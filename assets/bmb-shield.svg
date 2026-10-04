@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Best Man Backup BMB shield</title>
+  <desc id="desc">Standalone master logo matching the original compact shield fitted to the premium gold microphone.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7A4A0B"/>
+      <stop offset="0.17" stop-color="#F8E19A"/>
+      <stop offset="0.38" stop-color="#C98B2D"/>
+      <stop offset="0.60" stop-color="#FFF0B1"/>
+      <stop offset="0.82" stop-color="#B87518"/>
+      <stop offset="1" stop-color="#6B3E08"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0.12" y1="0" x2="0.82" y2="1">
+      <stop offset="0" stop-color="#203653"/>
+      <stop offset="0.48" stop-color="#132238"/>
+      <stop offset="1" stop-color="#081321"/>
+    </linearGradient>
+    <linearGradient id="letterGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF1B0"/>
+      <stop offset="0.42" stop-color="#E6B74F"/>
+      <stop offset="1" stop-color="#9B5F11"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Broad, compact single-point geometry taken from the original microphone badge. -->
+  <path d="M600 198 L1030 356 L1008 665 C994 833 840 951 600 1050 C360 951 206 833 192 665 L170 356 Z"
+        fill="url(#gold)" stroke="#5E3507" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M600 232 L990 376 L970 650 C958 799 819 904 600 997 C381 904 242 799 230 650 L210 376 Z"
+        fill="#070D16" stroke="#F8D978" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M600 254 L962 390 L943 641 C932 776 804 872 600 959 C396 872 268 776 257 641 L238 390 Z"
+        fill="url(#navy)" stroke="url(#gold)" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M600 280 L928 404 L911 628 C901 746 787 829 600 912 C413 829 299 746 289 628 L272 404 Z"
+        fill="none" stroke="#DDE8F5" stroke-opacity="0.58" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M290 410 L600 294 L910 410" fill="none" stroke="#FFFFFF" stroke-opacity="0.13" stroke-width="5"/>
+  <text x="600" y="675" text-anchor="middle"
+        font-family="DejaVu Serif, Georgia, 'Times New Roman', serif"
+        font-size="220" font-weight="400" letter-spacing="-7"
+        fill="url(#letterGold)" stroke="#5C3408" stroke-width="4" paint-order="stroke">BMB</text>
+</svg>
