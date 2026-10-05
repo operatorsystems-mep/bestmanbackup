@@ -1,4 +1,4 @@
-/* Local interactions only. No analytics, form collection, or external scripts. */
+/* Local interactions (tabs). Outbound Etsy links use UTM on the HTML hrefs. Site visit analytics: Cloudflare Web Analytics snippet in index.html when enabled. No forms or third-party pixels beyond that. */
 (() => {
  const tabs = [...document.querySelectorAll('[role="tab"]')];
  function activate(tab, focus = false) {
