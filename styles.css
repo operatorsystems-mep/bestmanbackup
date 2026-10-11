@@ -94,3 +94,32 @@ footer{padding-block:32px}
 .duties .button{margin-top:8px}
 .closing .actions{display:flex;flex-wrap:wrap;gap:16px}
 @media(max-width:760px){.kits-grid{grid-template-columns:1fr;gap:24px}.kit-card{padding:22px}.kit-card .kit-image{height:240px}.kit-card .kit-image img{max-height:240px}.duties{grid-template-columns:1fr;gap:30px}.kit-card .button,.duties .button{width:100%;text-align:center}.closing .actions .button{width:100%}}
+/* 2026-10-11 preview: three kits, The Best Man Set, free cheat sheet */
+.kits-grid-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.kits-grid-3 .kit-card{padding:26px}
+.kits-grid-3 .kit-card h3{font-size:1.75rem}
+.kit-card .kit-image-navy{background:#203653}
+.kit-card .kit-image-navy img{box-shadow:0 8px 22px #0006;max-height:270px}
+.bundle-card{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:center;margin-top:28px;background:var(--navy);color:#fff;padding:36px;border-top:4px solid var(--gold)}
+.bundle-card .eyebrow{color:var(--gold)}
+.bundle-card h3{font-family:var(--serif);font-size:clamp(2rem,3vw,2.75rem);line-height:1.08;margin:0 0 16px}
+.bundle-copy>p:not(.eyebrow){color:#d8dce2}
+.bundle-copy ul{list-style:none;padding:0;margin:20px 0 28px}
+.bundle-copy li{padding:10px 0 10px 20px;border-top:1px solid #ffffff26;position:relative;font-size:1rem}
+.bundle-copy li:before{content:'';position:absolute;left:0;top:21px;width:6px;height:6px;background:var(--gold)}
+.bundle-image img{width:100%;box-shadow:0 14px 34px #0007}
+.lead-magnet{background:#eeeae1;border-block:1px solid var(--line);padding-block:80px}
+.lead-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:72px;align-items:center}
+.lead-preview{margin:0;max-width:360px;justify-self:center;box-shadow:0 14px 36px #13223833;transform:rotate(-2deg)}
+.lead-copy h2{font-family:var(--serif);font-weight:400}
+.lead-copy>p:not(.eyebrow){color:var(--muted);max-width:520px}
+.lead-form{margin-top:26px;max-width:560px}
+.lead-form label{display:block;font-weight:700;font-size:.9375rem;margin-bottom:8px}
+.lead-row{display:flex;gap:12px;flex-wrap:wrap}
+.lead-row input{flex:1 1 240px;min-height:52px;padding:12px 16px;font:inherit;border:1px solid #b9b3a6;border-radius:2px;background:#fff;color:var(--ink)}
+.lead-row input:focus-visible{outline:3px solid #a27720;outline-offset:2px}
+.lead-row .button{background:var(--gold);border-color:var(--gold);color:var(--navy);cursor:pointer}
+.lead-consent{font-size:.875rem;color:var(--muted);margin:12px 0 0}
+.lead-status{font-size:.9375rem;font-weight:700;margin:10px 0 0;min-height:1.4em}
+@media(max-width:1000px){.kits-grid-3{grid-template-columns:1fr 1fr}.bundle-card{grid-template-columns:1fr;gap:28px}.lead-grid{gap:40px}}
+@media(max-width:760px){.kits-grid-3{grid-template-columns:1fr}.bundle-card{padding:22px}.bundle-card .button{width:100%}.lead-magnet{padding-block:56px}.lead-grid{grid-template-columns:1fr}.lead-preview{max-width:230px}.lead-row .button{width:100%}}
