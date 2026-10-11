@@ -1,0 +1,39 @@
+/* Best man guides: article layout on top of /styles.css */
+.guide{max-width:780px;padding-block:48px 80px}
+.guide .crumbs{font-size:.875rem;color:var(--muted);margin-bottom:28px}
+.guide .crumbs a{color:var(--muted)}
+.guide>.eyebrow{display:flex;align-items:center;gap:12px}
+.guide h1{font-size:clamp(2.3rem,4.4vw,3.5rem);line-height:1.06}
+.guide .answer{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);padding:24px 28px;margin:8px 0 40px}
+.guide .answer .eyebrow{margin-bottom:10px}
+.guide .answer p:last-child{margin:0;font-size:1.125rem;line-height:1.55}
+.guide-body h2,.guide-faq h2,.related h2,.guide-group h2{font-size:clamp(1.6rem,2.6vw,2.1rem);line-height:1.15;letter-spacing:-.015em;margin:48px 0 16px}
+.guide-body h3{font-size:1.25rem;line-height:1.25;margin:28px 0 10px}
+.guide-body p,.guide-body li{line-height:1.65}
+.guide-body ul,.guide-body ol{padding-left:1.3em;margin:0 0 20px}
+.guide-body li{margin-bottom:8px}
+.guide-body a,.related a,.kit-note a{color:var(--blue);text-underline-offset:3px}
+.guide-body blockquote{margin:0 0 16px;padding:20px 24px;background:#fff;border:1px solid var(--line);font-family:var(--serif);font-size:1.125rem;line-height:1.6}
+.guide-body blockquote p:last-child{margin-bottom:0}
+.guide-body ul.lines{list-style:none;padding:0}
+.guide-body ul.lines li{font-family:var(--serif);font-size:1.0625rem;border-left:3px solid var(--gold);padding:4px 0 4px 16px;margin-bottom:14px}
+.guide-body ul.checklist{list-style:none;padding:0}
+.guide-body ul.checklist li{position:relative;padding-left:32px}
+.guide-body ul.checklist li:before{content:'';position:absolute;left:0;top:.3em;width:16px;height:16px;border:2px solid var(--navy);border-radius:2px;background:#fff}
+.guide-table{width:100%;border-collapse:collapse;margin:0 0 20px;background:#fff;font-size:.9375rem}
+.guide-table th,.guide-table td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.guide-table th{background:var(--navy);color:#fff}
+.guide-faq .faq-list{margin-top:8px}
+.kit-note{margin:48px 0 0;padding:24px 28px;border:1px solid var(--line);background:#fff}
+.kit-note .eyebrow{margin-bottom:10px}
+.kit-note p:last-child{margin:0}
+.related ul{padding-left:1.2em}
+.related li{margin-bottom:8px}
+.guide-cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.guide-cards a{display:block;height:100%;background:#fff;border:1px solid var(--line);padding:20px 22px;text-decoration:none}
+.guide-cards a:hover{border-color:var(--gold)}
+.guide-cards strong{display:block;font-size:1.125rem;line-height:1.25;margin-bottom:8px}
+.guide-cards span{display:block;font-size:.9375rem;color:var(--muted);line-height:1.5}
+.guide-index{max-width:1000px}
+.guide-footer-links a{color:#fff;font-size:.9375rem;text-underline-offset:4px}
+@media(max-width:760px){.guide{padding-block:32px 56px}.guide .answer{padding:18px 18px}.guide-table{font-size:.875rem}.guide-table th,.guide-table td{padding:8px}}
