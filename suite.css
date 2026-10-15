@@ -2,3 +2,27 @@
 
 .tile-cover{height:250px;margin:0 0 28px;padding:10px 30px;background:#e9e1d3;display:flex;justify-content:center}.tile-cover img{width:auto;height:100%;box-shadow:0 5px 12px #14253b1c}@media(max-width:640px){.tile-cover{float:right;height:145px;width:112px;padding:9px;margin:0 0 10px 16px}.kit-tile h3{font-size:26px}.kit-tile:after{content:"";display:block;clear:both}}
 .header nav a{display:flex;align-items:center;min-height:44px}.footer-inner>div>a{display:inline-flex;align-items:center;min-height:44px}
+
+/* Cheat-sheet sign-up, carried over from the live homepage */
+/* 2026-10-11 preview: three kits, The Best Man Set, free cheat sheet */
+.kits-grid-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.lead-magnet{background:#eeeae1;border-block:1px solid var(--line);padding-block:80px}
+.lead-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:72px;align-items:center}
+.lead-preview{margin:0;max-width:360px;justify-self:center;box-shadow:0 14px 36px #13223833;transform:rotate(-2deg)}
+.lead-copy h2{font-family:var(--serif);font-weight:400}
+.lead-copy>p:not(.eyebrow){color:var(--muted);max-width:520px}
+.lead-form{margin-top:26px;max-width:560px}
+.lead-form label{display:block;font-weight:700;font-size:.9375rem;margin-bottom:8px}
+.lead-row{display:flex;gap:12px;flex-wrap:wrap}
+.lead-row input{flex:1 1 240px;min-height:52px;padding:12px 16px;font:inherit;border:1px solid #b9b3a6;border-radius:2px;background:#fff;color:var(--ink)}
+.lead-row input:focus-visible{outline:3px solid #a27720;outline-offset:2px}
+.lead-row .button{background:var(--gold);border-color:var(--gold);color:var(--navy);cursor:pointer}
+.lead-consent{font-size:.875rem;color:var(--muted);margin:12px 0 0}
+.lead-status{font-size:.9375rem;font-weight:700;margin:10px 0 0;min-height:1.4em}
+.lead-grid{gap:40px}
+.lead-magnet{padding-block:56px}
+.lead-grid{grid-template-columns:1fr}
+.lead-preview{max-width:230px}
+.lead-row .button{width:100%}
+.lead-copy h2{margin-bottom:14px}
+.lead-copy>p:not(.eyebrow){font-size:1.125rem}
