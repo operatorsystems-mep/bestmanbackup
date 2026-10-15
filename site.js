@@ -25,7 +25,7 @@
 
 /* ===== SITE CONFIG: the only lines to edit ===== */
 const BMB_CONFIG = {
-  bundleUrl: 'https://www.etsy.com/listing/4593235340',                          // BUNDLE LISTING URL: paste the Best Man Set Etsy URL here (e.g. 'https://www.etsy.com/uk/listing/1234567890') to show the Set card. Empty = hidden.
+  bundleUrl: 'https://www.etsy.com/listing/4593235340',                          
   signupEnabled: false,                   // CHEAT-SHEET SIGN-UP FLAG: true shows the section, but only once signupAction and privacyUrl are both real.
   signupAction: 'MAILERLITE_FORM_ACTION', // SIGN-UP ENDPOINT: paste the MailerLite embedded form action URL here.
   privacyUrl: ''                          // PRIVACY NOTICE URL: must point to a real privacy page before the sign-up can show.
