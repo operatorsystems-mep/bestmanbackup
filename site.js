@@ -28,7 +28,7 @@ const BMB_CONFIG = {
   bundleUrl: 'https://www.etsy.com/listing/4593235340',                          
   signupEnabled: false,                   // CHEAT-SHEET SIGN-UP FLAG: true shows the section, but only once signupAction and privacyUrl are both real.
   signupAction: 'MAILERLITE_FORM_ACTION', // SIGN-UP ENDPOINT: paste the MailerLite embedded form action URL here.
-  privacyUrl: ''                          // PRIVACY NOTICE URL: must point to a real privacy page before the sign-up can show.
+  privacyUrl: '/privacy/'                        // PRIVACY NOTICE URL: must point to a real privacy page before the sign-up can show.
 };
 /* ================================================ */
 
