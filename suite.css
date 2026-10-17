@@ -26,3 +26,7 @@
 .lead-row .button{width:100%}
 .lead-copy h2{margin-bottom:14px}
 .lead-copy>p:not(.eyebrow){font-size:1.125rem}
+
+/* Home: best man guides links (17 Oct 2026) */
+.guide-links{display:grid;grid-template-columns:1fr 1.2fr;gap:85px;border-top:1px solid var(--line)}.guide-links>div>p:not(.eyebrow){color:var(--muted);max-width:400px}.guide-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.guide-list li{border-bottom:1px solid var(--line)}.guide-list a{display:block;padding:20px 30px 20px 0;font-weight:700;text-decoration:none;position:relative}.guide-list a:after{content:"\2192";position:absolute;right:3px;color:#72531d}.guide-list a:hover{text-decoration:underline;text-underline-offset:6px}
+@media(max-width:1000px){.guide-links{gap:48px}}@media(max-width:760px){.guide-links{grid-template-columns:1fr;gap:10px}.guide-list a{font-size:1rem;padding-block:18px}}
