@@ -13,14 +13,20 @@
   document.head.append(va);
 
   // Etsy buy-link clicks. Vercel custom events only record on a paid plan; on Hobby these calls
-  // are ignored harmlessly. GoatCounter click tracking below still records them until retired.
+  // are ignored harmlessly. GoatCounter click tracking still records them until retired.
+  // Static guide links are named here; homepage buy buttons (built by suite.js/site.js) keep
+  // their own names. One delegated listener catches links added after this script runs.
   document.querySelectorAll('a[href*="etsy.com/"]').forEach((link, index) => {
-    const name = 'etsy-guide-' + location.pathname.replace(/\//g, '-') + '-' + index;
-    if (!link.dataset.goatcounterClick) link.dataset.goatcounterClick = name;
-    link.addEventListener('click', () => {
-      try { window.va('event', { name: 'etsy_click', data: { page: location.pathname, link: index } }); } catch (e) {}
-    });
+    if (!link.dataset.goatcounterClick) link.dataset.goatcounterClick = 'etsy-guide-' + location.pathname.replace(/\//g, '-') + '-' + index;
   });
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest && event.target.closest('a[href*="etsy.com/"]');
+    if (!link) return;
+    const listing = (link.href.match(/listing\/(\d+)/) || [])[1] || 'shop';
+    try {
+      window.va('event', { name: 'etsy_click', data: { page: location.pathname, listing, placement: link.dataset.goatcounterClick || 'etsy-link' } });
+    } catch (e) {}
+  }, true);
 
   // GoatCounter (retire after cut-over).
   const gc = document.createElement('script');
