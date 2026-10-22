@@ -32,7 +32,7 @@ const BMB_CONFIG = {
 };
 /* ================================================ */
 
-// The Best Man Set: hidden until a listing URL exists.
+// Best Man Bundle card: hidden until a listing URL exists.
 (() => {
  const url = BMB_CONFIG.bundleUrl.trim();
  if (!/^https:\/\/www\.etsy\.com\//.test(url)) return;

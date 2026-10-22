@@ -1,9 +1,10 @@
-/* Homepage purchase links. A product without a live listing (ready:false) keeps no buy button. */
+/* Homepage purchase links. The homepage now ships real <a> buy links in static HTML (house UTM format below).
+   This script only upgrades any leftover <button data-product> placeholder; a product without a live listing (ready:false) keeps no buy button. */
 const BMB_RELEASE = Object.freeze({
   approved: true,
   products: {
     duties: {ready:true, url:'https://www.etsy.com/listing/4592141224'},
-    party: {ready:false, url:''}, // No listing yet: button stays hidden.
+    playbook: {ready:true, url:'https://www.etsy.com/listing/4593059189'},
     speech: {ready:true, url:'https://www.etsy.com/listing/4567367337'},
     set: {ready:true, url:'https://www.etsy.com/listing/4593235340'}
   }
@@ -12,7 +13,7 @@ const BMB_RELEASE = Object.freeze({
   // GoatCounter is loaded by /analytics.js (production host only).
   if (!BMB_RELEASE.approved) return;
   document.querySelectorAll('[data-review-only]').forEach(node => node.remove());
-  document.querySelectorAll('[data-product]').forEach(button => {
+  document.querySelectorAll('button[data-product]').forEach(button => {
     const key = button.dataset.product, product = BMB_RELEASE.products[key];
     if (!product?.ready || !/^https:\/\/www\.etsy\.com\/listing\/\d+$/.test(product.url)) { button.remove(); return; }
     const link=document.createElement('a');
