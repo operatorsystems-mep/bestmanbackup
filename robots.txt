@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Not pages. Canonical URLs use https://bestmanbackup.com/ and a trailing slash.
+Disallow: /CNAME
+Disallow: /.nojekyll
+
 Sitemap: https://bestmanbackup.com/sitemap.xml
