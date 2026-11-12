@@ -7,6 +7,8 @@
 .guide .answer{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);padding:24px 28px;margin:8px 0 40px}
 .guide .answer .eyebrow{margin-bottom:10px}
 .guide .answer p:last-child{margin:0;font-size:1.125rem;line-height:1.55}
+.guide .answer ul{margin:12px 0 16px;padding-left:1.2em}
+.guide .answer li{margin:0 0 6px;line-height:1.45}
 .guide-body h2,.guide-faq h2,.related h2,.guide-group h2{font-size:clamp(1.6rem,2.6vw,2.1rem);line-height:1.15;letter-spacing:-.015em;margin:48px 0 16px}
 .guide-body h3{font-size:1.25rem;line-height:1.25;margin:28px 0 10px}
 .guide-body p,.guide-body li{line-height:1.65}

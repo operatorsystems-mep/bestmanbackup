@@ -1,0 +1,4 @@
+# GitHub Pages artefacts. Not site pages. Serving them creates junk URLs
+# (CNAME returns the hostname as a document). They stay in git.
+CNAME
+.nojekyll

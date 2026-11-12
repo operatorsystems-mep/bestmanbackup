@@ -1,6 +1,6 @@
 # Best Man Backup
 
-> Best Man Backup is an independent site for best men only. It publishes free practical guides on the speech, the duties and the stag do or bachelor party, and it sells digital preparation kits on Etsy. Guides are in UK English, with notes where US weddings differ. The kits are editable downloads, not a speech-writing service.
+> Best Man Backup is an independent site for best men only. It publishes free practical guides on the speech, the duties and the stag do or bachelor party, and it sells digital preparation kits on Etsy. Guides are free web pages in UK English, not a printed book, with notes where US weddings differ. The kits are editable downloads, not a speech-writing service.
 
 Site: https://bestmanbackup.com/
 Guides: https://bestmanbackup.com/guides/
@@ -15,9 +15,9 @@ Guides: https://bestmanbackup.com/guides/
 - [best man speech template](https://bestmanbackup.com/guides/best-man-speech-template/): An eight-part fill-in structure with word counts and a worked example.
 - [what not to say in a best man speech](https://bestmanbackup.com/guides/what-not-to-say-in-a-best-man-speech/): Exes, stag stories, in-jokes and other lines that backfire, and what to say instead.
 - [how long should a best man speech be](https://bestmanbackup.com/guides/how-long-should-a-best-man-speech-be/): Most speeches land at 3–5 minutes; 5–7 if you are the main UK speaker; never over 10.
-- [short best man speech](https://bestmanbackup.com/guides/short-best-man-speech/): Complete examples at about 60 seconds, 2 minutes and 3 minutes.
+- [short best man speech](https://bestmanbackup.com/guides/short-best-man-speech/): What a short best man speech is, with complete examples at about 60 seconds, 2 minutes and 3 minutes.
 - [how to end a best man speech](https://bestmanbackup.com/guides/how-to-end-a-best-man-speech/): Twenty closing lines and a word-for-word last 30 seconds, then the toast.
-- [best man toast](https://bestmanbackup.com/guides/best-man-toast/): Short, funny and formal toast examples, and the difference between a UK speech and a US toast.
+- [best man toast](https://bestmanbackup.com/guides/best-man-toast/): What a best man toast is, with short, funny and formal examples, and the difference between a UK speech and a US toast.
 - [joint best man speech](https://bestmanbackup.com/guides/joint-best-man-speech/): How two best men split one speech, with a full two-voice example and staging.
 - [best woman speech](https://bestmanbackup.com/guides/best-woman-speech/): The same job under a different title: structure, lines and the toast.
 - [best man speech for a brother](https://bestmanbackup.com/guides/best-man-speech-for-a-brother/): Which family stories work, and how to welcome a partner.
@@ -30,7 +30,7 @@ Guides: https://bestmanbackup.com/guides/
 
 ## Duties and the wedding day
 - [best mans job](https://bestmanbackup.com/guides/best-mans-job/): The job in plain English: what is yours, and what is not.
-- [best man duties checklist](https://bestmanbackup.com/guides/best-man-duties-checklist/): The checklist for before, during and after the wedding.
+- [best man duties checklist](https://bestmanbackup.com/guides/best-man-duties-checklist/): The best man duties checklist for before, during and after the wedding.
 - [best man duties timeline](https://bestmanbackup.com/guides/best-man-duties-timeline/): What to do month by month, plus a short-notice version.
 - [best man vs groomsmen vs ushers](https://bestmanbackup.com/guides/best-man-vs-groomsmen-vs-ushers/): Who does the stag do, the rings, the guests and the speech.
 - [what does the best man do on the wedding day](https://bestmanbackup.com/guides/what-does-the-best-man-do-on-the-wedding-day/): The day itself, from getting him ready to the last dance.
