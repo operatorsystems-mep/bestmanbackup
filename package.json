@@ -1,0 +1,13 @@
+{
+  "name": "bestmanbackup",
+  "private": true,
+  "description": "Static site for bestmanbackup.com. Playwright is a dev-only check and is not part of the public site.",
+  "scripts": {
+    "test:e2e": "playwright test tests/e2e/site.spec.ts",
+    "test:render": "playwright test tests/e2e/social-render.spec.ts",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

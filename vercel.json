@@ -3,6 +3,16 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/refund",
+      "destination": "/refunds/",
+      "permanent": true
+    },
+    {
+      "source": "/refund/",
+      "destination": "/refunds/",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
