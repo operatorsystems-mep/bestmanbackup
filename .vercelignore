@@ -2,3 +2,12 @@
 # (CNAME returns the hostname as a document). They stay in git.
 CNAME
 .nojekyll
+
+# Test harness. Not site pages.
+node_modules
+package.json
+package-lock.json
+playwright.config.ts
+serve.json
+tests
+.github
