@@ -6,62 +6,97 @@
   <meta name="theme-color" content="#132238">
   <meta name="robots" content="noindex,nofollow">
   <title>Thank you | Best Man Backup</title>
-  <meta name="description" content="Download your Best Man Backup kit after checkout.">
+  <meta name="description" content="Download your Best Man Backup kit after checkout. You've Got His Back, We've Got Yours.">
   <link rel="canonical" href="https://bestmanbackup.com/thank-you/">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/assets/bmb-shield.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/bmb-shield-48.png">
+  <link rel="apple-touch-icon" href="/assets/bmb-shield-180.png">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/guides/guides.css">
+  <link rel="stylesheet" href="/thank-you/thank-you.css">
+  <script defer src="/assets/checkout-config.js"></script>
+  <script defer src="/assets/checkout.js"></script>
+  <script defer src="/assets/thank-you.js"></script>
 </head>
-<body>
+<body class="ty-page">
   <a class="skip" href="#main">Skip to content</a>
   <header class="header wrap">
     <a class="brand" href="/" aria-label="Best Man Backup home">
       <img src="/assets/bmb-shield.svg" width="70" height="70" alt="">
       <span class="brand-name">Best Man Backup</span>
     </a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/kits/">Kits</a>
+      <a href="/guides/">Best man guides</a>
+    </nav>
   </header>
-  <main id="main" class="guide wrap" style="max-width:640px;padding-block:48px 80px">
-    <p class="eyebrow"><span></span> CHECKOUT</p>
-    <h1>Thank you</h1>
-    <p id="status">Checking your payment…</p>
-    <p id="actions" hidden></p>
-    <p class="micro">If this page does not update, email <a href="mailto:hello@bestmanbackup.com">hello@bestmanbackup.com</a> with your order time.</p>
+
+  <main id="main" class="ty-main wrap">
+    <section class="ty-hero" aria-labelledby="ty-title">
+      <p class="eyebrow"><span></span> ORDER CONFIRMED</p>
+      <p id="ty-tagline" class="ty-tagline">You've Got His Back, We've Got Yours.</p>
+      <h1 id="ty-title">Confirming your order</h1>
+      <p id="ty-product" class="ty-product-name ty-hidden" aria-live="polite"></p>
+      <p id="ty-status" class="ty-status" data-state="checking" role="status" aria-live="polite">Checking your payment…</p>
+
+      <div id="ty-download" class="ty-download ty-hidden ty-reveal">
+        <a id="ty-download-btn" class="button" href="#">Download your files</a>
+        <p id="ty-download-note" class="ty-download-note"></p>
+      </div>
+      <p id="ty-error-actions" class="ty-error-actions ty-hidden"></p>
+    </section>
+
+    <section id="ty-contents-panel" class="ty-panel ty-hidden ty-reveal" aria-labelledby="ty-contents-title">
+      <h2 id="ty-contents-title">What's inside</h2>
+      <ul id="ty-contents" class="ty-contents"></ul>
+    </section>
+
+    <section id="ty-steps-panel" class="ty-panel ty-hidden ty-reveal" aria-labelledby="ty-steps-title">
+      <h2 id="ty-steps-title">Your next 3 steps</h2>
+      <ol id="ty-steps" class="ty-steps"></ol>
+    </section>
+
+    <section id="ty-reassure-panel" class="ty-panel ty-hidden ty-reveal" aria-labelledby="ty-reassure-title">
+      <h2 id="ty-reassure-title">Before you go</h2>
+      <ul class="ty-reassure">
+        <li><strong>Save the ZIP now.</strong> The download link is short-lived. Keep the files on your computer and open Start Here first.</li>
+        <li><strong>Stripe receipt.</strong> Stripe emails your payment receipt to the address you used at checkout.</li>
+        <li><strong>Need help?</strong> Email <a href="mailto:hello@bestmanbackup.com">hello@bestmanbackup.com</a> with your order time and we’ll sort it.</li>
+      </ul>
+    </section>
+
+    <aside id="ty-upsell" class="ty-upsell ty-hidden ty-reveal" aria-labelledby="ty-upsell-title">
+      <p class="eyebrow">COVER THE WHOLE ROLE</p>
+      <h2 id="ty-upsell-title">Best Man Bundle</h2>
+      <p>The Duties Kit, the Stag &amp; Bachelor Party Kit and the Speech Kit in one download, with one starting point across the role, the stag do and the speech.</p>
+      <a class="button" data-product="bundle" data-label="Get the Best Man Bundle" href="/kits/#bundle">Get the Best Man Bundle · £19.99</a>
+    </aside>
+
+    <p id="ty-share" class="ty-share ty-hidden ty-reveal">
+      Share the Start Here file with the groom or ushers if they’re helping with the plan. Keep your speech draft private until you’re ready.
+    </p>
   </main>
-  <script>
-    (() => {
-      const params = new URLSearchParams(location.search);
-      const kit = params.get('kit');
-      const sessionId = params.get('session_id');
-      const status = document.getElementById('status');
-      const actions = document.getElementById('actions');
 
-      if (!kit || !sessionId) {
-        status.textContent = 'Missing kit or session. If you have just paid, use the link from Stripe, or email hello@bestmanbackup.com.';
-        return;
-      }
-
-      fetch('/api/fulfillment/?kit=' + encodeURIComponent(kit) + '&session_id=' + encodeURIComponent(sessionId), {
-        headers: { Accept: 'application/json' },
-      })
-        .then(async (res) => {
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok || !data.ok) {
-            status.textContent = data.message || 'We could not verify this purchase.';
-            actions.hidden = false;
-            actions.innerHTML = 'Need help? Email <a href="mailto:hello@bestmanbackup.com">hello@bestmanbackup.com</a>.';
-            return;
-          }
-          status.innerHTML = 'Your payment for the <strong>' + (data.name || 'kit') + '</strong> is confirmed.';
-          actions.hidden = false;
-          actions.innerHTML = '<a class="button" href="' + data.downloadUrl + '">Download your files</a>';
-        })
-        .catch(() => {
-          status.textContent = 'Something went wrong verifying your payment.';
-          actions.hidden = false;
-          actions.innerHTML = 'Need help? Email <a href="mailto:hello@bestmanbackup.com">hello@bestmanbackup.com</a>.';
-        });
-    })();
-  </script>
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="Best Man Backup home">
+          <img src="/assets/bmb-shield.svg" width="96" height="96" alt="">
+          <span class="footer-wordmark">
+            <span class="brand-name">Best Man Backup</span>
+            <span class="footer-tagline">You've Got His Back, We've Got Yours.</span>
+          </span>
+        </a>
+      </div>
+      <nav class="guide-footer-links" aria-label="Footer">
+        <a href="/guides/">Best man guides</a>
+        <a href="/kits/">Kits</a>
+        <a href="/privacy/">Privacy</a>
+      </nav>
+      <small>© Best Man Backup</small>
+    </div>
+  </footer>
 </body>
 </html>

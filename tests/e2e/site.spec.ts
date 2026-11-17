@@ -76,7 +76,8 @@ test.describe('Best Man Backup — desktop 1440', () => {
     const res = await page.goto('/thank-you/?kit=speech&session_id=cs_test_dummy');
     expect(res?.ok()).toBeTruthy();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
-    await expect(page.locator('body')).toContainText(/Thank you|Checking your payment|verify|hello@bestmanbackup\.com/i);
+    await expect(page.locator('#ty-tagline')).toHaveText("You've Got His Back, We've Got Yours.");
+    await expect(page.locator('body')).toContainText(/Checking your payment|verify|hello@bestmanbackup\.com/i);
 
     const sitemap = await (await request.get('/sitemap.xml')).text();
     expect(sitemap).not.toContain('/thank-you/');
@@ -86,6 +87,94 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await page.goto('/');
     await expect(page.locator('a[href*="/private/"]')).toHaveCount(0);
     await expect(page.locator('a[href$=".zip"]')).toHaveCount(0);
+  });
+
+  test('thank-you missing params shows recovery state', async ({ page }) => {
+    const res = await page.goto('/thank-you/');
+    expect(res?.ok()).toBeTruthy();
+    await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'missing');
+    await expect(page.locator('#ty-status')).toContainText(/Missing kit or session/i);
+    await expect(page.locator('#ty-error-actions')).toBeVisible();
+    await expect(page.locator('#ty-download')).toBeHidden();
+    await expect(page.locator('#ty-tagline')).toHaveText("You've Got His Back, We've Got Yours.");
+  });
+
+  test('thank-you success state for a single kit shows download, contents, steps and bundle upsell', async ({ page }) => {
+    await page.route('**/api/fulfillment/**', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          ok: true,
+          kit: 'speech',
+          name: 'Best Man Speech Kit',
+          downloadUrl: '/api/download/?token=test-token',
+        }),
+      });
+    });
+
+    await page.goto('/thank-you/?kit=speech&session_id=cs_test_ok');
+    await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'success');
+    await expect(page.getByRole('heading', { name: /You're all set/i })).toBeVisible();
+    await expect(page.locator('#ty-product')).toHaveText('Best Man Speech Kit');
+    await expect(page.locator('#ty-download-btn')).toBeVisible();
+    await expect(page.locator('#ty-download-btn')).toHaveAttribute('href', '/api/download/?token=test-token');
+    await expect(page.locator('#ty-contents')).toContainText(/speech-writing guide/i);
+    await expect(page.locator('#ty-steps a')).toHaveCount(3);
+    await expect(page.locator('#ty-reassure-panel')).toContainText(/hello@bestmanbackup\.com/i);
+    await expect(page.locator('#ty-upsell')).toBeVisible();
+    await expect(page.locator('#ty-upsell a[data-product="bundle"]')).toHaveAttribute(
+      'href',
+      /buy\.stripe\.com\/test_/
+    );
+    await expect(page.locator('#ty-share')).toBeHidden();
+    await expect(page.locator('body')).not.toContainText(/founding|Done for you|package/i);
+  });
+
+  test('thank-you success state for the bundle shows share tip and no upsell', async ({ page }) => {
+    await page.route('**/api/fulfillment/**', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          ok: true,
+          kit: 'bundle',
+          name: 'Best Man Bundle',
+          downloadUrl: '/api/download/?token=bundle-token',
+        }),
+      });
+    });
+
+    await page.goto('/thank-you/?kit=bundle&session_id=cs_test_bundle');
+    await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'success');
+    await expect(page.locator('#ty-product')).toHaveText('Best Man Bundle');
+    await expect(page.locator('#ty-contents')).toContainText(/Duties Kit/i);
+    await expect(page.locator('#ty-share')).toBeVisible();
+    await expect(page.locator('#ty-share')).toContainText(/groom or ushers/i);
+    await expect(page.locator('#ty-upsell')).toBeHidden();
+  });
+
+  test('thank-you error state keeps brand chrome and help path', async ({ page }) => {
+    await page.route('**/api/fulfillment/**', async (route) => {
+      await route.fulfill({
+        status: 400,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          ok: false,
+          message: 'We could not verify this purchase.',
+        }),
+      });
+    });
+
+    await page.goto('/thank-you/?kit=duties&session_id=cs_test_bad');
+    await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'error');
+    await expect(page.locator('#ty-status')).toContainText(/could not verify/i);
+    await expect(page.locator('#ty-product')).toHaveText('Best Man Duties Kit');
+    await expect(page.locator('#ty-download')).toBeHidden();
+    await expect(page.locator('#ty-error-actions')).toContainText(/hello@bestmanbackup\.com/i);
+    await expect(page.locator('#ty-tagline')).toHaveText("You've Got His Back, We've Got Yours.");
+    await expect(page.getByRole('navigation', { name: /Main navigation/i })).toBeVisible();
+    await expect(page.locator('footer .brand-name')).toBeVisible();
   });
 
   test('links page is present, tap-friendly and noindex', async ({ page }) => {
@@ -235,5 +324,28 @@ test.describe('Best Man Backup — mobile 390', () => {
     const first = page.locator('.link-stack a').first();
     const box = await first.boundingBox();
     expect(box?.height || 0).toBeGreaterThanOrEqual(48);
+  });
+
+  test('thank-you success download CTA is tap-friendly on a phone width', async ({ page }) => {
+    await page.route('**/api/fulfillment/**', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          ok: true,
+          kit: 'speech',
+          name: 'Best Man Speech Kit',
+          downloadUrl: '/api/download/?token=mobile-token',
+        }),
+      });
+    });
+
+    await page.goto('/thank-you/?kit=speech&session_id=cs_test_mobile');
+    await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'success');
+    const btn = page.locator('#ty-download-btn');
+    await expect(btn).toBeVisible();
+    const box = await btn.boundingBox();
+    expect(box?.width || 0).toBeGreaterThan(200);
+    expect(box?.height || 0).toBeGreaterThan(40);
   });
 });
