@@ -1,0 +1,14 @@
+{
+  "name": "bestmanbackup",
+  "private": true,
+  "description": "Static site for bestmanbackup.com. Playwright is a dev-only check and is not part of the public site.",
+  "scripts": {
+    "test:e2e": "playwright test tests/e2e/site.spec.ts",
+    "test": "playwright test tests/e2e/site.spec.ts",
+    "pdfs": "python3 scripts/generate-guide-pdfs.py",
+    "guides:cta": "python3 scripts/update-guides-cta.py"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

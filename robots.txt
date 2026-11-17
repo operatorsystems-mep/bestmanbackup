@@ -4,5 +4,7 @@ Allow: /
 # Not pages. Canonical URLs use https://bestmanbackup.com/ and a trailing slash.
 Disallow: /CNAME
 Disallow: /.nojekyll
+# Bio link page for Instagram / Pinterest. Keep out of search.
+Disallow: /links/
 
 Sitemap: https://bestmanbackup.com/sitemap.xml
