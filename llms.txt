@@ -1,8 +1,9 @@
 # Best Man Backup
 
-> Best Man Backup is an independent site for best men only. It publishes free practical guides on the speech, the duties and the stag do or bachelor party, and it sells digital preparation kits on Etsy. Guides are free web pages in UK English, not a printed book, with notes where US weddings differ. The kits are editable downloads, not a speech-writing service.
+> Best Man Backup is an independent site for best men only. It publishes free practical guides on the speech, the duties and the stag do or bachelor party, and it sells digital preparation kits. Guides are free web pages in UK English, not a printed book, with notes where US weddings differ. The kits are editable downloads, not a speech-writing service.
 
 Site: https://bestmanbackup.com/
+Kits: https://bestmanbackup.com/kits/
 Guides: https://bestmanbackup.com/guides/
 
 ## Writing the speech

@@ -53,8 +53,16 @@
 .speaker{margin:0 0 6px;font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .print-sheet{border:1px solid var(--line);background:#fff;padding:20px 22px;margin:0 0 28px}
 .print-sheet h2{margin-top:0}
+.free-download{margin:0 0 28px;padding:20px 24px;border:1px solid var(--line);border-left:4px solid var(--gold);background:#fff}
+.free-download .eyebrow{margin:0 0 8px}
+.free-download p{margin:0 0 12px}
+.free-download p:last-child{margin:0}
+.free-download .button,.guide-body .free-download .button{min-width:0;background:var(--navy);border-color:var(--navy);color:#fff;text-decoration:none}
+.free-download .button:hover{background:var(--blue);border-color:var(--blue)}
+.free-download-end{margin:40px 0 28px}
+@media(max-width:760px){.free-download{padding:18px}.free-download .button{width:100%;text-align:center}}
 @media print{
-  header,footer,.kit-cta,.kit-note,.toc,.guide-faq,.related,.crumbs,.guide-stamp{display:none}
+  header,footer,.kit-cta,.kit-note,.free-download,.toc,.guide-faq,.related,.crumbs,.guide-stamp{display:none}
   .print-sheet{border:0;padding:0;break-before:page}
   body{background:#fff}
 }

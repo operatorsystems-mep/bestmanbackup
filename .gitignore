@@ -1,0 +1,12 @@
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.env
+.env.*
+!.env.example
+
+# Never commit paid kit files (served from private Vercel Blob only)
+private/products/
+*.zip

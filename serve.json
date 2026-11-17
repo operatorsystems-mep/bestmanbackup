@@ -1,0 +1,7 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/refund", "destination": "/refunds/", "type": 308 },
+    { "source": "/refund/", "destination": "/refunds/", "type": 308 }
+  ]
+}

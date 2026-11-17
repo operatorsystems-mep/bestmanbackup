@@ -2,3 +2,12 @@
 # (CNAME returns the hostname as a document). They stay in git.
 CNAME
 .nojekyll
+
+# Local test harness only. package.json stays so Vercel can install Stripe for /api.
+playwright.config.ts
+serve.json
+tests
+.github
+scripts/requirements-pdf.txt
+scripts/generate-guide-pdfs.py
+scripts/update-guides-cta.py
