@@ -11,6 +11,7 @@
     "guides:cta": "python3 scripts/update-guides-cta.py"
   },
   "dependencies": {
+    "@vercel/blob": "^2.9.0",
     "stripe": "^17.7.0"
   },
   "devDependencies": {

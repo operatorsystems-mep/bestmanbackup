@@ -1,15 +1,17 @@
 /**
  * Validates a Stripe Checkout Session and returns a short-lived download link.
- * Env: STRIPE_SECRET_KEY (required in production; never hard-code).
+ *
+ * Env (never hard-code):
+ * - STRIPE_SECRET_KEY — retrieve Checkout Sessions + sign download tokens
+ * - BLOB_READ_WRITE_TOKEN — private Blob store (connected as "bmb-paid-products")
  *
  * GET /api/fulfillment?kit=speech&session_id=cs_test_...
  * Accept: application/json → JSON; otherwise HTML.
  */
-import fs from 'node:fs';
-import path from 'node:path';
 import Stripe from 'stripe';
 import { getKit } from '../lib/kits.mjs';
 import { createDownloadToken, sessionMatchesKit } from '../lib/fulfillment.mjs';
+import { blobTokenConfigured } from '../lib/blob-download.mjs';
 
 function htmlPage({ title, body }) {
   return `<!DOCTYPE html>
@@ -64,7 +66,8 @@ export default async function handler(req, res) {
   const kit = getKit(kitId);
 
   if (!kit || !sessionId) {
-    const message = 'Missing kit or checkout session. If you have just paid, open the link from your Stripe confirmation email, or contact us.';
+    const message =
+      'Missing kit or checkout session. If you have just paid, open the link from your Stripe confirmation email, or contact us.';
     if (wantsJson) return json(res, 400, { ok: false, code: 'bad_request', message });
     return html(
       res,
@@ -77,6 +80,17 @@ export default async function handler(req, res) {
   const secret = process.env.STRIPE_SECRET_KEY;
   if (!secret) {
     const message = 'Checkout is not configured on this server yet.';
+    if (wantsJson) return json(res, 503, { ok: false, code: 'misconfigured', message });
+    return html(
+      res,
+      503,
+      'Download help',
+      `<h1>Download temporarily unavailable</h1><p>${message}</p>${helpBlock()}`
+    );
+  }
+
+  if (!blobTokenConfigured()) {
+    const message = 'Paid file storage is not configured on this server yet.';
     if (wantsJson) return json(res, 503, { ok: false, code: 'misconfigured', message });
     return html(
       res,
@@ -102,24 +116,12 @@ export default async function handler(req, res) {
       );
     }
 
-    const productPath = path.join(process.cwd(), 'private', 'products', kit.file);
-    if (!fs.existsSync(productPath)) {
-      const message = `The ${kit.name} file is not installed on the server yet.`;
-      if (wantsJson) return json(res, 503, { ok: false, code: 'missing_file', message });
-      return html(
-        res,
-        503,
-        'Download help',
-        `<h1>Your payment succeeded</h1><p>${message}</p>${helpBlock()}`
-      );
-    }
-
-    const token = createDownloadToken({
+    const downloadToken = createDownloadToken({
       sessionId,
       kitId: kit.id,
       secret,
     });
-    const downloadUrl = `/api/download?token=${encodeURIComponent(token)}`;
+    const downloadUrl = `/api/download?token=${encodeURIComponent(downloadToken)}`;
 
     if (wantsJson) {
       return json(res, 200, {

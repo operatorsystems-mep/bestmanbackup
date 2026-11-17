@@ -1,14 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": true,
-  "functions": {
-    "api/fulfillment.js": {
-      "includeFiles": "private/products/**"
-    },
-    "api/download.js": {
-      "includeFiles": "private/products/**"
-    }
-  },
   "rewrites": [
     {
       "source": "/private/(.*)",

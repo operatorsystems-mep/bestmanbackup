@@ -11,28 +11,39 @@ Buy buttons read from [`assets/checkout-config.js`](assets/checkout-config.js) �
 3. Each Payment Link must redirect after payment to:
    `https://bestmanbackup.com/thank-you/?kit=<speech|duties|playbook|bundle>&session_id={CHECKOUT_SESSION_ID}`
 
-### Server env var (required for downloads)
+### Server env vars (required for downloads)
 
-Set this on the Vercel project (Preview + Production):
+Set these on the Vercel project (Preview + Production). **Never commit secrets.**
 
 | Variable | Purpose |
 |---|---|
-| `STRIPE_SECRET_KEY` | Stripe secret key (`sk_test_…` for test mode, `sk_live_…` for live). Used to retrieve Checkout Sessions and to sign short-lived download tokens. **Never commit this value.** |
+| `STRIPE_SECRET_KEY` | Stripe secret (`sk_test_…` / `sk_live_…`). Retrieves Checkout Sessions and signs short-lived download tokens. |
+| `BLOB_READ_WRITE_TOKEN` | Private Vercel Blob store token. Auto-created when the `bmb-paid-products` store is connected to this project (Preview + Production + Development). Used to issue short-lived signed download URLs. |
 
-Without `STRIPE_SECRET_KEY`, `/thank-you/` shows a friendly error and points buyers to `hello@bestmanbackup.com`.
+Without either variable, `/thank-you/` shows a friendly error and points buyers to `hello@bestmanbackup.com`.
 
-### Paid file delivery
+### Paid file delivery (private Blob — never in git)
 
-- `/thank-you/` calls `/api/fulfillment`, which checks `payment_status === 'paid'` and that the session’s Stripe price ID matches the kit.
-- A short-lived token unlocks `/api/download`, which streams the ZIP from `private/products/` (not a public static URL; `/private/*` is blocked; not in the sitemap).
-- Replace the placeholder ZIPs in `private/products/` with the real customer downloads before going live (do not commit paid files to this public repository).
+This repository is **public**. Paid kit ZIPs must **never** be committed (not under `private/`, not as placeholders, not in history).
 
-Expected filenames:
+Files are stored in a **private** Vercel Blob store named `bmb-paid-products` on the `bestmanbackup` project (`operator-systems-mep` team, region `lhr1`).
 
-- `private/products/speech.zip`
-- `private/products/duties.zip`
-- `private/products/playbook.zip`
-- `private/products/bundle.zip` (all three kits)
+Blob pathnames (server-side only):
+
+| Kit | Blob pathname | Built from |
+|---|---|---|
+| Speech | `kits/speech.zip` | `Best_Man_Speech_Kit_Customer_Download_vC1.zip` |
+| Duties | `kits/duties.zip` | A4 + US Letter + Editable Files ZIPs |
+| Playbook | `kits/playbook.zip` | `BMB_Stag_Do_Playbook_v0.4.2.zip` |
+| Bundle | `kits/bundle.zip` | All of the above |
+
+Flow:
+
+1. `/thank-you/` → `/api/fulfillment` checks Stripe `payment_status === 'paid'` and matching price ID.
+2. Issues a short-lived HMAC token for `/api/download`.
+3. `/api/download` redirects to a short-lived **signed GET URL** for the private Blob object (not a public static URL; not in the sitemap).
+
+Re-upload kits with `@vercel/blob` `put(..., { access: 'private', addRandomSuffix: false, allowOverwrite: true })` using `BLOB_READ_WRITE_TOKEN`. Do not put product files in this repo.
 
 ## Free printable PDFs
 

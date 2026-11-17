@@ -54,7 +54,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
     expect(schema.join('\n')).toMatch(/"price":\s*"6\.98"/);
   });
 
-  test('thank-you page is present and noindex; private product paths are not linked from the site', async ({ page, request }) => {
+  test('thank-you page is present and noindex; paid files are not linked as static URLs', async ({ page, request }) => {
     const res = await page.goto('/thank-you/?kit=speech&session_id=cs_test_dummy');
     expect(res?.ok()).toBeTruthy();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
@@ -63,9 +63,11 @@ test.describe('Best Man Backup — desktop 1440', () => {
     const sitemap = await (await request.get('/sitemap.xml')).text();
     expect(sitemap).not.toContain('/thank-you/');
     expect(sitemap).not.toContain('/private/');
+    expect(sitemap).not.toMatch(/speech\.zip|duties\.zip|playbook\.zip|bundle\.zip/i);
 
     await page.goto('/');
     await expect(page.locator('a[href*="/private/"]')).toHaveCount(0);
+    await expect(page.locator('a[href$=".zip"]')).toHaveCount(0);
   });
 
   test('links page is present, tap-friendly and noindex', async ({ page }) => {
