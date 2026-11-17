@@ -121,7 +121,7 @@ export default async function handler(req, res) {
       kitId: kit.id,
       secret,
     });
-    const downloadUrl = `/api/download?token=${encodeURIComponent(downloadToken)}`;
+    const downloadUrl = `/api/download/?token=${encodeURIComponent(downloadToken)}`;
 
     if (wantsJson) {
       return json(res, 200, {

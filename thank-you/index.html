@@ -41,7 +41,7 @@
         return;
       }
 
-      fetch('/api/fulfillment?kit=' + encodeURIComponent(kit) + '&session_id=' + encodeURIComponent(sessionId), {
+      fetch('/api/fulfillment/?kit=' + encodeURIComponent(kit) + '&session_id=' + encodeURIComponent(sessionId), {
         headers: { Accept: 'application/json' },
       })
         .then(async (res) => {
