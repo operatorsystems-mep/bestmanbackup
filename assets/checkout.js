@@ -1,25 +1,38 @@
 /**
  * Wire every [data-product] buy control to checkout-config.js.
- * Empty checkoutUrl → product section on /kits/. Never leaves a dead href.
- * Live Stripe Payment Links open in the same tab so the thank-you redirect returns here.
+ * Production host (bestmanbackup.com / www) → live Payment Links.
+ * Preview / localhost / other hosts → test Payment Links.
+ * Empty URL → product section on /kits/. Never leaves a dead href.
  */
 (() => {
   const config = window.BMB_CHECKOUT;
   if (!config || !config.products) return;
   const aliases = window.BMB_CHECKOUT_ALIASES || {};
 
+  function isProductionHost(hostname) {
+    const host = String(hostname || '').toLowerCase();
+    return host === 'bestmanbackup.com' || host === 'www.bestmanbackup.com';
+  }
+
+  function checkoutUrlFor(product) {
+    const live = isProductionHost(location.hostname);
+    const url = live ? product.checkoutUrlLive : product.checkoutUrlTest;
+    return typeof url === 'string' ? url.trim() : '';
+  }
+
   function resolve(key) {
     const id = aliases[key] || key;
     return config.products[id] || null;
   }
 
-  function isLiveCheckout(url) {
-    return typeof url === 'string' && /^https:\/\//i.test(url.trim());
+  function isHttpCheckout(url) {
+    return typeof url === 'string' && /^https:\/\//i.test(url);
   }
 
   function applyLink(el, product) {
-    const live = isLiveCheckout(product.checkoutUrl);
-    const href = live ? product.checkoutUrl.trim() : product.kitsPath;
+    const url = checkoutUrlFor(product);
+    const live = isHttpCheckout(url);
+    const href = live ? url : product.kitsPath;
     el.setAttribute('href', href);
     el.removeAttribute('target');
     el.removeAttribute('rel');
@@ -31,7 +44,6 @@
         .replace(/^kits-/, live ? 'checkout-' : 'kits-');
     }
 
-    // Hide "checkout opening shortly" notes once a live URL exists for this product.
     if (live) {
       document.querySelectorAll(`[data-checkout-pending="${product.id}"]`).forEach((node) => {
         node.hidden = true;
@@ -58,8 +70,7 @@
     }
   });
 
-  // Page-level pending banner when every product has a live checkout URL.
-  const allLive = Object.values(config.products).every((p) => isLiveCheckout(p.checkoutUrl));
+  const allLive = Object.values(config.products).every((p) => isHttpCheckout(checkoutUrlFor(p)));
   if (allLive) {
     document.querySelectorAll('[data-checkout-pending="all"]').forEach((node) => {
       node.hidden = true;

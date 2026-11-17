@@ -1,15 +1,15 @@
 /**
- * Best Man Backup — checkout URLs and kit metadata.
+ * Best Man Backup — checkout URLs and kit metadata (one file).
  *
- * Paste a Stripe Payment Link into checkoutUrl for each product.
- * Leave checkoutUrl empty ("") to send buy buttons to /kits/#<id> instead.
- * Never point a buy button at a dead or placeholder URL.
+ * Each product has checkoutUrlTest and checkoutUrlLive.
+ * assets/checkout.js picks Live only on bestmanbackup.com / www;
+ * Preview, localhost and other hosts keep Test links.
  *
- * Swap test links for live Payment Links in this one file when ready.
- * After payment, each link should redirect to:
+ * After payment, each Payment Link must redirect to:
  *   https://bestmanbackup.com/thank-you/?kit=<speech|duties|playbook|bundle>&session_id={CHECKOUT_SESSION_ID}
  *
- * Server fulfillment also checks the Stripe price IDs in lib/kits.mjs.
+ * Server fulfillment matches Stripe price IDs by session.livemode
+ * (test vs live) in lib/kits.mjs — never mix modes.
  */
 window.BMB_CHECKOUT = Object.freeze({
   products: Object.freeze({
@@ -20,10 +20,12 @@ window.BMB_CHECKOUT = Object.freeze({
       price: '£6.98',
       currency: 'GBP',
       priceValue: 6.98,
-      priceId: 'price_1UcuNkRKrA7iXAzoBcZbNaOO',
+      priceIdTest: 'price_1UcuNkRKrA7iXAzoBcZbNaOO',
+      priceIdLive: 'price_1UcuxdRKrA7iXAzo7Bpifs0D',
       description:
         'A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.',
-      checkoutUrl: 'https://buy.stripe.com/test_8x214pgMc0iq3wrbaI0Fi0g',
+      checkoutUrlTest: 'https://buy.stripe.com/test_8x214pgMc0iq3wrbaI0Fi0g',
+      checkoutUrlLive: 'https://buy.stripe.com/9B67sN9jK1muc2X3Ig0Fi00',
       kitsPath: '/kits/#speech',
       buttonLabel: 'Get the Speech Kit',
     }),
@@ -34,10 +36,12 @@ window.BMB_CHECKOUT = Object.freeze({
       price: '£5.99',
       currency: 'GBP',
       priceValue: 5.99,
-      priceId: 'price_1UcuNmRKrA7iXAzo8plO4K7b',
+      priceIdTest: 'price_1UcuNmRKrA7iXAzo8plO4K7b',
+      priceIdLive: 'price_1UcuxsRKrA7iXAzoTZHCJEQo',
       description:
         'A duties handbook, an editable Word planner and a printable planner with 14 planning sections, plus a wedding-day sheet and four pocket carry cards, in A4 and US Letter. Digital download.',
-      checkoutUrl: 'https://buy.stripe.com/test_5kQeVfanOfdkc2XemU0Fi0h',
+      checkoutUrlTest: 'https://buy.stripe.com/test_5kQeVfanOfdkc2XemU0Fi0h',
+      checkoutUrlLive: 'https://buy.stripe.com/cNicN7anOe9g1oj92A0Fi01',
       kitsPath: '/kits/#duties',
       buttonLabel: 'Get the Duties Kit',
     }),
@@ -48,10 +52,12 @@ window.BMB_CHECKOUT = Object.freeze({
       price: '£11.99',
       currency: 'GBP',
       priceValue: 11.99,
-      priceId: 'price_1UcuNoRKrA7iXAzosSZztLsF',
+      priceIdTest: 'price_1UcuNoRKrA7iXAzosSZztLsF',
+      priceIdLive: 'price_1Ucuy1RKrA7iXAzo80f5IBDs',
       description:
         'Eight stag do games, a groom quiz, challenge cards and the Stag Awards, editable in Word or printable, in UK and US editions. Digital download.',
-      checkoutUrl: 'https://buy.stripe.com/test_5kQ14pgMc6GOc2Xa6E0Fi0i',
+      checkoutUrlTest: 'https://buy.stripe.com/test_5kQ14pgMc6GOc2Xa6E0Fi0i',
+      checkoutUrlLive: 'https://buy.stripe.com/4gM14p67y9T07MH5Qo0Fi02',
       kitsPath: '/kits/#playbook',
       buttonLabel: 'Get the Playbook',
     }),
@@ -62,10 +68,12 @@ window.BMB_CHECKOUT = Object.freeze({
       price: '£19.99',
       currency: 'GBP',
       priceValue: 19.99,
-      priceId: 'price_1UcuNqRKrA7iXAzo9Q853mBX',
+      priceIdTest: 'price_1UcuNqRKrA7iXAzo9Q853mBX',
+      priceIdLive: 'price_1UcuyBRKrA7iXAzolGfl4aQX',
       description:
         'The Duties Kit, the Stag & Bachelor Party Kit and the Speech Kit in one download, with one starting point across the role, the stag do and the speech.',
-      checkoutUrl: 'https://buy.stripe.com/test_aFa7sN1Ric18gjd4Mk0Fi0j',
+      checkoutUrlTest: 'https://buy.stripe.com/test_aFa7sN1Ric18gjd4Mk0Fi0j',
+      checkoutUrlLive: 'https://buy.stripe.com/dRmbJ3brSe9g7MHbaI0Fi03',
       kitsPath: '/kits/#bundle',
       buttonLabel: 'Get the Best Man Bundle',
     }),

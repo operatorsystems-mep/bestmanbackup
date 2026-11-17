@@ -20,25 +20,43 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.getByRole('link', { name: /Best Man Backup/i }).first()).toBeVisible();
   });
 
-  test('home buy buttons resolve via checkout config to Stripe test Payment Links', async ({ page }) => {
+  test('home buy buttons use Stripe TEST links on non-production hosts; LIVE links stay in config', async ({ page }) => {
     await page.goto('/');
     await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
 
-    const expected: Record<string, RegExp> = {
+    const expectedTest: Record<string, RegExp> = {
       duties: /buy\.stripe\.com\/test_5kQeVfanOfdkc2XemU0Fi0h/,
       playbook: /buy\.stripe\.com\/test_5kQ14pgMc6GOc2Xa6E0Fi0i/,
       speech: /buy\.stripe\.com\/test_8x214pgMc0iq3wrbaI0Fi0g/,
       set: /buy\.stripe\.com\/test_aFa7sN1Ric18gjd4Mk0Fi0j/,
     };
+    const expectedLive: Record<string, RegExp> = {
+      duties: /buy\.stripe\.com\/cNicN7anOe9g1oj92A0Fi01/,
+      playbook: /buy\.stripe\.com\/4gM14p67y9T07MH5Qo0Fi02/,
+      speech: /buy\.stripe\.com\/9B67sN9jK1muc2X3Ig0Fi00/,
+      bundle: /buy\.stripe\.com\/dRmbJ3brSe9g7MHbaI0Fi03/,
+    };
 
-    for (const product of Object.keys(expected)) {
+    const cfg = await page.evaluate(() => {
+      const c = (window as unknown as { BMB_CHECKOUT: { products: Record<string, { checkoutUrlTest: string; checkoutUrlLive: string }> } }).BMB_CHECKOUT;
+      return c.products;
+    });
+    for (const id of Object.keys(expectedLive)) {
+      expect(cfg[id].checkoutUrlLive, `${id} live url`).toMatch(expectedLive[id]);
+      expect(cfg[id].checkoutUrlTest, `${id} test url`).toMatch(/buy\.stripe\.com\/test_/);
+    }
+
+    for (const product of Object.keys(expectedTest)) {
       const link = page.locator(`a[data-product="${product}"]`).first();
       await expect(link, `missing buy button for ${product}`).toBeVisible();
       const href = await link.getAttribute('href');
-      expect(href, `${product} href`).toMatch(expected[product]);
+      expect(href, `${product} href`).toMatch(expectedTest[product]);
       expect(href || '').not.toMatch(/etsy\.com/i);
+      // Local/preview must not wire live Payment Links.
+      expect(href || '').not.toMatch(/buy\.stripe\.com\/(?!test_)/);
     }
   });
+
 
   test('kits page lists every product with a price and no pending checkout wording', async ({ page }) => {
     const res = await page.goto('/kits/');

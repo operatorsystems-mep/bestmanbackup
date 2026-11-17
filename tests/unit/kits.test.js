@@ -31,4 +31,13 @@ describe('kit blob pathnames', () => {
       assert.ok(!String(kit.blobPath).includes('private/'));
     }
   });
+
+  it('keeps distinct test and live Stripe price IDs', () => {
+    for (const kit of Object.values(KITS)) {
+      assert.match(kit.priceIdTest, /^price_/);
+      assert.match(kit.priceIdLive, /^price_/);
+      assert.notEqual(kit.priceIdTest, kit.priceIdLive);
+    }
+  });
 });
+

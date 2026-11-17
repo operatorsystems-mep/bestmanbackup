@@ -5,14 +5,21 @@ import {
   sessionMatchesKit,
   verifyDownloadToken,
 } from '../../lib/fulfillment.mjs';
+import { KITS } from '../../lib/kits.mjs';
 
 const SECRET = 'sk_test_unit_secret_for_signing_only';
 
-function session({ payment_status = 'paid', priceId = 'price_1UcuNkRKrA7iXAzoBcZbNaOO', amount_total = 698 } = {}) {
+function session({
+  payment_status = 'paid',
+  priceId = KITS.speech.priceIdTest,
+  amount_total = 698,
+  livemode = false,
+} = {}) {
   return {
     id: 'cs_test_123',
     payment_status,
     amount_total,
+    livemode,
     line_items: {
       data: [{ price: { id: priceId } }],
     },
@@ -20,7 +27,7 @@ function session({ payment_status = 'paid', priceId = 'price_1UcuNkRKrA7iXAzoBcZ
 }
 
 describe('sessionMatchesKit', () => {
-  it('accepts a paid session for the matching kit price', () => {
+  it('accepts a paid test session for the matching test kit price', () => {
     const result = sessionMatchesKit(session(), 'speech');
     assert.equal(result.ok, true);
     assert.equal(result.kit.id, 'speech');
@@ -34,7 +41,7 @@ describe('sessionMatchesKit', () => {
 
   it('rejects a paid session for the wrong kit', () => {
     const result = sessionMatchesKit(
-      session({ priceId: 'price_1UcuNkRKrA7iXAzoBcZbNaOO', amount_total: 698 }),
+      session({ priceId: KITS.speech.priceIdTest, amount_total: 698 }),
       'duties'
     );
     assert.equal(result.ok, false);
@@ -43,19 +50,55 @@ describe('sessionMatchesKit', () => {
 
   it('rejects a wrong amount even when the price id matches', () => {
     const result = sessionMatchesKit(
-      session({ priceId: 'price_1UcuNmRKrA7iXAzo8plO4K7b', amount_total: 999 }),
+      session({ priceId: KITS.duties.priceIdTest, amount_total: 999 }),
       'duties'
     );
     assert.equal(result.ok, false);
     assert.equal(result.code, 'wrong_price');
   });
 
-  it('accepts duties with the duties price id and amount', () => {
+  it('accepts duties with the duties test price id and amount', () => {
     const result = sessionMatchesKit(
-      session({ priceId: 'price_1UcuNmRKrA7iXAzo8plO4K7b', amount_total: 599 }),
+      session({ priceId: KITS.duties.priceIdTest, amount_total: 599 }),
       'duties'
     );
     assert.equal(result.ok, true);
+  });
+
+  it('accepts a livemode session only with the live price id', () => {
+    const ok = sessionMatchesKit(
+      session({
+        livemode: true,
+        priceId: KITS.speech.priceIdLive,
+        amount_total: 698,
+      }),
+      'speech'
+    );
+    assert.equal(ok.ok, true);
+
+    const mixed = sessionMatchesKit(
+      session({
+        livemode: true,
+        priceId: KITS.speech.priceIdTest,
+        amount_total: 698,
+      }),
+      'speech'
+    );
+    assert.equal(mixed.ok, false);
+    assert.equal(mixed.code, 'wrong_kit');
+  });
+
+  it('rejects a test session that carries a live price id', () => {
+    const result = sessionMatchesKit(
+      session({
+        livemode: false,
+        priceId: KITS.bundle.priceIdLive,
+        amount_total: 1999,
+      }),
+      'bundle'
+    );
+    assert.equal(result.ok, false);
+    assert.equal(result.code, 'wrong_kit');
   });
 });
 
