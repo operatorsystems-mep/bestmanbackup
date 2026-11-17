@@ -20,30 +20,52 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.getByRole('link', { name: /Best Man Backup/i }).first()).toBeVisible();
   });
 
-  test('home buy buttons resolve via checkout config to /kits/ when URLs are empty', async ({ page }) => {
+  test('home buy buttons resolve via checkout config to Stripe test Payment Links', async ({ page }) => {
     await page.goto('/');
     await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
 
-    for (const product of ['duties', 'playbook', 'speech', 'set'] as const) {
+    const expected: Record<string, RegExp> = {
+      duties: /buy\.stripe\.com\/test_5kQeVfanOfdkc2XemU0Fi0h/,
+      playbook: /buy\.stripe\.com\/test_5kQ14pgMc6GOc2Xa6E0Fi0i/,
+      speech: /buy\.stripe\.com\/test_8x214pgMc0iq3wrbaI0Fi0g/,
+      set: /buy\.stripe\.com\/test_aFa7sN1Ric18gjd4Mk0Fi0j/,
+    };
+
+    for (const product of Object.keys(expected)) {
       const link = page.locator(`a[data-product="${product}"]`).first();
       await expect(link, `missing buy button for ${product}`).toBeVisible();
       const href = await link.getAttribute('href');
-      expect(href, `${product} href`).toMatch(/^\/kits\/#/);
+      expect(href, `${product} href`).toMatch(expected[product]);
       expect(href || '').not.toMatch(/etsy\.com/i);
     }
   });
 
-  test('kits page lists every product with a price and checkout note', async ({ page }) => {
+  test('kits page lists every product with a price and no pending checkout wording', async ({ page }) => {
     const res = await page.goto('/kits/');
     expect(res?.ok()).toBeTruthy();
+    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
     await expect(page.locator('#speech')).toContainText('£6.98');
     await expect(page.locator('#duties')).toContainText('£5.99');
     await expect(page.locator('#playbook')).toContainText('£11.99');
     await expect(page.locator('#bundle')).toContainText('£19.99');
-    await expect(page.locator('body')).toContainText(/Checkout opening shortly/i);
+    await expect(page.locator('body')).not.toContainText(/Checkout opening shortly/i);
     const schema = await page.locator('script[type="application/ld+json"]').allTextContents();
     expect(schema.join('\n')).toMatch(/"@type":\s*"Product"/);
     expect(schema.join('\n')).toMatch(/"price":\s*"6\.98"/);
+  });
+
+  test('thank-you page is present and noindex; private product paths are not linked from the site', async ({ page, request }) => {
+    const res = await page.goto('/thank-you/?kit=speech&session_id=cs_test_dummy');
+    expect(res?.ok()).toBeTruthy();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
+    await expect(page.locator('body')).toContainText(/Thank you|Checking your payment|verify|hello@bestmanbackup\.com/i);
+
+    const sitemap = await (await request.get('/sitemap.xml')).text();
+    expect(sitemap).not.toContain('/thank-you/');
+    expect(sitemap).not.toContain('/private/');
+
+    await page.goto('/');
+    await expect(page.locator('a[href*="/private/"]')).toHaveCount(0);
   });
 
   test('links page is present, tap-friendly and noindex', async ({ page }) => {
@@ -78,7 +100,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
 
       await expect(page.locator('.kit-cta a[data-product]').first(), `${slug} CTA`).toBeVisible();
       const ctaHref = await page.locator('.kit-cta a[data-product]').first().getAttribute('href');
-      expect(ctaHref || '').toMatch(/^\/kits\/#/);
+      expect(ctaHref || '').toMatch(/buy\.stripe\.com\/test_/);
     }
   });
 

@@ -1,6 +1,7 @@
 /**
  * Wire every [data-product] buy control to checkout-config.js.
  * Empty checkoutUrl → product section on /kits/. Never leaves a dead href.
+ * Live Stripe Payment Links open in the same tab so the thank-you redirect returns here.
  */
 (() => {
   const config = window.BMB_CHECKOUT;
@@ -20,22 +21,21 @@
     const live = isLiveCheckout(product.checkoutUrl);
     const href = live ? product.checkoutUrl.trim() : product.kitsPath;
     el.setAttribute('href', href);
+    el.removeAttribute('target');
+    el.removeAttribute('rel');
+    const label = el.dataset.label || product.buttonLabel;
+    el.setAttribute('aria-label', label);
+    if (el.dataset.goatcounterClick) {
+      el.dataset.goatcounterClick = el.dataset.goatcounterClick
+        .replace(/^etsy-/, live ? 'checkout-' : 'kits-')
+        .replace(/^kits-/, live ? 'checkout-' : 'kits-');
+    }
+
+    // Hide "checkout opening shortly" notes once a live URL exists for this product.
     if (live) {
-      el.setAttribute('target', '_blank');
-      el.setAttribute('rel', 'noopener');
-      const label = el.dataset.label || product.buttonLabel;
-      el.setAttribute('aria-label', `${label} (opens in a new tab)`);
-      if (el.dataset.goatcounterClick) {
-        el.dataset.goatcounterClick = el.dataset.goatcounterClick.replace(/^etsy-/, 'checkout-');
-      }
-    } else {
-      el.removeAttribute('target');
-      el.removeAttribute('rel');
-      const label = el.dataset.label || product.buttonLabel;
-      el.setAttribute('aria-label', label);
-      if (el.dataset.goatcounterClick) {
-        el.dataset.goatcounterClick = el.dataset.goatcounterClick.replace(/^etsy-/, 'kits-');
-      }
+      document.querySelectorAll(`[data-checkout-pending="${product.id}"]`).forEach((node) => {
+        node.hidden = true;
+      });
     }
   }
 
@@ -57,4 +57,12 @@
       el.replaceWith(link);
     }
   });
+
+  // Page-level pending banner when every product has a live checkout URL.
+  const allLive = Object.values(config.products).every((p) => isLiveCheckout(p.checkoutUrl));
+  if (allLive) {
+    document.querySelectorAll('[data-checkout-pending="all"]').forEach((node) => {
+      node.hidden = true;
+    });
+  }
 })();

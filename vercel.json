@@ -1,6 +1,20 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": true,
+  "functions": {
+    "api/fulfillment.js": {
+      "includeFiles": "private/products/**"
+    },
+    "api/download.js": {
+      "includeFiles": "private/products/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/private/(.*)",
+      "destination": "/api/blocked"
+    }
+  ],
   "redirects": [
     {
       "source": "/index.html",
@@ -24,6 +38,18 @@
     },
     {
       "source": "/links/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/thank-you",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/thank-you/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/private/(.*)",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },
     {

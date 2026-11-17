@@ -6,5 +6,9 @@ Disallow: /CNAME
 Disallow: /.nojekyll
 # Bio link page for Instagram / Pinterest. Keep out of search.
 Disallow: /links/
+# Post-checkout delivery and paid product storage.
+Disallow: /thank-you/
+Disallow: /private/
+Disallow: /api/
 
 Sitemap: https://bestmanbackup.com/sitemap.xml

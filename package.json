@@ -1,12 +1,17 @@
 {
   "name": "bestmanbackup",
   "private": true,
-  "description": "Static site for bestmanbackup.com. Playwright is a dev-only check and is not part of the public site.",
+  "type": "module",
+  "description": "Static site for bestmanbackup.com. Playwright and unit tests are not part of the public site.",
   "scripts": {
     "test:e2e": "playwright test tests/e2e/site.spec.ts",
-    "test": "playwright test tests/e2e/site.spec.ts",
+    "test:unit": "node --test tests/unit/*.test.js",
+    "test": "npm run test:unit && npm run test:e2e",
     "pdfs": "python3 scripts/generate-guide-pdfs.py",
     "guides:cta": "python3 scripts/update-guides-cta.py"
+  },
+  "dependencies": {
+    "stripe": "^17.7.0"
   },
   "devDependencies": {
     "@playwright/test": "1.65.1"

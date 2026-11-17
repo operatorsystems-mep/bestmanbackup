@@ -3,12 +3,11 @@
 CNAME
 .nojekyll
 
-# Test harness and local tooling. Not site pages.
-node_modules
-package.json
-package-lock.json
+# Local test harness only. package.json stays so Vercel can install Stripe for /api.
 playwright.config.ts
 serve.json
 tests
 .github
 scripts/requirements-pdf.txt
+scripts/generate-guide-pdfs.py
+scripts/update-guides-cta.py
