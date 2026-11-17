@@ -1,68 +1,231 @@
 /* Best man guides: article layout on top of /styles.css */
-.guide{max-width:780px;padding-block:48px 80px}
+.guide{max-width:780px;padding-block:48px 96px}
 .guide .crumbs{font-size:.875rem;color:var(--muted);margin-bottom:28px}
-.guide .crumbs a{color:var(--muted)}
-.guide>.eyebrow{display:flex;align-items:center;gap:12px}
-.guide h1{font-size:clamp(2.3rem,4.4vw,3.5rem);line-height:1.06}
-.guide .answer{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);padding:24px 28px;margin:8px 0 40px}
+.guide .crumbs a{color:var(--muted);text-decoration:none}
+.guide .crumbs a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.guide>.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.guide h1{
+  font-family:var(--serif);
+  font-size:clamp(2.4rem,4.6vw,3.55rem);
+  line-height:1.08;
+  letter-spacing:-.02em;
+  margin-bottom:8px;
+  color:var(--navy);
+}
+.guide .answer{
+  background:#fff;
+  border:1px solid var(--line);
+  border-left:4px solid var(--gold);
+  padding:26px 30px;
+  margin:8px 0 40px;
+  box-shadow:0 10px 28px #13223808;
+}
 .guide .answer .eyebrow{margin-bottom:10px}
 .guide .answer p:last-child{margin:0;font-size:1.125rem;line-height:1.55}
 .guide .answer ul{margin:12px 0 16px;padding-left:1.2em}
 .guide .answer li{margin:0 0 6px;line-height:1.45}
-.guide-body h2,.guide-faq h2,.related h2,.guide-group h2{font-size:clamp(1.6rem,2.6vw,2.1rem);line-height:1.15;letter-spacing:-.015em;margin:48px 0 16px}
-.guide-body h3{font-size:1.25rem;line-height:1.25;margin:28px 0 10px}
-.guide-body p,.guide-body li{line-height:1.65}
-.guide-body ul,.guide-body ol{padding-left:1.3em;margin:0 0 20px}
-.guide-body li{margin-bottom:8px}
-.guide-body a,.related a,.kit-note a{color:var(--blue);text-underline-offset:3px}
-.guide-body blockquote{margin:0 0 16px;padding:20px 24px;background:#fff;border:1px solid var(--line);font-family:var(--serif);font-size:1.125rem;line-height:1.6}
+.guide-body h2,.guide-faq h2,.related h2,.guide-group h2{
+  font-size:clamp(1.65rem,2.7vw,2.15rem);
+  line-height:1.15;
+  letter-spacing:-.015em;
+  margin:52px 0 18px;
+  color:var(--navy);
+}
+.guide-body h3{font-size:1.28rem;line-height:1.25;margin:32px 0 10px;color:var(--ink)}
+.guide-body p,.guide-body li{line-height:1.68}
+.guide-body ul,.guide-body ol{padding-left:1.3em;margin:0 0 22px}
+.guide-body li{margin-bottom:9px}
+.guide-body a,.related a,.kit-note a,.playbook-nudge a{color:var(--blue);text-underline-offset:3px}
+.guide-body a:hover,.related a:hover,.kit-note a:hover,.playbook-nudge a:hover{color:var(--navy)}
+.guide-body blockquote{
+  margin:0 0 18px;
+  padding:18px 22px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-left:4px solid var(--navy);
+  font-family:var(--serif);
+  font-size:1.125rem;
+  line-height:1.6;
+}
+.guide-body blockquote p{margin:0}
 .guide-body blockquote p:last-child{margin-bottom:0}
 .guide-body ul.lines{list-style:none;padding:0}
-.guide-body ul.lines li{font-family:var(--serif);font-size:1.0625rem;border-left:3px solid var(--gold);padding:4px 0 4px 16px;margin-bottom:14px}
+.guide-body ul.lines li{
+  font-family:var(--serif);
+  font-size:1.0625rem;
+  border-left:3px solid var(--gold);
+  padding:4px 0 4px 16px;
+  margin-bottom:14px;
+}
 .guide-body ul.checklist{list-style:none;padding:0}
 .guide-body ul.checklist li{position:relative;padding-left:32px}
-.guide-body ul.checklist li:before{content:'';position:absolute;left:0;top:.3em;width:16px;height:16px;border:2px solid var(--navy);border-radius:2px;background:#fff}
+.guide-body ul.checklist li:before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:.3em;
+  width:16px;
+  height:16px;
+  border:2px solid var(--navy);
+  border-radius:2px;
+  background:#fff;
+}
 .guide-table{width:100%;border-collapse:collapse;margin:0 0 20px;background:#fff;font-size:.9375rem}
-.guide-table th,.guide-table td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
-.guide-table th{background:var(--navy);color:#fff}
+.guide-table th,.guide-table td{border:1px solid var(--line);padding:11px 13px;text-align:left;vertical-align:top}
+.guide-table th{background:var(--navy);color:#fff;font-weight:700}
 .guide-faq .faq-list{margin-top:8px}
-.kit-note{margin:48px 0 0;padding:24px 28px;border:1px solid var(--line);background:#fff}
+.guide-faq details{border-bottom:1px solid var(--line)}
+.guide-faq summary{
+  font-weight:700;
+  cursor:pointer;
+  padding:20px 36px 20px 0;
+  position:relative;
+  list-style:none;
+  font-size:1.0625rem;
+}
+.guide-faq summary::-webkit-details-marker{display:none}
+.guide-faq summary:after{
+  content:'+';
+  position:absolute;
+  right:3px;
+  top:16px;
+  font:1.5rem var(--sans);
+  font-weight:400;
+  color:#72531d;
+}
+.guide-faq details[open] summary:after{content:'−'}
+.guide-faq details>p{font-size:1rem;color:var(--muted);margin:0 28px 20px 0;line-height:1.6}
+.kit-note{
+  margin:52px 0 0;
+  padding:26px 30px;
+  border:1px solid var(--line);
+  border-left:4px solid var(--gold);
+  background:#fff;
+  box-shadow:0 10px 28px #13223808;
+}
 .kit-note .eyebrow{margin-bottom:10px}
 .kit-note p:last-child{margin:0}
 .related ul{padding-left:1.2em}
-.related li{margin-bottom:8px}
-.guide-cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.guide-cards a{display:block;height:100%;background:#fff;border:1px solid var(--line);padding:20px 22px;text-decoration:none}
-.guide-cards a:hover{border-color:var(--gold)}
-.guide-cards strong{display:block;font-size:1.125rem;line-height:1.25;margin-bottom:8px}
+.related li{margin-bottom:10px}
+.guide-cards{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:18px;
+}
+.guide-cards a{
+  display:block;
+  height:100%;
+  background:#fff;
+  border:1px solid var(--line);
+  border-top:3px solid transparent;
+  padding:22px 24px;
+  text-decoration:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.guide-cards a:hover{
+  border-top-color:var(--gold);
+  border-color:var(--line);
+  box-shadow:0 12px 28px #13223812;
+}
+.guide-cards a:focus-visible{
+  outline:3px solid #a27720;
+  outline-offset:4px;
+}
+.guide-cards strong{display:block;font-size:1.125rem;line-height:1.25;margin-bottom:8px;color:var(--navy)}
 .guide-cards span{display:block;font-size:.9375rem;color:var(--muted);line-height:1.5}
 .guide-index{max-width:1000px}
+.guide-footer-links{display:flex;flex-wrap:wrap;gap:12px 20px}
 .guide-footer-links a{color:#fff;font-size:.9375rem;text-underline-offset:4px}
-@media(max-width:760px){.guide{padding-block:32px 56px}.guide .answer{padding:18px 18px}.guide-table{font-size:.875rem}.guide-table th,.guide-table td{padding:8px}}
-.table-scroll{overflow-x:auto;margin:0 0 20px}.table-scroll .guide-table{margin:0}
-.guide-body .toc{border:1px solid var(--line);background:#fff;padding:16px 20px;margin:0 0 28px}.guide-body .toc .eyebrow{margin:0 0 8px}.guide-body .toc ol{margin:0;padding-left:20px}.guide-body .toc li{margin:4px 0}
-.guide-body blockquote{margin:0 0 16px;padding:12px 18px;border-left:4px solid var(--navy);background:#fff}.guide-body blockquote p{margin:0}
-.kit-cta{margin:0 0 28px;padding:20px 24px;border:1px solid var(--line);border-top:3px solid var(--gold);background:#fff}.kit-cta .eyebrow{margin:0 0 8px}.kit-cta p{margin:0 0 12px}.kit-cta p:last-child{margin:0}
-.kit-cta .button,.guide-body .kit-cta .button{min-width:0;background:var(--gold);border-color:var(--gold);color:var(--navy);text-decoration:none}.kit-cta .button:hover{background:#e3ba67;border-color:#e3ba67}
-.kit-cta .button.secondary{background:transparent;border-color:var(--navy);color:var(--navy)}.kit-cta .button.secondary:hover{background:var(--navy);color:#fff}
-.kit-cta-end{margin:48px 0 0}.kit-cta-actions{display:flex;flex-wrap:wrap;gap:12px}.kit-cta-small{font-size:.875rem;color:var(--muted)}
-@media(max-width:760px){.kit-cta{padding:18px}.kit-cta .button{width:100%;text-align:center}}
+.table-scroll{overflow-x:auto;margin:0 0 20px}
+.table-scroll .guide-table{margin:0}
+.guide-body .toc{
+  border:1px solid var(--line);
+  border-top:3px solid var(--gold);
+  background:#fff;
+  padding:18px 22px;
+  margin:0 0 32px;
+}
+.guide-body .toc .eyebrow{margin:0 0 8px}
+.guide-body .toc ol{margin:0;padding-left:20px}
+.guide-body .toc li{margin:5px 0}
+.kit-cta{
+  margin:0 0 32px;
+  padding:24px 28px;
+  border:1px solid var(--line);
+  border-top:3px solid var(--gold);
+  background:#fff;
+  box-shadow:0 10px 28px #13223808;
+}
+.kit-cta .eyebrow{margin:0 0 10px}
+.kit-cta p{margin:0 0 14px}
+.kit-cta p:last-child{margin:0}
+.kit-cta .button,.guide-body .kit-cta .button{
+  min-width:0;
+  background:var(--gold);
+  border-color:var(--gold);
+  color:var(--navy);
+  text-decoration:none;
+}
+.kit-cta .button:hover{background:#e3ba67;border-color:#e3ba67}
+.kit-cta .button:focus-visible,.free-download .button:focus-visible{
+  outline:3px solid #a27720;
+  outline-offset:4px;
+}
+.kit-cta .button.secondary{
+  background:transparent;
+  border-color:var(--navy);
+  color:var(--navy);
+}
+.kit-cta .button.secondary:hover{background:var(--navy);color:#fff}
+.kit-cta-end{margin:52px 0 0}
+.kit-cta-actions{display:flex;flex-wrap:wrap;gap:12px}
+.kit-cta-small{font-size:.875rem;color:var(--muted)}
+.playbook-nudge{
+  margin:-2px 0 16px;
+  font-size:.875rem;
+  color:var(--muted);
+}
+.playbook-nudge a{font-weight:700}
 .guide-stamp{margin:14px 0 28px;font-size:.875rem;line-height:1.45;color:var(--muted)}
 .guide-stamp p{margin:0}
 .guide-stamp p+p{margin-top:4px}
 .speaker{margin:0 0 6px;font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.print-sheet{border:1px solid var(--line);background:#fff;padding:20px 22px;margin:0 0 28px}
+.print-sheet{border:1px solid var(--line);background:#fff;padding:22px 24px;margin:0 0 28px}
 .print-sheet h2{margin-top:0}
-.free-download{margin:0 0 28px;padding:20px 24px;border:1px solid var(--line);border-left:4px solid var(--gold);background:#fff}
+.free-download{
+  margin:0 0 32px;
+  padding:22px 26px;
+  border:1px solid var(--line);
+  border-left:4px solid var(--gold);
+  background:#fff;
+}
 .free-download .eyebrow{margin:0 0 8px}
 .free-download p{margin:0 0 12px}
 .free-download p:last-child{margin:0}
-.free-download .button,.guide-body .free-download .button{min-width:0;background:var(--navy);border-color:var(--navy);color:#fff;text-decoration:none}
+.free-download .button,.guide-body .free-download .button{
+  min-width:0;
+  background:var(--navy);
+  border-color:var(--navy);
+  color:#fff;
+  text-decoration:none;
+}
 .free-download .button:hover{background:var(--blue);border-color:var(--blue)}
 .free-download-end{margin:40px 0 28px}
-@media(max-width:760px){.free-download{padding:18px}.free-download .button{width:100%;text-align:center}}
+@media(max-width:760px){
+  .guide{padding-block:32px 64px}
+  .guide .answer{padding:18px 18px}
+  .guide-table{font-size:.875rem}
+  .guide-table th,.guide-table td{padding:8px}
+  .kit-cta,.kit-note,.free-download{padding:18px}
+  .kit-cta .button,.free-download .button{width:100%;text-align:center}
+  .guide-cards{grid-template-columns:1fr;gap:12px}
+}
 @media print{
-  header,footer,.kit-cta,.kit-note,.free-download,.toc,.guide-faq,.related,.crumbs,.guide-stamp{display:none}
+  header,footer,.kit-cta,.kit-note,.free-download,.toc,.guide-faq,.related,.crumbs,.guide-stamp,.playbook-nudge{display:none}
   .print-sheet{border:0;padding:0;break-before:page}
   body{background:#fff}
+  .guide h1{font-family:var(--serif);color:#000}
 }
