@@ -1,0 +1,325 @@
+/* Post-checkout confirmation — brand tokens from styles.css */
+.ty-page {
+  --ty-max: 720px;
+  --ty-wide: 920px;
+}
+
+.ty-main {
+  padding-block: 48px 96px;
+  background:
+    radial-gradient(ellipse 80% 50% at 0% 0%, rgba(201, 162, 39, 0.08), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 10%, rgba(19, 34, 56, 0.05), transparent 50%);
+}
+
+.ty-hero {
+  position: relative;
+  max-width: var(--ty-wide);
+  margin: 0 auto 40px;
+  padding: 40px 0 8px;
+}
+
+.ty-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0 -24px auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold), transparent 70%);
+  opacity: 0.95;
+}
+
+.ty-tagline {
+  margin: 0 0 28px;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  max-width: 28ch;
+}
+
+.ty-hero h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2.6rem, 5vw, 3.75rem);
+}
+
+.ty-product-name {
+  margin: 0 0 20px;
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.ty-status {
+  margin: 0 0 28px;
+  font-size: 1.125rem;
+  color: var(--muted);
+  max-width: 40ch;
+}
+
+.ty-status[data-state='success'] {
+  color: var(--ink);
+}
+
+.ty-status[data-state='error'],
+.ty-status[data-state='missing'] {
+  color: var(--ink);
+  max-width: 46ch;
+}
+
+.ty-status[data-state='checking'] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ty-status[data-state='checking']::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--line);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: ty-spin 0.8s linear infinite;
+}
+
+@keyframes ty-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ty-download {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  margin-bottom: 12px;
+}
+
+.ty-download .button {
+  min-width: min(100%, 280px);
+  font-size: 1.0625rem;
+  padding: 18px 28px;
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+.ty-download .button:hover {
+  background: #e3ba67;
+  border-color: #e3ba67;
+}
+
+.ty-download-note {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+.ty-panel {
+  max-width: var(--ty-wide);
+  margin: 0 auto 28px;
+  padding: 28px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.ty-panel h2 {
+  font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+  margin-bottom: 16px;
+}
+
+.ty-contents {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ty-contents li {
+  position: relative;
+  padding: 12px 0 12px 22px;
+  border-top: 1px solid var(--line);
+  font-size: 1.0625rem;
+}
+
+.ty-contents li:first-child {
+  border-top: 0;
+}
+
+.ty-contents li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 8px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.ty-steps {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ty-step;
+}
+
+.ty-steps li {
+  counter-increment: ty-step;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px 18px;
+  align-items: start;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+
+.ty-steps li:first-child {
+  border-top: 0;
+  padding-top: 4px;
+}
+
+.ty-steps li::before {
+  content: counter(ty-step, decimal-leading-zero);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #72531d;
+  padding-top: 4px;
+}
+
+.ty-steps a {
+  font-weight: 700;
+  text-underline-offset: 5px;
+}
+
+.ty-steps p {
+  grid-column: 2;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.975rem;
+}
+
+.ty-reassure {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ty-reassure li {
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.ty-reassure li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.ty-reassure strong {
+  color: var(--ink);
+}
+
+.ty-upsell {
+  max-width: var(--ty-wide);
+  margin: 36px auto 0;
+  padding: 28px 28px 30px;
+  background: var(--navy);
+  color: #fff;
+  border-top: 3px solid var(--gold);
+}
+
+.ty-upsell .eyebrow {
+  color: var(--gold);
+}
+
+.ty-upsell h2 {
+  color: #fff;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  margin-bottom: 12px;
+}
+
+.ty-upsell p {
+  color: #d8dce2;
+  max-width: 42ch;
+  margin-bottom: 22px;
+}
+
+.ty-upsell .button {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+.ty-upsell .button:hover {
+  background: #e3ba67;
+  border-color: #e3ba67;
+}
+
+.ty-share {
+  max-width: var(--ty-wide);
+  margin: 28px auto 0;
+  padding: 22px 0 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.ty-error-actions {
+  margin-top: 8px;
+}
+
+.ty-error-actions a {
+  font-weight: 700;
+}
+
+.ty-hidden {
+  display: none !important;
+}
+
+.ty-reveal {
+  animation: ty-fade 0.55s ease both;
+}
+
+@keyframes ty-fade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ty-status[data-state='checking']::before,
+  .ty-reveal {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .ty-main {
+    padding-block: 32px 72px;
+  }
+
+  .ty-hero {
+    padding-top: 28px;
+  }
+
+  .ty-download .button {
+    width: 100%;
+  }
+
+  .ty-upsell {
+    padding: 24px 20px 26px;
+  }
+
+  .ty-panel {
+    padding-top: 22px;
+  }
+}
