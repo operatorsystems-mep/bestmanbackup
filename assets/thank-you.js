@@ -127,6 +127,7 @@
   const aliases = { set: 'bundle' };
 
   const els = {
+    eyebrow: document.getElementById('ty-eyebrow'),
     tagline: document.getElementById('ty-tagline'),
     title: document.getElementById('ty-title'),
     product: document.getElementById('ty-product'),
@@ -143,6 +144,11 @@
     share: document.getElementById('ty-share'),
     errorActions: document.getElementById('ty-error-actions'),
   };
+
+  function setEyebrow(label) {
+    if (!els.eyebrow) return;
+    els.eyebrow.innerHTML = `<span></span> ${label}`;
+  }
 
   function kitFromParam(raw) {
     const id = aliases[String(raw || '').toLowerCase()] || String(raw || '').toLowerCase();
@@ -177,6 +183,7 @@
   }
 
   function renderChecking(kit) {
+    setEyebrow('CONFIRMING');
     els.title.textContent = 'Confirming your order';
     setState('checking', 'Checking your payment…');
     show(els.download, false);
@@ -190,6 +197,7 @@
   }
 
   function renderMissing() {
+    setEyebrow('ORDER HELP');
     els.title.textContent = 'We need your order link';
     els.product.textContent = '';
     show(els.product, false);
@@ -209,6 +217,7 @@
   }
 
   function renderError(kit, message) {
+    setEyebrow('ORDER HELP');
     els.title.textContent = 'We could not verify this purchase';
     fillKitChrome(kit);
     setState('error', message || 'We could not verify this purchase.');
@@ -224,6 +233,7 @@
   }
 
   function renderSuccess(kit, downloadUrl) {
+    setEyebrow('ORDER CONFIRMED');
     els.title.textContent = "You're all set";
     fillKitChrome(kit);
     setState(

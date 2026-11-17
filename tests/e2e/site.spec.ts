@@ -169,6 +169,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await page.goto('/thank-you/?kit=duties&session_id=cs_test_bad');
     await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'error');
     await expect(page.locator('#ty-status')).toContainText(/could not verify/i);
+    await expect(page.locator('#ty-eyebrow')).toContainText(/ORDER HELP/i);
     await expect(page.locator('#ty-product')).toHaveText('Best Man Duties Kit');
     await expect(page.locator('#ty-download')).toBeHidden();
     await expect(page.locator('#ty-error-actions')).toContainText(/hello@bestmanbackup\.com/i);
