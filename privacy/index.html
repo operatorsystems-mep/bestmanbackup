@@ -22,15 +22,18 @@
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/guides/guides.css">
   <script defer src="/analytics.js"></script>
+<link rel="stylesheet" href="/assets/nav.css">
+<script defer src="/assets/nav.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="header wrap">
     <a class="brand" href="/" aria-label="Best Man Backup home">
-      <img src="/assets/bmb-shield.svg" width="70" height="70" alt="">
+      <img src="/assets/bmb-shield.svg" width="70" height="70" alt="Best Man Backup logo">
       <span class="brand-name">Best Man Backup</span>
     </a>
-    <nav aria-label="Main navigation">
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span class="nav-toggle-bars" aria-hidden="true"></span></button>
+    <nav id="site-nav" aria-label="Main navigation">
       <a href="/">Home</a>
       <a href="/kits/">Kits</a>
       <a href="/guides/">Best man guides</a>
@@ -60,9 +63,9 @@
       <p>The site does not collect email addresses at the moment. Free printable checklists on the guides are instant downloads with no email gate. If we add a sign-up form, we will update this notice first to say who stores your address, what we send and how to unsubscribe.</p>
 
       <h2>Your rights</h2>
-      <p>Under UK data protection law you can ask to see, correct or delete personal information we hold about you, and you can complain to the <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">Information Commissioner's Office</a>. To contact us about a download or this notice, use the contact details supplied with your order confirmation once checkout is live.</p>
+      <p>Under UK data protection law you can ask to see, correct or delete personal information we hold about you, and you can complain to the <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">Information Commissioner's Office</a>. To contact us about a download or this notice, use the contact details supplied with your order confirmation.</p>
     </div>
   </main>
-  <footer><div class="wrap footer-inner"><div class="footer-brand"><a class="brand" href="/" aria-label="Best Man Backup home"><img src="/assets/bmb-shield.svg" width="96" height="96" alt=""><span class="footer-wordmark"><span class="brand-name">Best Man Backup</span><span class="footer-tagline">You've got his back - we've got yours</span></span></a></div><nav class="guide-footer-links" aria-label="Footer"><a href="/kits/">Kits</a> <a href="/guides/">Best man guides</a> <a href="/privacy/">Privacy</a></nav><small>© Best Man Backup</small></div></footer>
+  <footer><div class="wrap footer-inner"><div class="footer-brand"><a class="brand" href="/" aria-label="Best Man Backup home"><img src="/assets/bmb-shield.svg" width="96" height="96" alt="Best Man Backup logo"><span class="footer-wordmark"><span class="brand-name">Best Man Backup</span><span class="footer-tagline">You've got his back - we've got yours</span></span></a></div><nav class="guide-footer-links" aria-label="Footer"><a href="/kits/">Kits</a> <a href="/guides/">Best man guides</a> <a href="/privacy/">Privacy</a></nav><small>© Best Man Backup</small></div></footer>
 </body>
 </html>
