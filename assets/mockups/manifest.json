@@ -1,0 +1,156 @@
+{
+  "generatedAt": "2026-11-17T23:58:05.249Z",
+  "source": "/cursor/stores/bot/bmb-product-previews-pass2",
+  "assets": [
+    {
+      "name": "speech-cover",
+      "width": 760,
+      "height": 1074,
+      "jpgKB": 56,
+      "webpKB": 34,
+      "quality": 84,
+      "source": "p01_speech_cover-1.png",
+      "alt": "Best Man Speech Kit cover"
+    },
+    {
+      "name": "duties-cover",
+      "width": 760,
+      "height": 1074,
+      "jpgKB": 55,
+      "webpKB": 32,
+      "quality": 84,
+      "source": "p07_duties_cover-1.png",
+      "alt": "Best Man Duties Kit cover"
+    },
+    {
+      "name": "playbook-cover",
+      "width": 760,
+      "height": 1074,
+      "jpgKB": 59,
+      "webpKB": 36,
+      "quality": 84,
+      "source": "p12_playbook_cover-1.png",
+      "alt": "Stag Do and Bachelor Party Playbook cover"
+    },
+    {
+      "name": "bundle-cover",
+      "width": 760,
+      "height": 1074,
+      "jpgKB": 53,
+      "webpKB": 30,
+      "quality": 84,
+      "source": "p17_set_cover-1.png",
+      "alt": "The Best Man Set cover"
+    },
+    {
+      "name": "speech-inside",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 67,
+      "webpKB": 45,
+      "quality": 84,
+      "source": "p05_speech_example-4.png",
+      "alt": "Speech Kit worked example page"
+    },
+    {
+      "name": "speech-guide",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 59,
+      "webpKB": 38,
+      "quality": 84,
+      "source": "p04_speech_guide-2.png",
+      "alt": "Speech Kit writing guide page"
+    },
+    {
+      "name": "speech-start",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 79,
+      "webpKB": 51,
+      "quality": 84,
+      "source": "p02_speech_start-1.png",
+      "alt": "Speech Kit Start Here page"
+    },
+    {
+      "name": "cue-cards",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 46,
+      "webpKB": 21,
+      "quality": 84,
+      "source": "p06_cue_cards-1.png",
+      "alt": "Printable cue cards from the Speech Kit"
+    },
+    {
+      "name": "duties-inside",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 71,
+      "webpKB": 43,
+      "quality": 84,
+      "source": "p08_duties_handbook-2.png",
+      "alt": "Duties Kit handbook page"
+    },
+    {
+      "name": "duties-planner",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 52,
+      "webpKB": 22,
+      "quality": 84,
+      "source": "p10_guest_payments-10.png",
+      "alt": "Duties Kit guest payments planner page"
+    },
+    {
+      "name": "duties-carry",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 46,
+      "webpKB": 19,
+      "quality": 84,
+      "source": "p11_carry_cards-2.png",
+      "alt": "Duties Kit wedding-day carry cards page"
+    },
+    {
+      "name": "playbook-inside",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 57,
+      "webpKB": 28,
+      "quality": 84,
+      "source": "p15_bingo_a-10.png",
+      "alt": "Playbook Stag Bingo card"
+    },
+    {
+      "name": "playbook-code",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 44,
+      "webpKB": 25,
+      "quality": 84,
+      "source": "p13_stag_code-3.png",
+      "alt": "Playbook Stag Code page"
+    },
+    {
+      "name": "playbook-games",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 43,
+      "webpKB": 26,
+      "quality": 84,
+      "source": "p14_games_toc-01.png",
+      "alt": "Playbook games contents page"
+    },
+    {
+      "name": "bundle-inside",
+      "width": 900,
+      "height": 1273,
+      "jpgKB": 70,
+      "webpKB": 42,
+      "quality": 84,
+      "source": "p18_set_start-1.png",
+      "alt": "Best Man Set Start Here page"
+    }
+  ]
+}

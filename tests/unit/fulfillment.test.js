@@ -5,14 +5,14 @@ import {
   sessionMatchesKit,
   verifyDownloadToken,
 } from '../../lib/fulfillment.mjs';
-import { KITS } from '../../lib/kits.mjs';
+import { acceptedPricesForSession, KITS } from '../../lib/kits.mjs';
 
 const SECRET = 'sk_test_unit_secret_for_signing_only';
 
 function session({
   payment_status = 'paid',
   priceId = KITS.speech.priceIdTest,
-  amount_total = 698,
+  amount_total = 1499,
   livemode = false,
 } = {}) {
   return {
@@ -41,7 +41,7 @@ describe('sessionMatchesKit', () => {
 
   it('rejects a paid session for the wrong kit', () => {
     const result = sessionMatchesKit(
-      session({ priceId: KITS.speech.priceIdTest, amount_total: 698 }),
+      session({ priceId: KITS.speech.priceIdTest, amount_total: 1499 }),
       'duties'
     );
     assert.equal(result.ok, false);
@@ -50,7 +50,7 @@ describe('sessionMatchesKit', () => {
 
   it('rejects a wrong amount even when the price id matches', () => {
     const result = sessionMatchesKit(
-      session({ priceId: KITS.duties.priceIdTest, amount_total: 999 }),
+      session({ priceId: KITS.duties.priceIdTest, amount_total: 599 }),
       'duties'
     );
     assert.equal(result.ok, false);
@@ -59,7 +59,7 @@ describe('sessionMatchesKit', () => {
 
   it('accepts duties with the duties test price id and amount', () => {
     const result = sessionMatchesKit(
-      session({ priceId: KITS.duties.priceIdTest, amount_total: 599 }),
+      session({ priceId: KITS.duties.priceIdTest, amount_total: 999 }),
       'duties'
     );
     assert.equal(result.ok, true);
@@ -70,7 +70,7 @@ describe('sessionMatchesKit', () => {
       session({
         livemode: true,
         priceId: KITS.speech.priceIdLive,
-        amount_total: 698,
+        amount_total: 1499,
       }),
       'speech'
     );
@@ -80,12 +80,32 @@ describe('sessionMatchesKit', () => {
       session({
         livemode: true,
         priceId: KITS.speech.priceIdTest,
-        amount_total: 698,
+        amount_total: 1499,
       }),
       'speech'
     );
     assert.equal(mixed.ok, false);
     assert.equal(mixed.code, 'wrong_kit');
+  });
+
+  it('lists GBP and optional USD price ids for a session', () => {
+    const gbpOnly = acceptedPricesForSession(KITS.speech, { livemode: false });
+    assert.equal(gbpOnly.length, 1);
+    assert.equal(gbpOnly[0].currency, 'gbp');
+    assert.equal(gbpOnly[0].amountMinor, 1499);
+
+    const withUsd = acceptedPricesForSession(
+      {
+        ...KITS.speech,
+        priceIdTestUsd: 'price_test_usd_speech',
+        priceValueUsd: 17.99,
+      },
+      { livemode: false }
+    );
+    assert.equal(withUsd.length, 2);
+    assert.equal(withUsd[1].currency, 'usd');
+    assert.equal(withUsd[1].id, 'price_test_usd_speech');
+    assert.equal(withUsd[1].amountMinor, 1799);
   });
 
   it('rejects a test session that carries a live price id', () => {

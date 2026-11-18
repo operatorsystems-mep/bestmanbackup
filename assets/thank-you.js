@@ -9,7 +9,9 @@
     speech: {
       id: 'speech',
       name: 'Best Man Speech Kit',
-      price: '£6.98',
+      price: '£14.99',
+      priceGbp: '£14.99',
+      priceUsd: '$17.99',
       contents: [
         'A speech-writing guide',
         'An editable Word workbook',
@@ -38,7 +40,9 @@
     duties: {
       id: 'duties',
       name: 'Best Man Duties Kit',
-      price: '£5.99',
+      price: '£9.99',
+      priceGbp: '£9.99',
+      priceUsd: '$11.99',
       contents: [
         'A duties handbook',
         'An editable Word planner',
@@ -68,9 +72,11 @@
     playbook: {
       id: 'playbook',
       name: 'Stag Do & Bachelor Party Playbook',
-      price: '£11.99',
+      price: '£9.99',
+      priceGbp: '£9.99',
+      priceUsd: '$11.99',
       contents: [
-        'Eight stag do games',
+        'Eight stag do / bachelor party games',
         'A groom quiz',
         'Challenge cards and the Stag Awards',
         'Editable in Word or printable',
@@ -98,11 +104,13 @@
       id: 'bundle',
       name: 'Best Man Bundle',
       price: '£19.99',
+      priceGbp: '£19.99',
+      priceUsd: '$24.99',
       contents: [
         'The Duties Kit',
-        'The Stag & Bachelor Party Kit',
+        'The Stag Do & Bachelor Party Playbook',
         'The Speech Kit',
-        'One starting point across the role, the stag do and the speech',
+        'One starting point across the role, the night and the speech',
       ],
       steps: [
         {
@@ -113,7 +121,7 @@
         {
           title: 'How to plan a stag do',
           href: '/guides/how-to-plan-a-stag-do/',
-          blurb: 'Plan the night alongside the party kit files.',
+          blurb: 'Plan the night alongside the Playbook files.',
         },
         {
           title: 'How to write a best man speech',

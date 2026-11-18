@@ -62,14 +62,79 @@ test.describe('Best Man Backup — desktop 1440', () => {
     const res = await page.goto('/kits/');
     expect(res?.ok()).toBeTruthy();
     await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
-    await expect(page.locator('#speech')).toContainText('£6.98');
-    await expect(page.locator('#duties')).toContainText('£5.99');
-    await expect(page.locator('#playbook')).toContainText('£11.99');
-    await expect(page.locator('#bundle')).toContainText('£19.99');
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-currency', 'GBP');
+    });
+    await expect(page.locator('#speech .bmb-price-gbp')).toHaveText('£14.99');
+    await expect(page.locator('#duties .bmb-price-gbp')).toHaveText('£9.99');
+    await expect(page.locator('#playbook .bmb-price-gbp')).toHaveText('£9.99');
+    await expect(page.locator('#bundle .bmb-price-gbp')).toHaveText('£19.99');
     await expect(page.locator('body')).not.toContainText(/Checkout opening shortly/i);
     const schema = await page.locator('script[type="application/ld+json"]').allTextContents();
-    expect(schema.join('\n')).toMatch(/"@type":\s*"Product"/);
-    expect(schema.join('\n')).toMatch(/"price":\s*"6\.98"/);
+    const schemaText = schema.join('\n');
+    expect(schemaText).toMatch(/"@type":\s*"Product"/);
+    expect(schemaText).toMatch(/"priceCurrency":\s*"GBP"/);
+    expect(schemaText).toMatch(/"price":\s*"14\.99"/);
+    expect(schemaText).toMatch(/"priceCurrency":\s*"USD"/);
+    expect(schemaText).toMatch(/"price":\s*"17\.99"/);
+  });
+
+  test('currency toggle switches visible prices between GBP and USD without losing checkout wiring', async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      try {
+        localStorage.removeItem('bmb_currency');
+      } catch {
+        /* ignore */
+      }
+    });
+    await page.goto('/kits/');
+    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
+
+    // Force GBP first (locale-independent for CI)
+    await page.locator('[data-currency-toggle="GBP"]').click();
+    await expect(page.locator('html')).toHaveAttribute('data-currency', 'GBP');
+    await expect(page.locator('#speech .bmb-price-gbp')).toBeVisible();
+    await expect(page.locator('#speech .bmb-price-gbp')).toHaveText('£14.99');
+    await expect(page.locator('#speech .bmb-price-usd')).not.toBeVisible();
+
+    const gbpHref = await page.locator('a[data-product="speech"]').first().getAttribute('href');
+    expect(gbpHref || '').toMatch(/buy\.stripe\.com\/test_/);
+
+    await page.locator('[data-currency-toggle="USD"]').click();
+    await expect(page.locator('html')).toHaveAttribute('data-currency', 'USD');
+    await expect(page.locator('#speech .bmb-price-usd')).toBeVisible();
+    await expect(page.locator('#speech')).toContainText('$17.99');
+    await expect(page.locator('#duties')).toContainText('$11.99');
+    await expect(page.locator('#playbook')).toContainText('$11.99');
+    await expect(page.locator('#bundle')).toContainText('$24.99');
+
+    // Preview fallback: USD still uses GBP test Payment Links until USD slots are filled
+    const usdHref = await page.locator('a[data-product="speech"]').first().getAttribute('href');
+    expect(usdHref || '').toMatch(/buy\.stripe\.com\/test_/);
+    expect(usdHref).toBe(gbpHref);
+
+    // Preference persists
+    await page.reload();
+    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
+    await expect(page.locator('html')).toHaveAttribute('data-currency', 'USD');
+    await expect(page.locator('#speech')).toContainText('$17.99');
+  });
+
+  test('home shows USD prices when currency preference is USD', async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem('bmb_currency', 'USD');
+      } catch {
+        /* ignore */
+      }
+    });
+    await page.goto('/');
+    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
+    await expect(page.locator('html')).toHaveAttribute('data-currency', 'USD');
+    await expect(page.locator('.pillar .bmb-price-usd').first()).toHaveText('$17.99');
+    await expect(page.getByRole('link', { name: /Get the Speech Kit · \$17\.99/i }).first()).toBeVisible();
   });
 
   test('thank-you page is present and noindex; paid files are not linked as static URLs', async ({ page, request }) => {
@@ -289,16 +354,25 @@ test.describe('Best Man Backup — desktop 1440', () => {
     expect(xml).not.toContain('https://bestmanbackup.com/links/');
   });
 
-  test('cheat-sheet sign-up stays hidden', async ({ page }) => {
-    const siteJs = await page.request.get('/site.js');
-    expect(siteJs.ok()).toBeTruthy();
-    const source = await siteJs.text();
-    expect(source).toMatch(/signupEnabled:\s*false/);
-
+  test('checklist signup is visible with unticked consent and no MailerLite stub', async ({ page }) => {
     await page.goto('/');
-    const section = page.locator('[data-signup]');
-    await expect(section).toHaveCount(1);
-    await expect(section).toBeHidden();
+    const section = page.locator('#checklist-signup');
+    await expect(section).toBeVisible();
+    await expect(page.locator('[data-signup]')).toHaveCount(0);
+
+    const consent = section.locator('input[name="consent"]');
+    await expect(consent).toBeVisible();
+    await expect(consent).not.toBeChecked();
+
+    const form = section.locator('[data-checklist-form]');
+    await expect(form).toHaveAttribute('novalidate', '');
+    await expect(section.locator('input[name="website"]')).toHaveCount(1);
+
+    // Submitting without consent stays on the form and shows an error (no email send).
+    await section.locator('input[name="email"]').fill('bestman@example.com');
+    await section.locator('button[type="submit"]').click();
+    await expect(section.locator('[data-checklist-status]')).toContainText(/tick the box/i);
+    await expect(section.locator('[data-checklist-fields]')).toBeVisible();
   });
 });
 

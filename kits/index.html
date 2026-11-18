@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html data-currency="GBP" lang="en-GB">
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
+<script>(function(){try{var p='',c='',g='';try{p=localStorage.getItem('bmb_currency')||''}catch(e){}var m=document.cookie.match(/(?:^|; )bmb_currency=([^;]*)/);c=m?decodeURIComponent(m[1]):'';m=document.cookie.match(/(?:^|; )bmb_geo=([^;]*)/);g=m?decodeURIComponent(m[1]):'';var v=String(p||c||'').toUpperCase();if(v!=='USD'&&v!=='GBP'){var geo=(document.documentElement.getAttribute('data-geo')||g||'').toUpperCase();v=geo==='US'?'USD':null;if(!v){var lang=String(navigator.language||'').toLowerCase();v=(lang==='en-us'||lang.slice(-3)==='-us')?'USD':'GBP'}}document.documentElement.setAttribute('data-currency',v);document.documentElement.lang=v==='USD'?'en-US':'en-GB'}catch(e){document.documentElement.setAttribute('data-currency','GBP')}})();</script>
+<script src="/assets/currency.js" defer></script>
+
+  
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#132238">
   <title>Best Man Kits: Speech, Duties and Playbook | Best Man Backup</title>
@@ -21,6 +25,7 @@
   <link rel="apple-touch-icon" href="/assets/bmb-shield-180.png">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/guides/guides.css">
+  <link rel="stylesheet" href="/kits/kits.css">
   <script defer src="/analytics.js"></script>
   <script defer src="/assets/checkout-config.js"></script>
   <script defer src="/assets/checkout.js"></script>
@@ -41,13 +46,22 @@
         "name": "Best Man Speech Kit",
         "description": "A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.",
         "brand": {"@type": "Brand", "name": "Best Man Backup"},
-        "offers": {
-          "@type": "Offer",
-          "url": "https://bestmanbackup.com/kits/#speech",
-          "priceCurrency": "GBP",
-          "price": "6.98",
-          "availability": "https://schema.org/OnlineOnly"
-        }
+        "offers": [
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#speech",
+            "priceCurrency": "GBP",
+            "price": "14.99",
+            "availability": "https://schema.org/OnlineOnly"
+          },
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#speech",
+            "priceCurrency": "USD",
+            "price": "17.99",
+            "availability": "https://schema.org/OnlineOnly"
+          }
+        ]
       },
       {
         "@type": "Product",
@@ -55,47 +69,74 @@
         "name": "Best Man Duties Kit",
         "description": "A duties handbook, an editable Word planner and a printable planner with 14 planning sections, plus a wedding-day sheet and four pocket carry cards, in A4 and US Letter. Digital download.",
         "brand": {"@type": "Brand", "name": "Best Man Backup"},
-        "offers": {
-          "@type": "Offer",
-          "url": "https://bestmanbackup.com/kits/#duties",
-          "priceCurrency": "GBP",
-          "price": "5.99",
-          "availability": "https://schema.org/OnlineOnly"
-        }
+        "offers": [
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#duties",
+            "priceCurrency": "GBP",
+            "price": "9.99",
+            "availability": "https://schema.org/OnlineOnly"
+          },
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#duties",
+            "priceCurrency": "USD",
+            "price": "11.99",
+            "availability": "https://schema.org/OnlineOnly"
+          }
+        ]
       },
       {
         "@type": "Product",
         "@id": "https://bestmanbackup.com/kits/#playbook",
         "name": "Stag Do & Bachelor Party Playbook",
-        "description": "Eight stag do games, a groom quiz, challenge cards and the Stag Awards, editable in Word or printable, in UK and US editions. Digital download.",
+        "description": "Eight stag do / bachelor party games, a groom quiz, challenge cards and the Stag Awards, editable in Word or printable, in UK and US editions. Digital download.",
         "brand": {"@type": "Brand", "name": "Best Man Backup"},
-        "offers": {
-          "@type": "Offer",
-          "url": "https://bestmanbackup.com/kits/#playbook",
-          "priceCurrency": "GBP",
-          "price": "11.99",
-          "availability": "https://schema.org/OnlineOnly"
-        }
+        "offers": [
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#playbook",
+            "priceCurrency": "GBP",
+            "price": "9.99",
+            "availability": "https://schema.org/OnlineOnly"
+          },
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#playbook",
+            "priceCurrency": "USD",
+            "price": "11.99",
+            "availability": "https://schema.org/OnlineOnly"
+          }
+        ]
       },
       {
         "@type": "Product",
         "@id": "https://bestmanbackup.com/kits/#bundle",
         "name": "Best Man Bundle",
-        "description": "The Duties Kit, the Stag & Bachelor Party Kit and the Speech Kit in one download, with one starting point across the role, the stag do and the speech.",
+        "description": "The Duties Kit, the Stag Do & Bachelor Party Playbook and the Speech Kit in one download, with one starting point across the role, the night and the speech.",
         "brand": {"@type": "Brand", "name": "Best Man Backup"},
-        "offers": {
-          "@type": "Offer",
-          "url": "https://bestmanbackup.com/kits/#bundle",
-          "priceCurrency": "GBP",
-          "price": "19.99",
-          "availability": "https://schema.org/OnlineOnly"
-        }
+        "offers": [
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#bundle",
+            "priceCurrency": "GBP",
+            "price": "19.99",
+            "availability": "https://schema.org/OnlineOnly"
+          },
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#bundle",
+            "priceCurrency": "USD",
+            "price": "24.99",
+            "availability": "https://schema.org/OnlineOnly"
+          }
+        ]
       }
     ]
   }
   </script>
 </head>
-<body>
+<body class="kits-page">
   <a class="skip" href="#main">Skip to content</a>
   <header class="header wrap">
     <a class="brand" href="/" aria-label="Best Man Backup home">
@@ -105,60 +146,249 @@
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
       <a href="/kits/">Kits</a>
-      <a href="/guides/">Best man guides</a>
+      <a href="/guides/">Guides</a>
     </nav>
   </header>
 
-  <main id="main">
-    <div class="guide wrap guide-index">
+  <main id="main" class="kits-main wrap">
+    <section class="kits-hero" aria-labelledby="kits-title">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> Kits</nav>
       <p class="eyebrow"><span></span> THE KITS</p>
-      <h1>Best man kits</h1>
-      <div class="guide-stamp"><p>Updated 17 November 2026</p><p>Digital downloads. Editable Word files and printable A4 / US Letter pages.</p></div>
-      <div class="answer">
-        <p class="eyebrow">CHECKOUT</p>
-        <p>Choose a kit below. Checkout opens on Stripe. After payment you return here to download your files.</p>
-      </div>
+      <p class="kits-tagline">You've Got His Back, We've Got Yours.</p>
+      <h1 id="kits-title">Digital kits for the duties, the night and the speech</h1>
+      <p class="kits-hero-lead">Editable Word files and printable A4 / US Letter pages. Checkout opens on Stripe. After payment you return here to download your files.</p>
+      <p class="kits-hero-meta">Updated 17 November 2026</p>
+      <ul class="kits-jump" aria-label="Jump to a kit">
+        <li><a href="#duties"><span class="bmb-label-gbp">Duties · £9.99</span><span class="bmb-label-usd">Duties · $11.99</span></a></li>
+        <li><a href="#playbook"><span class="bmb-label-gbp">Playbook · £9.99</span><span class="bmb-label-usd">Playbook · $11.99</span></a></li>
+        <li><a href="#speech"><span class="bmb-label-gbp">Speech · £14.99</span><span class="bmb-label-usd">Speech · $17.99</span></a></li>
+        <li><a href="#bundle"><span class="bmb-label-gbp">Bundle · £19.99</span><span class="bmb-label-usd">Bundle · $24.99</span></a></li>
+      </ul>
+    </section>
 
-      <article class="kit-cta kit-cta-end" id="duties" aria-labelledby="duties-title">
-        <p class="eyebrow">01 / PLAN IT · £5.99</p>
+    <article class="kits-product" id="duties" aria-labelledby="duties-title">
+      <figure class="kits-visual">
+        <div class="kits-cover">
+          <picture>
+            <source type="image/webp" srcset="/assets/mockups/duties-cover.webp">
+            <img src="/assets/mockups/duties-cover.jpg" width="760" height="1074" alt="Best Man Duties Kit cover" loading="eager">
+          </picture>
+        </div>
+        <ul class="kits-pages" aria-label="Pages from the Duties Kit">
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/duties-inside.webp">
+              <img src="/assets/mockups/duties-inside.jpg" width="900" height="1273" alt="Duties Kit handbook page — guide before you start" loading="lazy">
+            </picture>
+          </li>
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/duties-planner.webp">
+              <img src="/assets/mockups/duties-planner.jpg" width="900" height="1273" alt="Duties Kit guest payments planner page" loading="lazy">
+            </picture>
+          </li>
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/duties-carry.webp">
+              <img src="/assets/mockups/duties-carry.jpg" width="900" height="1273" alt="Duties Kit wedding-day carry cards page" loading="lazy">
+            </picture>
+          </li>
+        </ul>
+        <figcaption>Handbook, guest payments planner and pocket carry cards.</figcaption>
+      </figure>
+      <div class="kits-copy">
+        <p class="eyebrow">01 / PLAN IT</p>
         <h2 id="duties-title">Best Man Duties Kit</h2>
+        <p class="kits-price"><span class="bmb-price"><span class="bmb-price-gbp">£9.99</span><span class="bmb-price-usd">$11.99</span></span></p>
         <p>A duties handbook, an editable Word planner and a printable planner with 14 planning sections, plus a wedding-day sheet and four pocket carry cards, in A4 and US Letter. Digital download.</p>
-        <p class="kit-cta-actions">
-          <a class="button" data-product="duties" data-label="Get the Duties Kit" href="/kits/#duties">Get the Duties Kit</a>
-        </p>
-      </article>
+        <ul class="kits-contents">
+          <li>Duties handbook with messages you can adapt</li>
+          <li>Editable Word planner and printable planner (14 sections)</li>
+          <li>Wedding-day sheet and four pocket carry cards</li>
+          <li>Stag or bachelor party budget and guest payments</li>
+          <li>A4 and US Letter layouts</li>
+        </ul>
+        <a class="button kits-buy" data-product="duties" data-label="Get the Duties Kit · £9.99" data-price-in-label="1" href="/kits/#duties"><span class="bmb-label-gbp">Get the Duties Kit · £9.99</span><span class="bmb-label-usd">Get the Duties Kit · $11.99</span></a>
+        <p class="kits-note">Games for the night sit in the Playbook.</p>
+      </div>
+    </article>
 
-      <article class="kit-cta kit-cta-end" id="playbook" aria-labelledby="playbook-title">
-        <p class="eyebrow">FOR THE NIGHT · £11.99</p>
+    <article class="kits-product reverse" id="playbook" aria-labelledby="playbook-title">
+      <figure class="kits-visual">
+        <div class="kits-cover">
+          <picture>
+            <source type="image/webp" srcset="/assets/mockups/playbook-cover.webp">
+            <img src="/assets/mockups/playbook-cover.jpg" width="760" height="1074" alt="Stag Do and Bachelor Party Playbook cover" loading="lazy">
+          </picture>
+        </div>
+        <ul class="kits-pages" aria-label="Pages from the Playbook">
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/playbook-inside.webp">
+              <img src="/assets/mockups/playbook-inside.jpg" width="900" height="1273" alt="Playbook Stag Bingo card A" loading="lazy">
+            </picture>
+          </li>
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/playbook-code.webp">
+              <img src="/assets/mockups/playbook-code.jpg" width="900" height="1273" alt="Playbook Stag Code page" loading="lazy">
+            </picture>
+          </li>
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/playbook-games.webp">
+              <img src="/assets/mockups/playbook-games.jpg" width="900" height="1273" alt="Playbook games contents page" loading="lazy">
+            </picture>
+          </li>
+        </ul>
+        <figcaption>Stag Bingo, the Stag Code and eight games for the night.</figcaption>
+      </figure>
+      <div class="kits-copy">
+        <p class="eyebrow">02 / RUN IT</p>
         <h2 id="playbook-title">Stag Do &amp; Bachelor Party Playbook</h2>
+        <p class="kits-price"><span class="bmb-price"><span class="bmb-price-gbp">£9.99</span><span class="bmb-price-usd">$11.99</span></span></p>
         <p>Eight stag do games, a groom quiz, challenge cards and the Stag Awards, editable in Word or printable, in UK and US editions. Digital download.</p>
-        <p class="kit-cta-actions">
-          <a class="button" data-product="playbook" data-label="Get the Playbook" href="/kits/#playbook">Get the Playbook</a>
-        </p>
-        <p class="kit-cta-small">Budgets and guest payments sit in the Duties Kit.</p>
-      </article>
+        <ul class="kits-contents">
+          <li>Host guide with running order, scoring and rules</li>
+          <li>Eight games, including a Groom Quiz</li>
+          <li>Challenge cards and Stag Awards</li>
+          <li>Editable Word pack and printable PDF pack</li>
+          <li>UK stag do and US bachelor party editions</li>
+        </ul>
+        <a class="button kits-buy" data-product="playbook" data-label="Get the Playbook · £9.99" data-price-in-label="1" href="/kits/#playbook"><span class="bmb-label-gbp">Get the Playbook · £9.99</span><span class="bmb-label-usd">Get the Playbook · $11.99</span></a>
+        <p class="kits-note">Budgets and guest payments sit in the Duties Kit.</p>
+      </div>
+    </article>
 
-      <article class="kit-cta kit-cta-end" id="speech" aria-labelledby="speech-title">
-        <p class="eyebrow">03 / SAY IT · £6.98</p>
+    <article class="kits-product" id="speech" aria-labelledby="speech-title">
+      <figure class="kits-visual">
+        <div class="kits-cover">
+          <picture>
+            <source type="image/webp" srcset="/assets/mockups/speech-cover.webp">
+            <img src="/assets/mockups/speech-cover.jpg" width="760" height="1074" alt="Best Man Speech Kit cover" loading="lazy">
+          </picture>
+        </div>
+        <ul class="kits-pages" aria-label="Pages from the Speech Kit">
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/speech-inside.webp">
+              <img src="/assets/mockups/speech-inside.jpg" width="900" height="1273" alt="Speech Kit worked example — ten notes with a story" loading="lazy">
+            </picture>
+          </li>
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/cue-cards.webp">
+              <img src="/assets/mockups/cue-cards.jpg" width="900" height="1273" alt="Printable cue cards from the Speech Kit" loading="lazy">
+            </picture>
+          </li>
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/speech-guide.webp">
+              <img src="/assets/mockups/speech-guide.jpg" width="900" height="1273" alt="Speech Kit writing guide page" loading="lazy">
+            </picture>
+          </li>
+        </ul>
+        <figcaption>Worked example, cue cards and writing guide.</figcaption>
+      </figure>
+      <div class="kits-copy">
+        <p class="eyebrow">03 / SAY IT</p>
         <h2 id="speech-title">Best Man Speech Kit</h2>
+        <p class="kits-price"><span class="bmb-price"><span class="bmb-price-gbp">£14.99</span><span class="bmb-price-usd">$17.99</span></span></p>
         <p>A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.</p>
-        <p class="kit-cta-actions">
-          <a class="button" data-product="speech" data-label="Get the Speech Kit" href="/kits/#speech">Get the Speech Kit</a>
-        </p>
-      </article>
+        <p class="kits-line">ChatGPT can write a best man speech. Only you can write his.</p>
+        <ul class="kits-contents">
+          <li>Speech-writing guide with story prompts</li>
+          <li>Editable Word workbook and final-speech document</li>
+          <li>Six large cue cards for delivery</li>
+          <li>Rehearsal checklist</li>
+          <li>A4 and US Letter layouts</li>
+        </ul>
+        <a class="button kits-buy" data-product="speech" data-label="Get the Speech Kit · £14.99" data-price-in-label="1" href="/kits/#speech"><span class="bmb-label-gbp">Get the Speech Kit · £14.99</span><span class="bmb-label-usd">Get the Speech Kit · $17.99</span></a>
+        <p class="kits-upsell">Want the full role covered? <a href="/kits/#bundle"><span class="bmb-label-gbp">Add the Duties Kit and Stag Playbook for £5 more</span><span class="bmb-label-usd">Add the Duties Kit and Stag Playbook for $7 more</span></a> — the Best Man Bundle.</p>
+      </div>
+    </article>
 
-      <article class="kit-cta kit-cta-end" id="bundle" aria-labelledby="bundle-title">
-        <p class="eyebrow">BEST MAN BUNDLE · £19.99</p>
+    <article class="kits-bundle" id="bundle" aria-labelledby="bundle-title">
+      <div class="kits-copy">
+        <p class="eyebrow">BEST MAN BUNDLE</p>
         <h2 id="bundle-title">Best Man Bundle</h2>
-        <p>The Duties Kit, the Stag &amp; Bachelor Party Kit and the Speech Kit in one download, with one starting point across the role, the stag do and the speech.</p>
-        <p class="kit-cta-actions">
-          <a class="button" data-product="bundle" data-label="Get the Best Man Bundle" href="/kits/#bundle">Get the Best Man Bundle</a>
-        </p>
-      </article>
+        <p class="kits-price"><span class="bmb-price"><span class="bmb-price-gbp">£19.99</span><span class="bmb-price-usd">$24.99</span></span></p>
+        <p>The Duties Kit, the Stag Do &amp; Bachelor Party Playbook and the Speech Kit in one download, with one starting point across the role, the night and the speech.</p>
+        <ul class="kits-contents">
+          <li>Best Man Duties Kit</li>
+          <li>Stag Do &amp; Bachelor Party Playbook</li>
+          <li>Best Man Speech Kit</li>
+          <li>One Start Here across the role, the night and the speech</li>
+        </ul>
+        <a class="button kits-buy" data-product="bundle" data-label="Get the Best Man Bundle · £19.99" data-price-in-label="1" href="/kits/#bundle"><span class="bmb-label-gbp">Get the Best Man Bundle · £19.99</span><span class="bmb-label-usd">Get the Best Man Bundle · $24.99</span></a>
+      </div>
+      <figure class="kits-visual">
+        <div class="kits-cover">
+          <picture>
+            <source type="image/webp" srcset="/assets/mockups/bundle-cover.webp">
+            <img src="/assets/mockups/bundle-cover.jpg" width="760" height="1074" alt="The Best Man Set cover" loading="lazy">
+          </picture>
+        </div>
+        <ul class="kits-pages kits-pages-bundle" aria-label="Pages from the Best Man Set">
+          <li>
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/bundle-inside.webp">
+              <img src="/assets/mockups/bundle-inside.jpg" width="900" height="1273" alt="Best Man Set Start Here page" loading="lazy">
+            </picture>
+          </li>
+        </ul>
+        <figcaption>Cover and Start Here across all three kits.</figcaption>
+      </figure>
+    </article>
 
-      <p style="margin-top:40px"><a class="text-link" href="/guides/">Read the free best man guides <span aria-hidden="true">→</span></a></p>
-    </div>
+    <section class="kits-trust" aria-labelledby="trust-title">
+      <h2 id="trust-title">What you can count on</h2>
+      <ul class="kits-trust-grid">
+        <li>
+          <strong>Instant digital download</strong>
+          <p>Pay on Stripe, return here, download your ZIP. Open Start Here first.</p>
+        </li>
+        <li>
+          <strong>Editable and printable</strong>
+          <p>Word files for typing, PDF layouts for print. A4 and US Letter included.</p>
+        </li>
+        <li>
+          <strong>Your words, your plan</strong>
+          <p>You personalise every kit. Digital download — print the pages you need.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="kits-faq" aria-labelledby="kits-faq-title">
+      <div>
+        <p class="eyebrow"><span></span> BEFORE YOU BUY</p>
+        <h2 id="kits-faq-title">A few good questions</h2>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary>Which kit should I choose?</summary>
+          <p>Choose Duties for your role, wedding-day responsibilities and the stag do budget; Playbook for games on the night; or Speech for writing and delivery. The Best Man Bundle covers the Duties Kit, the Stag Do &amp; Bachelor Party Playbook and the Speech Kit together.</p>
+        </details>
+        <details>
+          <summary>What software will I need?</summary>
+          <p>The editable documents are Word files for a current desktop version of Microsoft Word. Read and print the PDF versions with a PDF reader. Word licences are not included.</p>
+        </details>
+        <details>
+          <summary>Is this a printed book or a speech-writing service?</summary>
+          <p>No. The kits are digital downloads you personalise yourself — not a printed book and not a speech-writing service.</p>
+        </details>
+        <details>
+          <summary>Is anything posted to me?</summary>
+          <p>These are digital downloads. Print the pages you need at home or through your preferred print service.</p>
+        </details>
+        <details>
+          <summary>How do I get help with a download?</summary>
+          <p>Download in a browser, extract the ZIP and open Start Here. If you need help, email <a href="mailto:hello@bestmanbackup.com">hello@bestmanbackup.com</a> with your order time and the filename you are opening.</p>
+        </details>
+      </div>
+    </section>
+
+    <p class="kits-guides"><a class="text-link" href="/guides/">Read the free best man guides <span aria-hidden="true">→</span></a></p>
   </main>
 
   <footer>
@@ -168,13 +398,19 @@
           <img src="/assets/bmb-shield.svg" width="96" height="96" alt="">
           <span class="footer-wordmark">
             <span class="brand-name">Best Man Backup</span>
-            <span class="footer-tagline">You've got his back - we've got yours</span>
+            <span class="footer-tagline">You've Got His Back, We've Got Yours.</span>
           </span>
         </a>
       </div>
       <nav class="guide-footer-links" aria-label="Footer">
-        <a href="/guides/">Best man guides</a>
+        <a href="/guides/">Guides</a>
+        <a href="/kits/">Kits</a>
         <a href="/privacy/">Privacy</a>
+        <div class="currency-toggle" role="group" aria-label="Currency">
+          <button type="button" data-currency-toggle="GBP" aria-pressed="true">£ GBP</button>
+          <button type="button" data-currency-toggle="USD" aria-pressed="false">$ USD</button>
+        </div>
+        <p class="micro" data-usd-checkout-fallback hidden>Preview: USD checkout uses the existing test Payment Links until Sean adds USD Stripe links.</p>
       </nav>
       <small>© Best Man Backup</small>
     </div>
