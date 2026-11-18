@@ -36,7 +36,8 @@
     el.setAttribute('href', href);
     el.removeAttribute('target');
     el.removeAttribute('rel');
-    const label = el.dataset.label || product.buttonLabel;
+    const visible = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    const label = visible || el.dataset.label || product.buttonLabel;
     el.setAttribute('aria-label', label);
     if (el.dataset.goatcounterClick) {
       el.dataset.goatcounterClick = el.dataset.goatcounterClick

@@ -1,36 +1,42 @@
-# Product mockups (interim)
+# Product mockups (pass 2)
 
-These are interim site mockups for the premium brand overhaul PR.
+Site mockups built from the paid-products overhaul **pass 2** page renders
+(`/cursor/stores/bot/bmb-product-previews-pass2/`).
 
-They give the homepage and kits pages polished on-brand previews (navy / ivory / gold, BMB shield, Nimbus typography) without overwriting the existing `assets/cover-*-r3.jpg` and preview files yet.
+Covers are full-bleed page art. Interiors are the real pages framed on a navy
+studio backdrop. Every file ships as WebP + JPEG with fixed dimensions so
+`<img width/height>` and CSS `aspect-ratio` prevent layout shift.
 
-## When final product art lands
+## Regenerate
 
-When the parallel paid-products overhaul agent publishes final product preview images:
+```bash
+# Default source path is the bot store pass-2 folder
+node scripts/build-product-mockups.mjs
 
-1. Replace the files in this folder with the final art (same filenames), **or**
-2. Drop new files under `assets/mockups/from-products/` and update the HTML `src` / `<picture>` paths accordingly.
-
-Prefer WebP with JPEG fallback where the page markup supports it:
-
-```html
-<picture>
-  <source type="image/webp" srcset="assets/mockups/speech-cover.webp">
-  <img src="assets/mockups/speech-cover.jpg" width="760" height="1074" alt="…">
-</picture>
+# Or point at a local export
+BMB_PASS2_DIR=/path/to/pngs node scripts/build-product-mockups.mjs
 ```
+
+Requires `sharp` (dev dependency). Do not commit `node_modules`.
 
 ## Files
 
-| File | Use |
-|------|-----|
-| `speech-cover.jpg` / `.webp` | Speech Kit cover |
-| `duties-cover.jpg` / `.webp` | Duties Kit cover |
-| `playbook-cover.jpg` / `.webp` | Playbook cover |
-| `bundle-cover.jpg` / `.webp` | Bundle cover |
-| `speech-inside.jpg` / `.webp` | Speech Kit interior preview |
-| `duties-inside.jpg` / `.webp` | Duties Kit interior preview |
-| `playbook-inside.jpg` / `.webp` | Playbook interior preview |
-| `cue-cards.jpg` / `.webp` | Cue cards preview |
+| File | Source | Use |
+|------|--------|-----|
+| `speech-cover` | p01 | Speech Kit cover |
+| `speech-start` | p02 | Speech Start Here |
+| `speech-guide` | p04 | Writing guide interior |
+| `speech-inside` | p05 | Worked example (primary interior) |
+| `cue-cards` | p06 | Cue cards page |
+| `duties-cover` | p07 | Duties Kit cover |
+| `duties-inside` | p08 | Handbook (primary interior) |
+| `duties-planner` | p10 | Guest payments planner |
+| `duties-carry` | p11 | Carry cards |
+| `playbook-cover` | p12 | Playbook cover |
+| `playbook-code` | p13 | Stag Code |
+| `playbook-games` | p14 | Games contents |
+| `playbook-inside` | p15 | Stag Bingo card A (primary) |
+| `bundle-cover` | p17 | Best Man Set cover |
+| `bundle-inside` | p18 | Set Start Here |
 
-Regenerate with: `node scripts/generate-mockups.mjs` (requires `sharp` installed locally; do not commit `node_modules`).
+Dimensions: covers **760×1074**, interiors **900×1273**. See `manifest.json` for the last build.
