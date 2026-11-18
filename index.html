@@ -20,7 +20,7 @@
 <link rel="icon" href="/assets/bmb-shield.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/bmb-shield-48.png">
 <link rel="apple-touch-icon" href="/assets/bmb-shield-180.png">
-<link rel="stylesheet" href="suite.css"><script defer src="suite.js"></script><script defer src="/analytics.js"></script><script defer src="site.js"></script><script defer src="/assets/guide-stats.js"></script><script defer src="/assets/checkout-config.js"></script><script defer src="/assets/checkout.js"></script>
+<link rel="stylesheet" href="suite.css"><link rel="stylesheet" href="/assets/checklist-signup.css"><script defer src="suite.js"></script><script defer src="/analytics.js"></script><script defer src="site.js"></script><script defer src="/assets/guide-stats.js"></script><script defer src="/assets/checkout-config.js"></script><script defer src="/assets/checkout.js"></script><script defer src="/assets/subscribe.js"></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://bestmanbackup.com/#organization", "name": "Best Man Backup", "url": "https://bestmanbackup.com/", "logo": ["https://bestmanbackup.com/assets/bmb-shield.svg", "https://bestmanbackup.com/assets/bmb-shield-512.png"], "sameAs": ["https://www.instagram.com/bestmanbackup/"]}, {"@type": "WebSite", "@id": "https://bestmanbackup.com/#website", "name": "Best Man Backup", "url": "https://bestmanbackup.com/", "publisher": {"@id": "https://bestmanbackup.com/#organization"}}]}</script>
 </head>
 <body>
@@ -268,31 +268,31 @@
 <section class="lifestyle-section" aria-labelledby="lifestyle-title">
 <div class="shell section">
 <div class="reveal">
-<p class="eyebrow"><span></span> THE ROOM YOU’RE SPEAKING TO</p>
-<h2 id="lifestyle-title">Made for the people<br>who are listening.</h2>
-<p>Glamorous guests, a best woman toast, stylish couples on the floor — the speech lands in a real celebration.</p>
+<p class="eyebrow"><span></span> THIS IS BEST MAN BACKUP</p>
+<h2 id="lifestyle-title">Built for the best man<br>in the room.</h2>
+<p>A toast that lands, a groom you stand beside, groomsmen who have your back — guests may fill the hall, but the focus is you.</p>
 </div>
 <div class="lifestyle-grid">
 <figure class="lifestyle-shot lifestyle-wide reveal">
 <picture>
-<source type="image/webp" srcset="assets/lifestyle/bridesmaids-reception.webp">
-<img src="assets/lifestyle/bridesmaids-reception.jpg" width="1600" height="900" alt="Bridesmaids in elegant dresses laughing together at a wedding reception" loading="lazy">
+<source type="image/webp" srcset="assets/lifestyle/groom-and-best-man.webp">
+<img src="assets/lifestyle/groom-and-best-man.jpg" width="1600" height="900" alt="Groom in a tuxedo standing with his best man in a navy suit outside a classic wedding venue" loading="lazy">
 </picture>
-<figcaption>Bridesmaids and guests, dressed for a formal reception.</figcaption>
+<figcaption>Groom and best man, side by side.</figcaption>
 </figure>
 <figure class="lifestyle-shot lifestyle-tall reveal">
 <picture>
-<source type="image/webp" srcset="assets/lifestyle/best-woman-toast.webp">
-<img src="assets/lifestyle/best-woman-toast.jpg" width="900" height="1200" alt="Best woman in a tailored midi dress raising a champagne toast" loading="lazy">
+<source type="image/webp" srcset="assets/lifestyle/best-man-toast.webp">
+<img src="assets/lifestyle/best-man-toast.jpg" width="900" height="1200" alt="Best man in a navy suit raising a champagne toast at a wedding reception" loading="lazy">
 </picture>
-<figcaption>A best woman toast.</figcaption>
+<figcaption>The best man’s toast.</figcaption>
 </figure>
 <figure class="lifestyle-shot lifestyle-wide reveal">
 <picture>
-<source type="image/webp" srcset="assets/lifestyle/couples-reception.webp">
-<img src="assets/lifestyle/couples-reception.jpg" width="1600" height="900" alt="Stylish couple dancing at an elegant wedding reception" loading="lazy">
+<source type="image/webp" srcset="assets/lifestyle/groomsmen.webp">
+<img src="assets/lifestyle/groomsmen.jpg" width="1600" height="900" alt="Best man with groomsmen in matching navy suits laughing together before the ceremony" loading="lazy">
 </picture>
-<figcaption>Stylish couples at the reception.</figcaption>
+<figcaption>Best man and groomsmen before the ceremony.</figcaption>
 </figure>
 </div>
 </div>
@@ -342,21 +342,41 @@
 </ol>
 </section>
 
-<!-- Cheat-sheet sign-up stays hidden until signupEnabled, signupAction and privacyUrl are all set in site.js (BMB_CONFIG). -->
-<section class="lead-magnet" id="cheat-sheet" aria-labelledby="cheat-title" data-signup hidden>
-  <div class="shell lead-grid">
-    <figure class="lead-preview"><img loading="lazy" src="assets/cheat-sheet-preview.jpg" width="900" height="1274" alt="Preview of the Best Man's 1-Page Speech Cheat Sheet"></figure>
-    <div class="lead-copy">
-      <p class="eyebrow"><span></span> FREE · ONE PAGE · PDF</p>
-      <h2 id="cheat-title">Free speech cheat sheet</h2>
-      <p>Structure, openers and timing on one page.</p>
-      <!-- Form action and privacy link are set from BMB_CONFIG in site.js. Field names follow MailerLite's embed (fields[email]). -->
-      <form class="lead-form" action="MAILERLITE_FORM_ACTION" method="post" data-lead-form novalidate>
-        <label for="lead-email">Email address</label>
-        <div class="lead-row"><input id="lead-email" type="email" name="fields[email]" autocomplete="email" placeholder="you@example.com" required><button class="button gold" type="submit">Send it to me</button></div>
-        <p class="lead-consent">You'll get the cheat sheet, then a few short best man tips. Unsubscribe any time. <a data-privacy-link href="#">Privacy notice</a>.</p>
-        <p class="lead-status" role="status" aria-live="polite"></p>
-      </form>
+<!-- Free checklist signup: Resend contacts only (no email sends from this route). Consent starts unticked. -->
+<section class="checklist-band" id="checklist-signup" aria-labelledby="checklist-title">
+  <div class="shell">
+    <div class="checklist-signup">
+      <div class="checklist-signup-inner">
+        <p class="eyebrow"><span></span> FREE PDF</p>
+        <h2 id="checklist-title">Free best man checklist</h2>
+        <p>A short printable checklist for the speech, the day and the jobs around them. Enter your email to download. We do not send you anything from this form — you get the PDF straight away.</p>
+        <form class="checklist-form" data-checklist-form novalidate>
+          <div data-checklist-fields>
+            <div class="checklist-row">
+              <label class="field" for="checklist-first-name">First name <span class="optional">(optional)</span>
+                <input id="checklist-first-name" type="text" name="firstName" autocomplete="given-name" maxlength="80">
+              </label>
+              <label class="field" for="checklist-email">Email
+                <input id="checklist-email" type="email" name="email" autocomplete="email" required placeholder="you@example.com">
+              </label>
+            </div>
+            <label class="checklist-hp" aria-hidden="true">Leave blank
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </label>
+            <label class="checklist-consent">
+              <input type="checkbox" name="consent" value="true">
+              <span>I agree Best Man Backup can store my email for the checklist download and occasional best man tips. See the <a href="/privacy/">privacy notice</a>. You can ask us to delete it any time.</span>
+            </label>
+            <button type="submit">Get the free checklist</button>
+            <p class="checklist-status" data-checklist-status role="status" aria-live="polite"></p>
+          </div>
+          <div class="checklist-success" data-checklist-success hidden>
+            <p>Your checklist is ready.</p>
+            <a class="button" data-checklist-download href="/downloads/best-man-checklist.pdf" download>Download the PDF</a>
+            <p class="checklist-preview-note" data-checklist-preview-note hidden>Preview mode: contact storage is not connected on this host. The download still works.</p>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </section>

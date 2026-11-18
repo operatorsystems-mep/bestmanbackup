@@ -354,16 +354,25 @@ test.describe('Best Man Backup — desktop 1440', () => {
     expect(xml).not.toContain('https://bestmanbackup.com/links/');
   });
 
-  test('cheat-sheet sign-up stays hidden', async ({ page }) => {
-    const siteJs = await page.request.get('/site.js');
-    expect(siteJs.ok()).toBeTruthy();
-    const source = await siteJs.text();
-    expect(source).toMatch(/signupEnabled:\s*false/);
-
+  test('checklist signup is visible with unticked consent and no MailerLite stub', async ({ page }) => {
     await page.goto('/');
-    const section = page.locator('[data-signup]');
-    await expect(section).toHaveCount(1);
-    await expect(section).toBeHidden();
+    const section = page.locator('#checklist-signup');
+    await expect(section).toBeVisible();
+    await expect(page.locator('[data-signup]')).toHaveCount(0);
+
+    const consent = section.locator('input[name="consent"]');
+    await expect(consent).toBeVisible();
+    await expect(consent).not.toBeChecked();
+
+    const form = section.locator('[data-checklist-form]');
+    await expect(form).toHaveAttribute('novalidate', '');
+    await expect(section.locator('input[name="website"]')).toHaveCount(1);
+
+    // Submitting without consent stays on the form and shows an error (no email send).
+    await section.locator('input[name="email"]').fill('bestman@example.com');
+    await section.locator('button[type="submit"]').click();
+    await expect(section.locator('[data-checklist-status]')).toContainText(/tick the box/i);
+    await expect(section.locator('[data-checklist-fields]')).toBeVisible();
   });
 });
 
