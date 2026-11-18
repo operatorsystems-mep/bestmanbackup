@@ -114,12 +114,24 @@ describe('QA fixes', () => {
     assert.equal(retired.statusCode, 301);
   });
 
-  it('does not publish the draft legal pages from this branch', () => {
-    for (const page of ['terms', 'refunds', 'contact', 'about']) {
-      assert.equal(fs.existsSync(path.join(ROOT, page, 'index.html')), false);
-    }
+  it('marks the draft legal pages noindex, with placeholders and footer links', () => {
     const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-    assert.equal(home.includes('href="/terms/"'), false);
-    assert.equal(home.includes('[TRADER NAME]'), false);
+    for (const href of ['/about/', '/contact/', '/terms/', '/refunds/']) {
+      assert.equal(home.includes(`href="${href}"`), true, href);
+    }
+    const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
+    for (const page of ['about', 'contact', 'terms', 'refunds']) {
+      const html = fs.readFileSync(path.join(ROOT, page, 'index.html'), 'utf8');
+      assert.match(html, /DRAFT – awaiting owner sign-off/);
+      assert.match(html, /noindex/);
+      assert.match(html, /\[TRADER NAME\]/);
+      assert.match(html, /\[ADDRESS\]/);
+      assert.match(html, /\[EMAIL\]/);
+      assert.equal(sitemap.includes(`/${page}/`), false);
+    }
+    const refunds = fs.readFileSync(path.join(ROOT, 'refunds', 'index.html'), 'utf8');
+    assert.match(refunds, /Consumer Contracts \(Information, Cancellation and Additional Charges\) Regulations 2013/);
+    assert.match(refunds, /express consent/);
+    assert.match(refunds, /lose the 14-day cancellation right once the download starts/);
   });
 });
