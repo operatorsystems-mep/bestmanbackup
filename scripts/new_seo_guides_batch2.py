@@ -29,107 +29,7 @@ def add(g: dict) -> None:
 
 
 # 1 ------------------------------------------------------------------------
-add({
-    "slug": "best-man-speech-for-a-sister",
-    "product": "speech",
-    "eyebrow": "WRITING THE SPEECH",
-    "title": "Best Man Speech When the Bride Is Your Sister",
-    "meta": "How to write a best man speech when your sister is the bride: welcome her partner, pick family stories that work, and toast both of them without making it a sibling roast.",
-    "h1": "Best man speech when the bride is your sister",
-    "headline": "Best man speech when the bride is your sister",
-    "answer": "You are usually standing for the groom, but the room knows you as her brother. Open as both: how you know him, and that she is your sister. Tell one family story strangers can follow, one story that shows who he is, welcome him into the family by name, then toast both. Skip sibling score-settling and anything that upstages the couple.",
-    "sections": [
-        {
-            "h2": "Why this speech feels different",
-            "html": """
-<p>Most best man speeches centre the groom because that is whose side you stand on. When the bride is your sister, you have two loyalties in the room. Guests expect you to protect her, celebrate him, and sound like family rather than a mate from the football team.</p>
-<p>Real pages that rank for sister wedding speeches — sibling guides on ThePerfectWedding and published brother-as-best-man accounts — converge on the same shape: introduce the dual role, one character story, a welcome to the partner, toast. Treat that as etiquette pattern, not a rulebook.</p>
-<ul class="checklist">
-<li>Name both roles once: “I’m Sam, Jess’s brother and Tom’s best man.”</li>
-<li>Give him his own story. Do not make the whole speech about growing up with her.</li>
-<li>Welcome him into the family in plain English.</li>
-<li>Keep childhood rivalry to one light line, or cut it.</li>
-</ul>
-""",
-        },
-        {
-            "h2": "A structure that balances both people",
-            "html": """
-<div class="table-scroll"><table class="guide-table"><thead><tr><th>Part</th><th>What it does</th><th>Time</th></tr></thead><tbody>
-<tr><td>Open</td><td>Who you are to both of them</td><td>20–30 seconds</td></tr>
-<tr><td>Her, briefly</td><td>One trait you admire, shown in a short scene</td><td>45–60 seconds</td></tr>
-<tr><td>Him</td><td>How you know him; one story that shows character</td><td>1–2 minutes</td></tr>
-<tr><td>Them</td><td>What changed when they got together; welcome</td><td>45–60 seconds</td></tr>
-<tr><td>Toast</td><td>Both names</td><td>15–20 seconds</td></tr>
-</tbody></table></div>
-<p>Three to five minutes is enough. If the couple want brief speeches, use the <a href="/guides/short-best-man-speech/">short speech</a> shape. Full process: <a href="/guides/how-to-write-a-best-man-speech/">how to write a best man speech</a>. If you are her sister standing as best woman for the groom, start with <a href="/guides/best-woman-speech/">best woman speech</a> instead.</p>
-""",
-        },
-        {
-            "h2": "Stories that work — and ones that do not",
-            "html": """
-<ul class="checklist">
-<li><strong>Works:</strong> the first time you realised he was serious about her; a kindness he showed your parents; a habit of hers he somehow finds charming.</li>
-<li><strong>Works:</strong> a childhood scene that shows who she is now, told without humiliation.</li>
-<li><strong>Fails:</strong> exes, “nobody is good enough,” threats disguised as jokes, bathroom humour from shared childhood.</li>
-<li><strong>Fails:</strong> a twenty-minute family chronology. One scene beats a timeline.</li>
-</ul>
-<p>Off-limits material still applies — see <a href="/guides/what-not-to-say-in-a-best-man-speech/">what not to say</a>. Family fights and money talk stay out.</p>
-""",
-        },
-        {
-            "h2": "Opening lines you can adapt",
-            "html": """
-<ul class="lines">
-<li>“I’m Sam. I’m Jess’s brother, and today I’m also Tom’s best man, which means I have been briefed by both sides and trust neither completely.”</li>
-<li>“Evening. For anyone who only knows me from Jess’s childhood photos: I’ve improved. Tom, welcome — you’ve passed the only test that mattered.”</li>
-<li>“I’m Priya, Jess’s sister, standing here for Tom. She asked me to be nice. He asked me to be honest. I’ll land in the middle and blame the fizz.”</li>
-</ul>
-<p>More starters: <a href="/guides/best-man-speech-opening-lines/">opening lines</a>. Brother-of-the-groom tips sit in <a href="/guides/best-man-speech-for-a-brother/">best man speech for a brother</a>.</p>
-""",
-        },
-        {
-            "h2": "A worked example",
-            "html": """
-<p>About 380 words. Swap names and the Sunday-lunch detail.</p>
-<blockquote><p>Good evening. I’m Miles. I’m Maya’s brother, and today I’m also Noah’s best man. That is a lot of titles for someone who still gets called by a childhood nickname at Christmas.</p></blockquote>
-<blockquote><p>Growing up with Maya meant living with someone who organised other people’s birthdays better than her own. She made lists. She remembered who didn’t eat mushrooms. She still does. The difference is that Noah somehow finds that endearing rather than exhausting, which is either love or a very advanced coping strategy.</p></blockquote>
-<blockquote><p>I got to know Noah properly on a Sunday lunch that ran three hours because he stayed to help with the washing up and then stayed to lose at cards to our dad. He did not perform. He just stayed. That is still him. He shows up, he listens, and he makes a loud family quieter in the good way.</p></blockquote>
-<blockquote><p>Noah, welcome. Properly. Maya, you chose well, and the rest of us noticed before you admitted it. Please raise your glasses. To Maya and Noah — may the lists stay useful, and may you keep being each other’s favourite person in the room.</p></blockquote>
-""",
-        },
-        {
-            "h2": "Delivery notes",
-            "html": """
-<p>Look at both of them when you turn to the couple. If emotion hits on the welcome line, pause — practise that sentence standing up. Cue cards help: <a href="/guides/best-man-speech-cue-cards/">cue cards guide</a>. The <a href="/kits/#speech">Best Man Speech Kit</a> is the first place to go if you want a workbook and printable cards for this dual-role draft.</p>
-""",
-        },
-        {
-            "h2": "Sources",
-            "html": """
-<ul>
-<li>Sibling wedding speech structures summarised across public guides such as ThePerfectWedding’s brother/sister speech advice</li>
-<li>Published accounts of brothers serving as best man at a sister’s wedding</li>
-<li><a href="/guides/how-to-write-a-best-man-speech/">How to write a best man speech</a></li>
-</ul>
-""",
-        },
-    ],
-    "faqs": [
-        {"q": "Can the bride’s brother be best man?", "a": "Yes. Couples choose who they want. You usually stand for the groom while the room also knows you as her sibling — say both once, then focus on the couple."},
-        {"q": "How long should the speech be?", "a": "Three to five minutes is plenty. Ask the couple if they want something shorter."},
-        {"q": "Should I roast my sister?", "a": "One affectionate line is enough. A roast that needs family lore to decode will lose half the room."},
-        {"q": "How do I welcome my new brother-in-law?", "a": "Say his name, one specific thing you respect, and a plain welcome into the family. Then toast both."},
-        {"q": "What if I am the groom’s sister instead?", "a": "You may be best woman or best person for him. Use the best woman speech guide and keep the same clean rules on stories."},
-    ],
-    "related": [
-        ("/guides/best-man-speech-for-a-brother/", "Best man speech for a brother"),
-        ("/guides/best-woman-speech/", "Best woman speech"),
-        ("/guides/heartfelt-best-man-speech/", "Heartfelt best man speech"),
-        ("/guides/how-to-write-a-best-man-speech/", "How to write a best man speech"),
-        ("/guides/best-man-speech-opening-lines/", "Opening lines"),
-    ],
-})
+# sister guide removed per brand direction (not a women's/sibling-bride platform page)
 
 # 2 ------------------------------------------------------------------------
 add({
@@ -505,7 +405,7 @@ add({
         {
             "h2": "What actually changes",
             "html": """
-<p>The craft does not change. The logistics might. Same-sex weddings often have two grooms or two brides, sometimes two best men, a best woman, or no gendered titles at all. Guides aimed at gay and lesbian weddings — and same-sex speech examples on toast sites — stress asking about order and language before you write.</p>
+<p>The craft does not change. The logistics might. Same-sex weddings often have two grooms or two brides, sometimes two best men, or titles the couple choose themselves. Guides aimed at gay and lesbian weddings — and same-sex speech examples on toast sites — stress asking about order and language before you write.</p>
 <ul class="checklist">
 <li>Ask what they call your role and their roles.</li>
 <li>Ask who speaks when — do not assume the UK father–groom–best man pattern.</li>
@@ -570,8 +470,7 @@ add({
         ("/guides/joint-best-man-speech/", "Joint best man speech"),
         ("/guides/wedding-speech-order/", "Wedding speech order"),
         ("/guides/heartfelt-best-man-speech/", "Heartfelt best man speech"),
-        ("/guides/best-woman-speech/", "Best woman speech"),
-    ],
+            ],
 })
 
 # 7 ------------------------------------------------------------------------

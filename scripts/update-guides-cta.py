@@ -67,7 +67,7 @@ PRODUCT_BY_SLUG = {
     "best-man-toast": "speech",
     "best-man-vs-groomsmen-vs-ushers": "duties",
     "best-mans-job": "duties",
-    "best-woman-speech": "speech",
+
     "cheap-stag-do-ideas": "duties",
     "dad-as-best-man": "speech",
     "funny-best-man-speech": "speech",
@@ -88,10 +88,12 @@ PRODUCT_BY_SLUG = {
     "what-does-the-best-man-pay-for": "duties",
     "what-not-to-say-in-a-best-man-speech": "speech",
     "asked-to-be-best-man": "speech",
+    "best-man-speech-dont-know-the-bride": "speech",
+    "best-man-speech-thanking-parents": "speech",
     "best-man-gift-ideas": "duties",
     "best-man-outfit": "duties",
     "best-man-rehearsal-responsibilities": "duties",
-    "best-man-speech-for-a-sister": "speech",
+
     "best-man-speech-mistakes": "speech",
     "best-man-speech-same-sex-wedding": "speech",
     "best-man-speech-without-notes": "speech",
