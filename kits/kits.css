@@ -429,3 +429,32 @@
     transition: none !important;
   }
 }
+
+/* Dual currency (shared with suite.css patterns) */
+.bmb-price{display:inline-grid;vertical-align:baseline;justify-items:start}
+.bmb-price>*{grid-area:1/1;font-variant-numeric:tabular-nums}
+.bmb-price-gbp,.bmb-price-usd{visibility:hidden}
+html[data-currency="GBP"] .bmb-price-gbp,
+html[data-currency="USD"] .bmb-price-usd{visibility:visible}
+.bmb-label-gbp,.bmb-label-usd,.bmb-term-gb,.bmb-term-us{display:none}
+html[data-currency="GBP"] .bmb-label-gbp,
+html[data-currency="GBP"] .bmb-term-gb,
+html[data-currency="USD"] .bmb-label-usd,
+html[data-currency="USD"] .bmb-term-us{display:inline}
+html[data-currency="USD"] .bmb-party-term .bmb-term-gb{display:inline}
+html[data-currency="USD"] .bmb-party-term .bmb-term-gb::after{content:" / "}
+.bmb-party-term{display:inline}
+.currency-toggle{
+  display:inline-flex;align-items:center;gap:0;margin:12px 0 0;
+  border:1px solid rgba(255,255,255,.28);border-radius:2px;overflow:hidden;width:fit-content;
+}
+.currency-toggle button{
+  appearance:none;background:transparent;color:#c0c8d3;border:0;margin:0;
+  padding:8px 12px;min-height:40px;min-width:44px;font-size:12px;font-weight:700;
+  letter-spacing:.08em;cursor:pointer;line-height:1;
+}
+.currency-toggle button + button{border-left:1px solid rgba(255,255,255,.28)}
+.currency-toggle button.is-active,
+.currency-toggle button[aria-pressed="true"]{background:rgba(212,168,79,.18);color:#fff}
+.currency-toggle button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+[data-usd-checkout-fallback]{margin:10px 0 0;font-size:13px;color:#c0c8d3}
