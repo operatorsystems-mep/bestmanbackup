@@ -108,9 +108,9 @@
       priceUsd: '$24.99',
       contents: [
         'The Duties Kit',
-        'The Stag & Bachelor Party Kit',
+        'The Stag Do & Bachelor Party Playbook',
         'The Speech Kit',
-        'One starting point across the role, the stag do / bachelor party and the speech',
+        'One starting point across the role, the night and the speech',
       ],
       steps: [
         {
@@ -121,7 +121,7 @@
         {
           title: 'How to plan a stag do',
           href: '/guides/how-to-plan-a-stag-do/',
-          blurb: 'Plan the night alongside the party kit files.',
+          blurb: 'Plan the night alongside the Playbook files.',
         },
         {
           title: 'How to write a best man speech',

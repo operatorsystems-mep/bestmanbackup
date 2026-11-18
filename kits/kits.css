@@ -197,10 +197,33 @@
   color: var(--navy);
 }
 
-.kits-copy > p:not(.eyebrow):not(.kits-price):not(.kits-note) {
+.kits-copy > p:not(.eyebrow):not(.kits-price):not(.kits-note):not(.kits-line):not(.kits-upsell) {
   color: var(--muted);
   margin-bottom: 18px;
   max-width: 48ch;
+}
+
+.kits-line {
+  margin: 0 0 18px;
+  max-width: 34ch;
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--navy);
+}
+
+.kits-upsell {
+  margin: 14px 0 0;
+  max-width: 42ch;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.kits-upsell a {
+  font-weight: 700;
+  text-underline-offset: 3px;
 }
 
 .kits-contents {
@@ -275,7 +298,7 @@
   margin-bottom: 12px;
 }
 
-.kits-bundle > .kits-copy > p:not(.eyebrow):not(.kits-price):not(.kits-note) {
+.kits-bundle > .kits-copy > p:not(.eyebrow):not(.kits-price):not(.kits-note):not(.kits-line):not(.kits-upsell) {
   color: #d8dce2;
 }
 

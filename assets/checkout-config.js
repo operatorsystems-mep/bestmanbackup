@@ -112,7 +112,7 @@ window.BMB_CHECKOUT = Object.freeze({
       priceIdTestUsd: '',
       priceIdLiveUsd: '',
       description:
-        'The Duties Kit, the Stag & Bachelor Party Kit and the Speech Kit in one download, with one starting point across the role, the stag do / bachelor party and the speech.',
+        'The Duties Kit, the Stag Do & Bachelor Party Playbook and the Speech Kit in one download, with one starting point across the role, the night and the speech.',
       checkoutUrlTest: 'https://buy.stripe.com/test_aFa7sN1Ric18gjd4Mk0Fi0j',
       checkoutUrlLive: 'https://buy.stripe.com/dRmbJ3brSe9g7MHbaI0Fi03',
       checkoutUrlTestUsd: '', // TODO(Sean): Stripe TEST Payment Link — Bundle USD $24.99
