@@ -41,12 +41,26 @@
     .link-stack a.secondary:hover{background:var(--navy);color:#fff}
     @media(max-width:760px){.links-page{width:calc(100% - 40px);padding-block:28px 56px}}
   </style>
+<link rel="stylesheet" href="/assets/nav.css">
+<script defer src="/assets/nav.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <main id="main" class="links-page wrap">
+  <header class="header wrap">
     <a class="brand" href="/" aria-label="Best Man Backup home">
-      <img src="/assets/bmb-shield.svg" width="72" height="72" alt="">
+      <img src="/assets/bmb-shield.svg" width="70" height="70" alt="Best Man Backup logo">
+      <span class="brand-name">Best Man Backup</span>
+    </a>
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span class="nav-toggle-bars" aria-hidden="true"></span></button>
+    <nav id="site-nav" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/kits/">Kits</a>
+      <a href="/guides/">Best man guides</a>
+    </nav>
+  </header>
+    <main id="main" class="links-page wrap">
+    <a class="brand" href="/" aria-label="Best Man Backup home">
+      <img src="/assets/bmb-shield.svg" width="72" height="72" alt="Best Man Backup logo">
       <span class="brand-name">Best Man Backup</span>
     </a>
     <h1>Best Man Backup</h1>

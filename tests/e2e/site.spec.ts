@@ -187,7 +187,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
       '/guides/what-does-the-best-man-pay-for/',
       '/guides/joint-best-man-speech/',
     ]) {
-      const link = page.locator(`a[href="${href}"]`).first();
+      const link = page.locator(`.link-stack a[href="${href}"]`).first();
       await expect(link).toBeVisible();
       const box = await link.boundingBox();
       expect(box?.height || 0).toBeGreaterThan(40);
@@ -289,6 +289,40 @@ test.describe('Best Man Backup — desktop 1440', () => {
     expect(xml).not.toContain('https://bestmanbackup.com/links/');
   });
 
+  test('home shows current kit prices and the toolkit title', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/');
+    await expect(page).toHaveTitle('Best man toolkit: speech, duties, stag do | Best Man Backup');
+    await expect(page.locator('.kit-price')).toHaveText(['£5.99', '£11.99', '£6.98']);
+    await expect(page.locator('.set-price')).toHaveText('£19.99');
+    await expect(page.locator('table')).toContainText('£5.99');
+    await expect(page.locator('table')).toContainText('£19.99');
+    await expect(page.locator('a.kit-tile[href="/kits/#playbook"]')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Menu' })).toBeHidden();
+    const kits = page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'All kits' });
+    const box = await kits.boundingBox();
+    expect(box?.width || 0).toBeGreaterThan(40);
+    expect(box?.height || 0).toBeGreaterThan(20);
+  });
+
+  test('See the kit links stay on the kits page while buy buttons use test checkout', async ({ page }) => {
+    await page.goto('/guides/how-to-write-a-best-man-speech/');
+    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
+    await expect(page.getByRole('link', { name: 'See the Best Man Speech Kit' })).toHaveAttribute('href', '/kits/#speech');
+    await expect(page.locator('.kit-cta a[data-product="speech"]').first()).toHaveAttribute('href', /buy\.stripe\.com\/test_/);
+  });
+
+  test('unknown paths use the branded 404 and the old best-woman path redirects', async ({ page, request }) => {
+    const missing = await page.goto('/guides/this-page-does-not-exist/');
+    expect(missing?.status()).toBe(404);
+    await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
+
+    const redirect = await request.get('/guides/best-woman-speech/', { maxRedirects: 0 });
+    expect(redirect.status()).toBe(301);
+    expect(redirect.headers().location).toBe('/guides/');
+  });
+
   test('cheat-sheet sign-up stays hidden', async ({ page }) => {
     const siteJs = await page.request.get('/site.js');
     expect(siteJs.ok()).toBeTruthy();
@@ -304,6 +338,22 @@ test.describe('Best Man Backup — desktop 1440', () => {
 
 test.describe('Best Man Backup — mobile 390', () => {
   test.use({ viewport: { width: 390, height: 844 } });
+
+  test('guide and kits pages open a real mobile menu', async ({ page }) => {
+    for (const path of ['/guides/how-to-write-a-best-man-speech/', '/kits/', '/']) {
+      await page.goto(path);
+      const toggle = page.getByRole('button', { name: 'Menu' });
+      await expect(toggle).toBeVisible();
+      const nav = page.getByRole('navigation', { name: 'Main navigation' });
+      const link = nav.getByRole('link').first();
+      await expect(link).toBeHidden();
+      await toggle.click();
+      await expect(link).toBeVisible();
+      const box = await link.boundingBox();
+      expect(box?.width || 0).toBeGreaterThan(40);
+      expect(box?.height || 0).toBeGreaterThanOrEqual(44);
+    }
+  });
 
   test('guide free download and CTA remain usable on a phone width', async ({ page }) => {
     const res = await page.goto('/guides/joint-best-man-speech/');
