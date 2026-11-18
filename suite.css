@@ -2,6 +2,9 @@
 
 .tile-cover{height:250px;margin:0 0 28px;padding:10px 30px;background:#e9e1d3;display:flex;justify-content:center}.tile-cover img{width:auto;height:100%;box-shadow:0 5px 12px #14253b1c}@media(max-width:640px){.tile-cover{float:right;height:145px;width:112px;padding:9px;margin:0 0 10px 16px}.kit-tile h3{font-size:26px}.kit-tile:after{content:"";display:block;clear:both}}
 .header nav a{display:flex;align-items:center;min-height:44px}.footer-inner>div>a{display:inline-flex;align-items:center;min-height:44px}
+.kit-price{display:block;margin:10px 0 16px;font-weight:700;font-size:18px;letter-spacing:.02em}
+.set-price{margin:0 0 18px;font-size:22px;font-weight:700}
+.document-preview picture,.cue-preview picture{display:block}
 
 /* Cheat-sheet sign-up, carried over from the live homepage */
 /* 2026-10-11 preview: three kits, The Best Man Set, free cheat sheet */

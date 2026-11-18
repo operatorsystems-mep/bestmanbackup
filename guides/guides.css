@@ -61,6 +61,10 @@
 .free-download .button:hover{background:var(--blue);border-color:var(--blue)}
 .free-download-end{margin:40px 0 28px}
 @media(max-width:760px){.free-download{padding:18px}.free-download .button{width:100%;text-align:center}}
+.kit-card-image{margin:0 0 16px;background:#e9e1d3;display:flex;justify-content:center;align-items:flex-end;height:240px;padding:12px 12px 0;overflow:hidden}
+.kit-card-image img{width:auto;height:100%;max-width:100%;object-fit:contain;box-shadow:0 6px 16px #13223822}
+.guide .button.secondary{background:transparent;border:1px solid var(--navy);color:var(--navy);text-decoration:none}
+.guide .button.secondary:hover{background:var(--navy);color:#fff}
 @media print{
   header,footer,.kit-cta,.kit-note,.free-download,.toc,.guide-faq,.related,.crumbs,.guide-stamp{display:none}
   .print-sheet{border:0;padding:0;break-before:page}

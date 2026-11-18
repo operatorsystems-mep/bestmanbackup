@@ -94,15 +94,18 @@
     ]
   }
   </script>
+<link rel="stylesheet" href="/assets/nav.css">
+<script defer src="/assets/nav.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="header wrap">
     <a class="brand" href="/" aria-label="Best Man Backup home">
-      <img src="/assets/bmb-shield.svg" width="70" height="70" alt="">
+      <img src="/assets/bmb-shield.svg" width="70" height="70" alt="Best Man Backup logo">
       <span class="brand-name">Best Man Backup</span>
     </a>
-    <nav aria-label="Main navigation">
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span class="nav-toggle-bars" aria-hidden="true"></span></button>
+    <nav id="site-nav" aria-label="Main navigation">
       <a href="/">Home</a>
       <a href="/kits/">Kits</a>
       <a href="/guides/">Best man guides</a>
@@ -122,6 +125,7 @@
 
       <article class="kit-cta kit-cta-end" id="duties" aria-labelledby="duties-title">
         <p class="eyebrow">01 / PLAN IT · £5.99</p>
+        <figure class="kit-card-image"><img src="/assets/cover-duties-r3.jpg" width="760" height="1075" alt="Best Man Duties Kit cover" loading="lazy"></figure>
         <h2 id="duties-title">Best Man Duties Kit</h2>
         <p>A duties handbook, an editable Word planner and a printable planner with 14 planning sections, plus a wedding-day sheet and four pocket carry cards, in A4 and US Letter. Digital download.</p>
         <p class="kit-cta-actions">
@@ -130,7 +134,8 @@
       </article>
 
       <article class="kit-cta kit-cta-end" id="playbook" aria-labelledby="playbook-title">
-        <p class="eyebrow">FOR THE NIGHT · £11.99</p>
+        <p class="eyebrow">02 / FOR THE NIGHT · £11.99</p>
+        <figure class="kit-card-image"><img src="/assets/cover-playbook-r3.jpg" width="760" height="1075" alt="Stag Do and Bachelor Party Playbook cover" loading="lazy"></figure>
         <h2 id="playbook-title">Stag Do &amp; Bachelor Party Playbook</h2>
         <p>Eight stag do games, a groom quiz, challenge cards and the Stag Awards, editable in Word or printable, in UK and US editions. Digital download.</p>
         <p class="kit-cta-actions">
@@ -141,6 +146,7 @@
 
       <article class="kit-cta kit-cta-end" id="speech" aria-labelledby="speech-title">
         <p class="eyebrow">03 / SAY IT · £6.98</p>
+        <figure class="kit-card-image"><img src="/assets/cover-speech-r3.jpg" width="760" height="1075" alt="Best Man Speech Kit cover" loading="lazy"></figure>
         <h2 id="speech-title">Best Man Speech Kit</h2>
         <p>A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.</p>
         <p class="kit-cta-actions">
@@ -150,6 +156,7 @@
 
       <article class="kit-cta kit-cta-end" id="bundle" aria-labelledby="bundle-title">
         <p class="eyebrow">BEST MAN BUNDLE · £19.99</p>
+        <figure class="kit-card-image"><img src="/assets/cover-set-r3.jpg" width="760" height="1075" alt="Best Man Bundle cover" loading="lazy"></figure>
         <h2 id="bundle-title">Best Man Bundle</h2>
         <p>The Duties Kit, the Stag &amp; Bachelor Party Kit and the Speech Kit in one download, with one starting point across the role, the stag do and the speech.</p>
         <p class="kit-cta-actions">
@@ -165,7 +172,7 @@
     <div class="wrap footer-inner">
       <div class="footer-brand">
         <a class="brand" href="/" aria-label="Best Man Backup home">
-          <img src="/assets/bmb-shield.svg" width="96" height="96" alt="">
+          <img src="/assets/bmb-shield.svg" width="96" height="96" alt="Best Man Backup logo">
           <span class="footer-wordmark">
             <span class="brand-name">Best Man Backup</span>
             <span class="footer-tagline">You've got his back - we've got yours</span>

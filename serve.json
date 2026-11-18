@@ -2,6 +2,8 @@
   "trailingSlash": true,
   "redirects": [
     { "source": "/refund", "destination": "/refunds/", "type": 308 },
-    { "source": "/refund/", "destination": "/refunds/", "type": 308 }
+    { "source": "/refund/", "destination": "/refunds/", "type": 308 },
+    { "source": "/guides/best-woman-speech", "destination": "/guides/", "type": 301 },
+    { "source": "/guides/best-woman-speech/", "destination": "/guides/", "type": 301 }
   ]
 }
