@@ -39,5 +39,14 @@ describe('kit blob pathnames', () => {
       assert.notEqual(kit.priceIdTest, kit.priceIdLive);
     }
   });
+
+  it('speech is £14.99 / $17.99 with USD price ids; other kits keep live GBP amounts', () => {
+    assert.equal(KITS.speech.priceValueGbp, 14.99);
+    assert.equal(KITS.speech.priceValueUsd, 17.99);
+    assert.match(KITS.speech.priceIdLiveUsd, /^price_/);
+    assert.equal(KITS.duties.priceValue, 5.99);
+    assert.equal(KITS.playbook.priceValue, 11.99);
+    assert.equal(KITS.bundle.priceValue, 19.99);
+  });
 });
 

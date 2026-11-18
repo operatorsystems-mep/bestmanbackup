@@ -27,13 +27,13 @@ test.describe('Best Man Backup — desktop 1440', () => {
     const expectedTest: Record<string, RegExp> = {
       duties: /buy\.stripe\.com\/test_5kQeVfanOfdkc2XemU0Fi0h/,
       playbook: /buy\.stripe\.com\/test_5kQ14pgMc6GOc2Xa6E0Fi0i/,
-      speech: /buy\.stripe\.com\/test_8x214pgMc0iq3wrbaI0Fi0g/,
+      speech: /buy\.stripe\.com\/test_TODO_SPEECH_GBP/,
       set: /buy\.stripe\.com\/test_aFa7sN1Ric18gjd4Mk0Fi0j/,
     };
     const expectedLive: Record<string, RegExp> = {
       duties: /buy\.stripe\.com\/cNicN7anOe9g1oj92A0Fi01/,
       playbook: /buy\.stripe\.com\/4gM14p67y9T07MH5Qo0Fi02/,
-      speech: /buy\.stripe\.com\/9B67sN9jK1muc2X3Ig0Fi00/,
+      speech: /buy\.stripe\.com\/TODO_SPEECH_LIVE_GBP/,
       bundle: /buy\.stripe\.com\/dRmbJ3brSe9g7MHbaI0Fi03/,
     };
 
@@ -62,14 +62,50 @@ test.describe('Best Man Backup — desktop 1440', () => {
     const res = await page.goto('/kits/');
     expect(res?.ok()).toBeTruthy();
     await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
-    await expect(page.locator('#speech')).toContainText('£6.98');
+    await expect(page.locator('#speech')).toContainText('£14.99');
+    await expect(page.locator('#speech')).toContainText(/ChatGPT can write a best man speech/i);
+    await expect(page.locator('body')).toContainText(/THE COMPLETE BEST MAN TOOLKIT/i);
     await expect(page.locator('#duties')).toContainText('£5.99');
     await expect(page.locator('#playbook')).toContainText('£11.99');
     await expect(page.locator('#bundle')).toContainText('£19.99');
+    await expect(page.locator('#speech')).not.toContainText(/for £5 more|for \$7 more/i);
     await expect(page.locator('body')).not.toContainText(/Checkout opening shortly/i);
     const schema = await page.locator('script[type="application/ld+json"]').allTextContents();
     expect(schema.join('\n')).toMatch(/"@type":\s*"Product"/);
-    expect(schema.join('\n')).toMatch(/"price":\s*"6\.98"/);
+    expect(schema.join('\n')).toMatch(/"price":\s*"14\.99"/);
+    expect(schema.join('\n')).toMatch(/"price":\s*"17\.99"/);
+    expect(schema.join('\n')).toMatch(/"price":\s*"5\.99"/);
+  });
+
+  test('kits speech shows GBP then USD prices and matching checkout hrefs; other kits unchanged', async ({ page }) => {
+    await page.goto('/kits/');
+    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
+
+    await page.evaluate(() => {
+      try { localStorage.setItem('bmb_currency', 'GBP'); } catch {}
+      document.documentElement.setAttribute('data-currency', 'GBP');
+      (window as unknown as { BMB_currency?: { set: (c: string) => void } }).BMB_currency?.set('GBP');
+      (window as unknown as { BMB_applyCheckout?: () => void }).BMB_applyCheckout?.();
+    });
+    await expect(page.locator('#speech .bmb-price-gbp')).toBeVisible();
+    await expect(page.locator('#speech')).toContainText('£14.99');
+    const speechGbp = page.locator('#speech a[data-product="speech"]').first();
+    await expect(speechGbp).toHaveAttribute('href', /buy\.stripe\.com\/test_TODO_SPEECH_GBP/);
+
+    await page.locator('[data-currency-toggle="USD"]').click();
+    await expect(page.locator('html')).toHaveAttribute('data-currency', 'USD');
+    await expect(page.locator('#speech')).toContainText('$17.99');
+    const speechUsd = page.locator('#speech a[data-product="speech"]').first();
+    await expect(speechUsd).toHaveAttribute('href', /buy\.stripe\.com\/test_TODO_SPEECH_USD/);
+
+    // Other kits keep live GBP prices and GBP test checkout links
+    await expect(page.locator('#duties')).toContainText('£5.99');
+    await expect(page.locator('#playbook')).toContainText('£11.99');
+    await expect(page.locator('#bundle')).toContainText('£19.99');
+    await expect(page.locator('#duties a[data-product="duties"]').first()).toHaveAttribute(
+      'href',
+      /buy\.stripe\.com\/test_5kQeVfanOfdkc2XemU0Fi0h/
+    );
   });
 
   test('thank-you page is present and noindex; paid files are not linked as static URLs', async ({ page, request }) => {

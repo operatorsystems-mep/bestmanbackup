@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html data-currency="GBP" lang="en-GB">
 <head>
   <meta charset="utf-8">
+  <script>(function(){try{var p='',c='',g='';try{p=localStorage.getItem('bmb_currency')||''}catch(e){}var m=document.cookie.match(/(?:^|; )bmb_currency=([^;]*)/);c=m?decodeURIComponent(m[1]):'';m=document.cookie.match(/(?:^|; )bmb_geo=([^;]*)/);g=m?decodeURIComponent(m[1]):'';var v=String(p||c||'').toUpperCase();if(v!=='USD'&&v!=='GBP'){var geo=(document.documentElement.getAttribute('data-geo')||g||'').toUpperCase();v=geo==='US'?'USD':null;if(!v){var lang=String(navigator.language||'').toLowerCase();v=(lang==='en-us'||lang.slice(-3)==='-us')?'USD':'GBP'}}document.documentElement.setAttribute('data-currency',v);document.documentElement.lang=v==='USD'?'en-US':'en-GB'}catch(e){document.documentElement.setAttribute('data-currency','GBP')}})();</script>
+  <script src="/assets/currency.js" defer></script>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#132238">
   <title>Best Man Kits: Speech, Duties and Playbook | Best Man Backup</title>
@@ -12,7 +14,7 @@
   <meta property="og:title" content="Best Man Kits | Best Man Backup">
   <meta property="og:description" content="Speech, duties and stag do kits for best men. Digital downloads. Checkout on Stripe.">
   <meta property="og:url" content="https://bestmanbackup.com/kits/">
-  <meta property="og:image" content="https://bestmanbackup.com/assets/best-man-editorial.jpg">
+  <meta property="og:image" content="https://bestmanbackup.com/assets/mockups/speech-cover.jpg">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,6 +23,7 @@
   <link rel="apple-touch-icon" href="/assets/bmb-shield-180.png">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/guides/guides.css">
+  <link rel="stylesheet" href="/kits/kits.css">
   <script defer src="/analytics.js"></script>
   <script defer src="/assets/checkout-config.js"></script>
   <script defer src="/assets/checkout.js"></script>
@@ -41,13 +44,22 @@
         "name": "Best Man Speech Kit",
         "description": "A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.",
         "brand": {"@type": "Brand", "name": "Best Man Backup"},
-        "offers": {
-          "@type": "Offer",
-          "url": "https://bestmanbackup.com/kits/#speech",
-          "priceCurrency": "GBP",
-          "price": "6.98",
-          "availability": "https://schema.org/OnlineOnly"
-        }
+        "offers": [
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#speech",
+            "priceCurrency": "GBP",
+            "price": "14.99",
+            "availability": "https://schema.org/OnlineOnly"
+          },
+          {
+            "@type": "Offer",
+            "url": "https://bestmanbackup.com/kits/#speech",
+            "priceCurrency": "USD",
+            "price": "17.99",
+            "availability": "https://schema.org/OnlineOnly"
+          }
+        ]
       },
       {
         "@type": "Product",
@@ -94,8 +106,30 @@
     ]
   }
   </script>
+  <style>
+    .bmb-price{display:inline-grid;grid-template-areas:"stack";align-items:baseline}
+    .bmb-price>*{grid-area:stack}
+    .bmb-price-gbp,.bmb-price-usd{visibility:hidden}
+    html[data-currency="GBP"] .bmb-price-gbp,
+    html[data-currency="USD"] .bmb-price-usd{visibility:visible}
+    .bmb-label-gbp,.bmb-label-usd{display:none}
+    html[data-currency="GBP"] .bmb-label-gbp,
+    html[data-currency="USD"] .bmb-label-usd{display:inline}
+    .kits-currency-bar{display:flex;gap:8px;align-items:center;margin:0 0 28px;flex-wrap:wrap}
+    .kits-currency-bar button{
+      min-height:40px;padding:8px 14px;border:1px solid var(--line,#d9d6cf);
+      background:#fff;color:var(--ink,#17263D);font:inherit;cursor:pointer;
+    }
+    .kits-currency-bar button.is-active,
+    .kits-currency-bar button[aria-pressed="true"]{
+      border-color:var(--gold,#D4A84F);background:var(--navy,#132238);color:#fff;
+    }
+    .kits-toolkit-lead{margin:0 0 36px;max-width:46ch}
+    .kits-toolkit-lead .eyebrow{margin-bottom:10px}
+    .kits-speech-live{margin:0 0 48px}
+  </style>
 </head>
-<body>
+<body class="kits-page">
   <a class="skip" href="#main">Skip to content</a>
   <header class="header wrap">
     <a class="brand" href="/" aria-label="Best Man Backup home">
@@ -114,7 +148,66 @@
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> Kits</nav>
       <p class="eyebrow"><span></span> THE KITS</p>
       <h1>Best man kits</h1>
-      <div class="guide-stamp"><p>Updated 17 November 2026</p><p>Digital downloads. Editable Word files and printable A4 / US Letter pages.</p></div>
+      <div class="guide-stamp"><p>Updated 18 November 2026</p><p>Digital downloads. Editable Word files and printable A4 / US Letter pages.</p></div>
+
+      <div class="kits-toolkit-lead">
+        <p class="eyebrow"><span></span> THE COMPLETE BEST MAN TOOLKIT</p>
+        <p>Speech, duties and the stag do — start with the Speech Kit, or choose the kit that matches the job in front of you.</p>
+      </div>
+
+      <div class="kits-currency-bar" role="group" aria-label="Currency">
+        <span>Prices</span>
+        <button type="button" data-currency-toggle="GBP" aria-pressed="true">£ GBP</button>
+        <button type="button" data-currency-toggle="USD" aria-pressed="false">$ USD</button>
+      </div>
+
+      <article class="kits-product kits-speech-live" id="speech" aria-labelledby="speech-title">
+        <figure class="kits-visual">
+          <div class="kits-cover">
+            <picture>
+              <source type="image/webp" srcset="/assets/mockups/speech-cover.webp">
+              <img src="/assets/mockups/speech-cover.jpg" width="760" height="1074" alt="Best Man Speech Kit cover" loading="lazy">
+            </picture>
+          </div>
+          <ul class="kits-pages" aria-label="Pages from the Speech Kit">
+            <li>
+              <picture>
+                <source type="image/webp" srcset="/assets/mockups/speech-inside.webp">
+                <img src="/assets/mockups/speech-inside.jpg" width="900" height="1273" alt="Speech Kit worked example — ten notes with a story" loading="lazy">
+              </picture>
+            </li>
+            <li>
+              <picture>
+                <source type="image/webp" srcset="/assets/mockups/cue-cards.webp">
+                <img src="/assets/mockups/cue-cards.jpg" width="900" height="1273" alt="Printable cue cards from the Speech Kit" loading="lazy">
+              </picture>
+            </li>
+            <li>
+              <picture>
+                <source type="image/webp" srcset="/assets/mockups/speech-guide.webp">
+                <img src="/assets/mockups/speech-guide.jpg" width="900" height="1273" alt="Speech Kit writing guide page" loading="lazy">
+              </picture>
+            </li>
+          </ul>
+          <figcaption>Worked example, cue cards and writing guide.</figcaption>
+        </figure>
+        <div class="kits-copy">
+          <p class="eyebrow">03 / SAY IT</p>
+          <h2 id="speech-title">Best Man Speech Kit</h2>
+          <p class="kits-price"><span class="bmb-price"><span class="bmb-price-gbp">£14.99</span><span class="bmb-price-usd">$17.99</span></span></p>
+          <p>A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.</p>
+          <p class="kits-line">ChatGPT can write a best man speech. Only you can write his.</p>
+          <ul class="kits-contents">
+            <li>Speech-writing guide with story prompts</li>
+            <li>Editable Word workbook and final-speech document</li>
+            <li>Six large cue cards for delivery</li>
+            <li>Rehearsal checklist</li>
+            <li>A4 and US Letter layouts</li>
+          </ul>
+          <a class="button kits-buy" data-product="speech" data-label="Get the Speech Kit · £14.99" data-price-in-label="1" href="/kits/#speech"><span class="bmb-label-gbp">Get the Speech Kit · £14.99</span><span class="bmb-label-usd">Get the Speech Kit · $17.99</span></a>
+        </div>
+      </article>
+
       <div class="answer">
         <p class="eyebrow">CHECKOUT</p>
         <p>Choose a kit below. Checkout opens on Stripe. After payment you return here to download your files.</p>
@@ -137,15 +230,6 @@
           <a class="button" data-product="playbook" data-label="Get the Playbook" href="/kits/#playbook">Get the Playbook</a>
         </p>
         <p class="kit-cta-small">Budgets and guest payments sit in the Duties Kit.</p>
-      </article>
-
-      <article class="kit-cta kit-cta-end" id="speech" aria-labelledby="speech-title">
-        <p class="eyebrow">03 / SAY IT · £6.98</p>
-        <h2 id="speech-title">Best Man Speech Kit</h2>
-        <p>A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.</p>
-        <p class="kit-cta-actions">
-          <a class="button" data-product="speech" data-label="Get the Speech Kit" href="/kits/#speech">Get the Speech Kit</a>
-        </p>
       </article>
 
       <article class="kit-cta kit-cta-end" id="bundle" aria-labelledby="bundle-title">
