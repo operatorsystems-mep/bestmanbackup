@@ -49,6 +49,44 @@ header.header.nav-open .nav-toggle-bars:after{top:0;transform:rotate(-45deg)}
     flex-wrap:nowrap;
     justify-content:space-between;
     align-items:center;
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    gap:8px;
+  }
+  header.header.wrap{
+    width:100%;
+    padding-inline:16px;
+  }
+  header.header .brand{
+    width:auto;
+    min-width:0;
+    max-width:calc(100% - 52px);
+    flex:1 1 auto;
+  }
+  header.header .brand img{
+    width:52px;
+    height:52px;
+    flex-shrink:0;
+  }
+  header.header .brand .brand-name,
+  header.header .brand > span{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .footer-inner,
+  .footer-inner .brand,
+  .footer-wordmark{
+    min-width:0;
+    max-width:100%;
+  }
+  .footer-inner .brand .footer-tagline,
+  .footer-tagline{
+    white-space:normal;
+    overflow-wrap:anywhere;
+    max-width:100%;
   }
   .nav-toggle{display:inline-flex}
   header.header nav#site-nav{

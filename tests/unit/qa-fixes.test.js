@@ -25,6 +25,42 @@ describe('QA fixes', () => {
   const files = htmlFiles(ROOT);
   const guides = files.filter((file) => file.includes(`${path.sep}guides${path.sep}`) && file.endsWith(`${path.sep}index.html`) && !file.endsWith(`${path.sep}guides${path.sep}index.html`));
 
+  it('keeps in-text kit links on the kits page instead of checkout', () => {
+    const bad = [];
+    let stripped = 0;
+    for (const file of guides) {
+      const html = fs.readFileSync(file, 'utf8');
+      for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)) {
+        const attrs = match[1];
+        if (attrs.includes('button')) continue;
+        const text = decode(match[2].replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+        const href = (attrs.match(/href="([^"]*)"/) || [])[1] || '';
+        if (attrs.includes('data-product') || /buy\.stripe\.com/i.test(href)) {
+          bad.push(`${path.relative(ROOT, file)} still checks out: ${text}`);
+        }
+        if (/^(Best Man Speech Kit|Best Man Duties Kit|Stag Do & Bachelor Party Playbook)$/.test(text)) {
+          stripped += 1;
+          const expected = /Speech Kit$/.test(text)
+            ? '/kits/#speech'
+            : /Duties Kit$/.test(text)
+              ? '/kits/#duties'
+              : '/kits/#playbook';
+          if (href !== expected) bad.push(`${path.relative(ROOT, file)} "${text}" -> ${href}`);
+        }
+        if (
+          text === 'Best Man Bundle' &&
+          file.endsWith(`${path.sep}what-does-the-best-man-pay-for${path.sep}index.html`)
+        ) {
+          if (href !== '/kits/' || attrs.includes('data-product')) {
+            bad.push(`${path.relative(ROOT, file)} in-text bundle link -> ${href}`);
+          }
+        }
+      }
+    }
+    assert.ok(stripped >= 13, `expected the renamed in-text kit links, saw ${stripped}`);
+    assert.deepEqual(bad, []);
+  });
+
   it('keeps See the kit links on the matching kits anchor', () => {
     const bad = [];
     let count = 0;
