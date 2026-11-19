@@ -339,6 +339,24 @@ test.describe('Best Man Backup — desktop 1440', () => {
 test.describe('Best Man Backup — mobile 390', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
+  test('pages do not scroll sideways and the menu button stays on screen', async ({ page }) => {
+    const paths = ['/', '/kits/', '/guides/', '/guides/how-to-write-a-best-man-speech/', '/privacy/', '/guides/this-page-does-not-exist/'];
+    for (const path of paths) {
+      await page.goto(path);
+      const toggle = page.getByRole('button', { name: 'Menu' });
+      await expect(toggle).toBeVisible();
+      const box = await toggle.boundingBox();
+      expect(box, path).toBeTruthy();
+      expect(box!.x, path).toBeGreaterThanOrEqual(0);
+      expect(box!.x + box!.width, path).toBeLessThanOrEqual(390);
+      const widths = await page.evaluate(() => ({
+        scroll: document.documentElement.scrollWidth,
+        client: document.documentElement.clientWidth,
+      }));
+      expect(widths.scroll, `${path} scrollWidth`).toBeLessThanOrEqual(widths.client);
+    }
+  });
+
   test('guide and kits pages open a real mobile menu', async ({ page }) => {
     for (const path of ['/guides/how-to-write-a-best-man-speech/', '/kits/', '/']) {
       await page.goto(path);
