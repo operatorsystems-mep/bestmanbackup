@@ -57,6 +57,35 @@ describe('public catalogue', () => {
     assert.equal(KITS.playbook.name, 'Stag Do & Bachelor Party Playbook');
   });
 
+  it('keeps the homepage title short and matched to the social title', () => {
+    const title = home.match(/<title>([^<]*)<\/title>/)[1];
+    const og = home.match(/property="og:title" content="([^"]*)"/)[1];
+    assert.equal(title, og);
+    assert.ok(title.length <= 60, title.length);
+    assert.match(title, /50 free/i);
+    assert.match(title, /best man/i);
+  });
+
+  it('leads the guides hub description with the free guides', () => {
+    const desc = hub.match(/<meta name="description" content="([^"]*)"/)[1];
+    assert.match(desc, /^50 free best man guides/);
+    assert.equal(desc.includes('printed book'), false);
+    assert.equal(hub.includes('These pages are not a printed book'), false);
+  });
+
+  it('gives every guide at least three inbound links from other guides', () => {
+    const inbound = new Map(slugs.map((slug) => [slug, new Set()]));
+    for (const slug of slugs) {
+      const html = read(path.join('guides', slug, 'index.html'));
+      for (const match of html.matchAll(/href="\/guides\/([^"/]+)\/"/g)) {
+        const target = match[1];
+        if (target !== slug && inbound.has(target)) inbound.get(target).add(slug);
+      }
+    }
+    const low = slugs.filter((slug) => inbound.get(slug).size < 3);
+    assert.deepEqual(low, []);
+  });
+
   it('does not publish draft legal pages', () => {
     for (const page of ['terms', 'refunds', 'contact', 'about']) {
       assert.equal(fs.existsSync(path.join(ROOT, page, 'index.html')), false);

@@ -16,7 +16,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
   test('home loads and names the brand', async ({ page }) => {
     const res = await page.goto('/');
     expect(res?.ok()).toBeTruthy();
-    await expect(page).toHaveTitle(/Best Man Backup/i);
+    await expect(page).toHaveTitle('Best Man Help: 50 Free Guides, Speech & Duties');
     await expect(page.getByRole('link', { name: /Best Man Backup/i }).first()).toBeVisible();
   });
 
@@ -295,7 +295,8 @@ test.describe('Best Man Backup — desktop 1440', () => {
   test('home shows current kit prices and the toolkit title', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/');
-    await expect(page).toHaveTitle('Best man toolkit: 50 free guides, speech, duties, stag do | Best Man Backup');
+    await expect(page).toHaveTitle('Best Man Help: 50 Free Guides, Speech & Duties');
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'Best Man Help: 50 Free Guides, Speech & Duties');
     await expect(page.locator('.kit-price')).toHaveText(['£9.99', '£9.99', '£14.99', '£19.99']);
     await expect(page.locator('.set-price')).toHaveText('£19.99');
     await expect(page.locator('table')).toContainText('£14.99');

@@ -148,6 +148,9 @@ describe('QA fixes', () => {
     assert.equal(www.statusCode, 301);
     assert.equal(retired.destination, '/guides/');
     assert.equal(retired.statusCode, 301);
+    const pdf = config.headers.find((rule) => rule.source === '/downloads/(.*\\.pdf)');
+    assert.equal(pdf.headers[0].key, 'X-Robots-Tag');
+    assert.equal(pdf.headers[0].value, 'noindex, follow');
   });
 
   it('does not publish the draft legal pages from this branch', () => {
