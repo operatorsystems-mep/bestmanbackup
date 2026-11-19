@@ -16,7 +16,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
   test('home loads and names the brand', async ({ page }) => {
     const res = await page.goto('/');
     expect(res?.ok()).toBeTruthy();
-    await expect(page).toHaveTitle(/Best Man Backup/i);
+    await expect(page).toHaveTitle('Best Man Help: 50 Free Guides, Speech & Duties');
     await expect(page.getByRole('link', { name: /Best Man Backup/i }).first()).toBeVisible();
   });
 
@@ -62,14 +62,17 @@ test.describe('Best Man Backup — desktop 1440', () => {
     const res = await page.goto('/kits/');
     expect(res?.ok()).toBeTruthy();
     await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
-    await expect(page.locator('#speech')).toContainText('£6.98');
-    await expect(page.locator('#duties')).toContainText('£5.99');
-    await expect(page.locator('#playbook')).toContainText('£11.99');
+    await expect(page.locator('#speech')).toContainText('£14.99');
+    await expect(page.locator('#duties')).toContainText('£9.99');
+    await expect(page.locator('#playbook')).toContainText('£9.99');
     await expect(page.locator('#bundle')).toContainText('£19.99');
+    await expect(page.locator('#bundle')).toContainText('Stag Do & Bachelor Party Playbook');
+    await expect(page.locator('body')).not.toContainText('Stag & Bachelor Party Kit');
     await expect(page.locator('body')).not.toContainText(/Checkout opening shortly/i);
     const schema = await page.locator('script[type="application/ld+json"]').allTextContents();
     expect(schema.join('\n')).toMatch(/"@type":\s*"Product"/);
-    expect(schema.join('\n')).toMatch(/"price":\s*"6\.98"/);
+    expect(schema.join('\n')).toMatch(/"price":\s*"14\.99"/);
+    expect(schema.join('\n')).toMatch(/"price":\s*"9\.99"/);
   });
 
   test('thank-you page is present and noindex; paid files are not linked as static URLs', async ({ page, request }) => {
@@ -292,12 +295,18 @@ test.describe('Best Man Backup — desktop 1440', () => {
   test('home shows current kit prices and the toolkit title', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/');
-    await expect(page).toHaveTitle('Best man toolkit: speech, duties, stag do | Best Man Backup');
-    await expect(page.locator('.kit-price')).toHaveText(['£5.99', '£11.99', '£6.98']);
+    await expect(page).toHaveTitle('Best Man Help: 50 Free Guides, Speech & Duties');
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'Best Man Help: 50 Free Guides, Speech & Duties');
+    await expect(page.locator('.kit-price')).toHaveText(['£9.99', '£9.99', '£14.99', '£19.99']);
     await expect(page.locator('.set-price')).toHaveText('£19.99');
-    await expect(page.locator('table')).toContainText('£5.99');
+    await expect(page.locator('table')).toContainText('£14.99');
     await expect(page.locator('table')).toContainText('£19.99');
-    await expect(page.locator('a.kit-tile[href="/kits/#playbook"]')).toBeVisible();
+    const games = page.locator('tr', { hasText: 'Stag do games, challenges and awards' });
+    await expect(games.locator('td').nth(3)).toHaveText('Included');
+    await expect(page.locator('#kits a[href="/kits/#playbook"]').first()).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Browse the 50 free guides' })).toBeVisible();
+    await expect(page.locator('#guides')).toContainText('50 free best man guides');
+    await expect(page.locator('#guides .guide-group-list a')).toHaveCount(50);
     await expect(page.getByRole('button', { name: 'Menu' })).toBeHidden();
     const kits = page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'All kits' });
     const box = await kits.boundingBox();
@@ -335,6 +344,28 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(section).toBeHidden();
   });
 });
+
+for (const width of [360, 375, 390, 414]) {
+  test.describe(`Best Man Backup — no sideways scroll at ${width}`, () => {
+    test.use({ viewport: { width, height: 800 } });
+
+    test('home kits and guides, the kits page and the guide index stay within the screen', async ({ page }) => {
+      for (const path of ['/', '/kits/', '/guides/']) {
+        await page.goto(path);
+        if (path === '/') {
+          await expect(page.locator('#kits')).toBeVisible();
+          await expect(page.locator('#guides')).toBeVisible();
+          await expect(page.locator('.bundle-banner')).toBeVisible();
+        }
+        const widths = await page.evaluate(() => ({
+          scroll: document.documentElement.scrollWidth,
+          client: document.documentElement.clientWidth,
+        }));
+        expect(widths.scroll, `${path} at ${width}`).toBeLessThanOrEqual(widths.client);
+      }
+    });
+  });
+}
 
 test.describe('Best Man Backup — mobile 390', () => {
   test.use({ viewport: { width: 390, height: 844 } });

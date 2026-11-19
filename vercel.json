@@ -47,6 +47,10 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
     },
     {
+      "source": "/downloads/(.*\\.pdf)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
       "source": "/links",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },

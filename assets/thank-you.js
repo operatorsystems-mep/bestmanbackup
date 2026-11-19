@@ -9,7 +9,7 @@
     speech: {
       id: 'speech',
       name: 'Best Man Speech Kit',
-      price: '£6.98',
+      price: '£14.99',
       contents: [
         'A speech-writing guide',
         'An editable Word workbook',
@@ -38,7 +38,7 @@
     duties: {
       id: 'duties',
       name: 'Best Man Duties Kit',
-      price: '£5.99',
+      price: '£9.99',
       contents: [
         'A duties handbook',
         'An editable Word planner',
@@ -68,7 +68,7 @@
     playbook: {
       id: 'playbook',
       name: 'Stag Do & Bachelor Party Playbook',
-      price: '£11.99',
+      price: '£9.99',
       contents: [
         'Eight stag do games',
         'A groom quiz',
@@ -99,10 +99,10 @@
       name: 'Best Man Bundle',
       price: '£19.99',
       contents: [
-        'The Duties Kit',
-        'The Stag & Bachelor Party Kit',
         'The Speech Kit',
-        'One starting point across the role, the stag do and the speech',
+        'The Duties Kit',
+        'The Stag Do & Bachelor Party Playbook',
+        'One starting point across the speech, the duties and the stag do',
       ],
       steps: [
         {

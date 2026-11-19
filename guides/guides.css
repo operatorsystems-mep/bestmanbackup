@@ -32,6 +32,16 @@
 .related ul{padding-left:1.2em}
 .related li{margin-bottom:8px}
 .guide-cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.guide-index{counter-reset:guideitem}
+.guide-index-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.guide-index-list li{counter-increment:guideitem;min-width:0}
+.guide-index-list a{display:grid;grid-template-columns:2.5rem minmax(0,1fr);column-gap:10px;row-gap:6px;height:100%;background:#fff;border:1px solid var(--line);padding:16px 16px 16px 14px;text-decoration:none}
+.guide-index-list a:before{content:counter(guideitem, decimal-leading-zero);grid-row:1 / span 2;font-weight:700;color:#8a6418;letter-spacing:.04em}
+.guide-index-list a:hover{border-color:var(--gold)}
+.guide-index-list strong{grid-column:2;display:block;font-size:1.05rem;line-height:1.25;margin:0;overflow-wrap:anywhere}
+.guide-index-list span{grid-column:2;display:block;font-size:.9375rem;color:var(--muted);line-height:1.45;overflow-wrap:anywhere}
+.guide-group h2 .guide-count{display:inline-block;margin-left:8px;font-family:var(--sans);font-size:.75rem;letter-spacing:.12em;color:#8a6418;font-weight:700}
+@media(min-width:760px){.guide-index-list{grid-template-columns:1fr 1fr}}
 .guide-cards a{display:block;height:100%;background:#fff;border:1px solid var(--line);padding:20px 22px;text-decoration:none}
 .guide-cards a:hover{border-color:var(--gold)}
 .guide-cards strong{display:block;font-size:1.125rem;line-height:1.25;margin-bottom:8px}

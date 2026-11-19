@@ -10,18 +10,29 @@
  *
  * Server fulfillment matches Stripe price IDs by session.livemode
  * (test vs live) in lib/kits.mjs — never mix modes.
+ *
+ * BMB_PRICE_ID_LIVE is the only live Price ID map in this file. Replace the
+ * string on a product's line when the new live price exists, and keep it
+ * identical to PRICE_ID_LIVE in lib/kits.mjs. Payment Link URLs stay below.
  */
+const BMB_PRICE_ID_LIVE = Object.freeze({
+  speech: 'price_1UcuxdRKrA7iXAzo7Bpifs0D',
+  duties: 'price_1UcuxsRKrA7iXAzoTZHCJEQo',
+  playbook: 'price_1Ucuy1RKrA7iXAzo80f5IBDs',
+  bundle: 'price_1UcuyBRKrA7iXAzolGfl4aQX',
+});
+
 window.BMB_CHECKOUT = Object.freeze({
   products: Object.freeze({
     speech: Object.freeze({
       id: 'speech',
       name: 'Best Man Speech Kit',
       shortName: 'Speech Kit',
-      price: '£6.98',
+      price: '£14.99',
       currency: 'GBP',
-      priceValue: 6.98,
+      priceValue: 14.99,
       priceIdTest: 'price_1UcuNkRKrA7iXAzoBcZbNaOO',
-      priceIdLive: 'price_1UcuxdRKrA7iXAzo7Bpifs0D',
+      priceIdLive: BMB_PRICE_ID_LIVE.speech,
       description:
         'A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.',
       checkoutUrlTest: 'https://buy.stripe.com/test_8x214pgMc0iq3wrbaI0Fi0g',
@@ -33,11 +44,11 @@ window.BMB_CHECKOUT = Object.freeze({
       id: 'duties',
       name: 'Best Man Duties Kit',
       shortName: 'Duties Kit',
-      price: '£5.99',
+      price: '£9.99',
       currency: 'GBP',
-      priceValue: 5.99,
+      priceValue: 9.99,
       priceIdTest: 'price_1UcuNmRKrA7iXAzo8plO4K7b',
-      priceIdLive: 'price_1UcuxsRKrA7iXAzoTZHCJEQo',
+      priceIdLive: BMB_PRICE_ID_LIVE.duties,
       description:
         'A duties handbook, an editable Word planner and a printable planner with 14 planning sections, plus a wedding-day sheet and four pocket carry cards, in A4 and US Letter. Digital download.',
       checkoutUrlTest: 'https://buy.stripe.com/test_5kQeVfanOfdkc2XemU0Fi0h',
@@ -49,11 +60,11 @@ window.BMB_CHECKOUT = Object.freeze({
       id: 'playbook',
       name: 'Stag Do & Bachelor Party Playbook',
       shortName: 'Playbook',
-      price: '£11.99',
+      price: '£9.99',
       currency: 'GBP',
-      priceValue: 11.99,
+      priceValue: 9.99,
       priceIdTest: 'price_1UcuNoRKrA7iXAzosSZztLsF',
-      priceIdLive: 'price_1Ucuy1RKrA7iXAzo80f5IBDs',
+      priceIdLive: BMB_PRICE_ID_LIVE.playbook,
       description:
         'Eight stag do games, a groom quiz, challenge cards and the Stag Awards, editable in Word or printable, in UK and US editions. Digital download.',
       checkoutUrlTest: 'https://buy.stripe.com/test_5kQ14pgMc6GOc2Xa6E0Fi0i',
@@ -69,9 +80,9 @@ window.BMB_CHECKOUT = Object.freeze({
       currency: 'GBP',
       priceValue: 19.99,
       priceIdTest: 'price_1UcuNqRKrA7iXAzo9Q853mBX',
-      priceIdLive: 'price_1UcuyBRKrA7iXAzolGfl4aQX',
+      priceIdLive: BMB_PRICE_ID_LIVE.bundle,
       description:
-        'The Duties Kit, the Stag & Bachelor Party Kit and the Speech Kit in one download, with one starting point across the role, the stag do and the speech.',
+        'The Speech Kit, the Duties Kit and the Stag Do & Bachelor Party Playbook in one download. Worth £34.97 separately.',
       checkoutUrlTest: 'https://buy.stripe.com/test_aFa7sN1Ric18gjd4Mk0Fi0j',
       checkoutUrlLive: 'https://buy.stripe.com/dRmbJ3brSe9g7MHbaI0Fi03',
       kitsPath: '/kits/#bundle',

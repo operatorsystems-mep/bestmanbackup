@@ -33,3 +33,40 @@
 /* Home: best man guides links (17 Oct 2026) */
 .guide-links{display:grid;grid-template-columns:1fr 1.2fr;gap:85px;border-top:1px solid var(--line)}.guide-links>div>p:not(.eyebrow){color:var(--muted);max-width:400px}.guide-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.guide-list li{border-bottom:1px solid var(--line)}.guide-list a{display:block;padding:20px 30px 20px 0;font-weight:700;text-decoration:none;position:relative}.guide-list a:after{content:"\2192";position:absolute;right:3px;color:#72531d}.guide-list a:hover{text-decoration:underline;text-underline-offset:6px}
 @media(max-width:1000px){.guide-links{gap:48px}}@media(max-width:760px){.guide-links{grid-template-columns:1fr;gap:10px}.guide-list a{font-size:1rem;padding-block:18px}}
+
+/* Home: kits and the free-guide index sit under the hero. */
+.hero-copy,.section-head,.kit-tile,.bundle-banner,.guide-feature,.guide-group-list{min-width:0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;max-width:100%}
+.hero-actions .button{max-width:100%;min-width:0;gap:16px;white-space:normal}
+.button.secondary{background:transparent;color:#14253b}
+.button.secondary:hover{background:#14253b;color:#fff}
+.kit-tile .button{margin-top:6px;max-width:100%}
+.bundle-banner{display:grid;grid-template-columns:minmax(0,160px) minmax(0,1fr);gap:28px;align-items:center;margin-top:8px;padding-top:28px}
+.bundle-cover{display:flex;justify-content:center;align-items:flex-end;height:210px;padding:12px 12px 0;background:#e9e1d3;overflow:hidden}
+.bundle-cover img{width:auto;height:100%;max-width:100%}
+.bundle-banner h3{font-family:BMB Serif,Georgia,serif;font-weight:400;font-size:clamp(28px,3vw,40px);margin:0 0 10px}
+.bundle-banner p{max-width:62ch}
+.bundle-banner .button{max-width:100%}
+.guide-feature{border-top:1px solid #ded5c4}
+.guide-groups{display:grid;gap:34px}
+.guide-feature h3{font-family:BMB Serif,Georgia,serif;font-weight:400;font-size:32px;margin:0 0 6px}
+.guide-count{font-family:BMB Sans,Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:.14em;color:#896821}
+.guide-group-list{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:1fr}
+.guide-group-list li{min-width:0;border-bottom:1px solid #ded5c4}
+.guide-group-list a{display:flex;gap:12px;align-items:baseline;padding:11px 0;text-decoration:none;font-weight:700;min-width:0}
+.guide-group-list a:hover{text-decoration:underline;text-underline-offset:4px}
+.guide-group-list .n{flex:0 0 2.4rem;color:#896821;font-variant-numeric:tabular-nums}
+.guide-group-list .t{min-width:0;overflow-wrap:anywhere}
+.guide-feature-more{margin:32px 0 0}
+.guide-feature-more .button{max-width:100%}
+.comparison{max-width:100%}
+@media(min-width:800px){.guide-group-list{grid-template-columns:1fr 1fr;column-gap:40px}}
+@media(max-width:640px){
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .button{width:100%;justify-content:space-between}
+  .kit-tile .button{clear:both;width:100%;justify-content:space-between}
+  .bundle-banner{grid-template-columns:minmax(0,1fr);gap:14px}
+  .bundle-cover{width:132px;height:170px}
+  .bundle-banner .button,.guide-feature-more .button{width:100%;justify-content:space-between}
+  .guide-feature h3{font-size:28px}
+}

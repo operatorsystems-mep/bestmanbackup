@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { KITS, getKit } from '../../lib/kits.mjs';
+import { KITS, PRICE_ID_LIVE, getKit } from '../../lib/kits.mjs';
 
 describe('kit blob pathnames', () => {
   it('maps every kit to a private Blob pathname under kits/', () => {
@@ -37,7 +37,16 @@ describe('kit blob pathnames', () => {
       assert.match(kit.priceIdTest, /^price_/);
       assert.match(kit.priceIdLive, /^price_/);
       assert.notEqual(kit.priceIdTest, kit.priceIdLive);
+      assert.equal(kit.priceIdLive, PRICE_ID_LIVE[kit.id]);
     }
+  });
+
+  it('uses the current public prices', () => {
+    assert.equal(getKit('speech').priceValue, 14.99);
+    assert.equal(getKit('duties').priceValue, 9.99);
+    assert.equal(getKit('playbook').priceValue, 9.99);
+    assert.equal(getKit('bundle').priceValue, 19.99);
+    assert.equal(getKit('playbook').name, 'Stag Do & Bachelor Party Playbook');
   });
 });
 
