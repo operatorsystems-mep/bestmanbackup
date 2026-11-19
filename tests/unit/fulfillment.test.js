@@ -12,7 +12,7 @@ const SECRET = 'sk_test_unit_secret_for_signing_only';
 function session({
   payment_status = 'paid',
   priceId = KITS.speech.priceIdTest,
-  amount_total = 698,
+  amount_total = 1499,
   livemode = false,
 } = {}) {
   return {
@@ -41,7 +41,7 @@ describe('sessionMatchesKit', () => {
 
   it('rejects a paid session for the wrong kit', () => {
     const result = sessionMatchesKit(
-      session({ priceId: KITS.speech.priceIdTest, amount_total: 698 }),
+      session({ priceId: KITS.speech.priceIdTest, amount_total: 1499 }),
       'duties'
     );
     assert.equal(result.ok, false);
@@ -50,7 +50,7 @@ describe('sessionMatchesKit', () => {
 
   it('rejects a wrong amount even when the price id matches', () => {
     const result = sessionMatchesKit(
-      session({ priceId: KITS.duties.priceIdTest, amount_total: 999 }),
+      session({ priceId: KITS.duties.priceIdTest, amount_total: 100 }),
       'duties'
     );
     assert.equal(result.ok, false);
@@ -59,7 +59,7 @@ describe('sessionMatchesKit', () => {
 
   it('accepts duties with the duties test price id and amount', () => {
     const result = sessionMatchesKit(
-      session({ priceId: KITS.duties.priceIdTest, amount_total: 599 }),
+      session({ priceId: KITS.duties.priceIdTest, amount_total: 999 }),
       'duties'
     );
     assert.equal(result.ok, true);
@@ -70,7 +70,7 @@ describe('sessionMatchesKit', () => {
       session({
         livemode: true,
         priceId: KITS.speech.priceIdLive,
-        amount_total: 698,
+        amount_total: 1499,
       }),
       'speech'
     );
@@ -80,7 +80,7 @@ describe('sessionMatchesKit', () => {
       session({
         livemode: true,
         priceId: KITS.speech.priceIdTest,
-        amount_total: 698,
+        amount_total: 1499,
       }),
       'speech'
     );

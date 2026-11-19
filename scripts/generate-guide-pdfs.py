@@ -88,17 +88,17 @@ PRODUCT_META = {
     "speech": {
         "name": "Best Man Speech Kit",
         "blurb": "Speech-writing guide, editable workbook and six large cue cards.",
-        "price": "£6.98",
+        "price": "£14.99",
     },
     "duties": {
         "name": "Best Man Duties Kit",
         "blurb": "Duties handbook, planner, wedding-day sheet and pocket carry cards.",
-        "price": "£5.99",
+        "price": "£9.99",
     },
     "playbook": {
         "name": "Stag Do & Bachelor Party Playbook",
         "blurb": "Eight games, groom quiz, challenge cards and Stag Awards.",
-        "price": "£11.99",
+        "price": "£9.99",
     },
 }
 
