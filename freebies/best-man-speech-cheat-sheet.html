@@ -3,9 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>The Best Man's 1-Page Speech Cheat Sheet - Best Man Backup</title>
+  <!--
+    Source for freebies/best-man-speech-cheat-sheet.pdf.
+    Reprint to A4 with background graphics, zero margin, preferCSSPageSize.
+  -->
   <style>
     @font-face { font-family: "Nimbus Sans"; src: url("../fonts/NimbusSans-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
     @font-face { font-family: "Nimbus Sans"; src: url("../fonts/NimbusSans-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    @font-face { font-family: "Nimbus Roman"; src: url("../fonts/NimbusRoman-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
     @font-face { font-family: "Nimbus Roman"; src: url("../fonts/NimbusRoman-Regular.otf") format("opentype"); font-weight: 400; font-style: italic; }
     @page { size: A4; margin: 0; }
     * { box-sizing: border-box; }
@@ -13,28 +18,25 @@
     body {
       width: 210mm;
       height: 297mm;
-      overflow: hidden;
-      background: #F6F1E8;
-      color: #17263D;
+      background: #F6F2E9;
+      color: #14253B;
       font-family: "Nimbus Sans", Arial, sans-serif;
-      font-size: 10.5pt;
-      line-height: 1.35;
       display: flex;
       flex-direction: column;
     }
-    a { color: inherit; }
+    a { color: inherit; text-decoration: none; }
     header {
       background: #132238;
       color: #fff;
-      padding: 8mm 10mm 7mm;
+      padding: 7mm 10mm 6.5mm;
       display: grid;
-      grid-template-columns: 18mm 1fr;
-      gap: 4mm;
+      grid-template-columns: 16mm 1fr;
+      column-gap: 4.5mm;
       align-items: center;
     }
-    header img { width: 16mm; height: 16mm; }
-    .kicker {
-      margin: 0 0 1mm;
+    header img { width: 15mm; height: 15mm; }
+    .brand {
+      margin: 0 0 1.4mm;
       color: #D4A84F;
       font-size: 8pt;
       font-weight: 700;
@@ -42,199 +44,198 @@
     }
     h1 {
       margin: 0;
+      font-family: "Nimbus Roman", Georgia, serif;
+      font-weight: 400;
       font-size: 22pt;
       line-height: 1.02;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
     }
-    .tagline {
-      margin: 1.5mm 0 0;
-      color: #D4A84F;
-      font-family: "Nimbus Roman", Georgia, serif;
-      font-style: italic;
-      font-size: 11pt;
+    .sub {
+      margin: 2mm 0 0;
+      max-width: 158mm;
+      color: #F6F2E9;
+      font-size: 10.5pt;
+      line-height: 1.35;
     }
-    .goldbar { height: 1.6mm; background: #D4A84F; }
+    .goldbar { height: 1.5mm; background: #D4A84F; flex: none; }
     main {
       flex: 1;
-      padding: 5mm 8mm 0;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 4mm;
-      align-items: stretch;
+      padding: 4.5mm 9mm 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
-    .col { display: flex; flex-direction: column; min-height: 0; }
-    .card.grow { flex: 1; }
-    .card {
-      background: #fff;
-      border: 0.4mm solid #E4C98A;
-      padding: 3.5mm 4mm 3mm;
-      margin: 0 0 4mm;
-    }
-    .label {
-      margin: 0 0 1mm;
-      color: #8A6418;
-      font-size: 8pt;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-    }
-    h2 { margin: 0 0 2mm; font-size: 13pt; line-height: 1.15; }
-    ol.parts { list-style: none; margin: 0; padding: 0; counter-reset: part; }
-    ol.parts li {
-      counter-increment: part;
-      display: grid;
-      grid-template-columns: 6mm 1fr;
-      gap: 1.5mm;
-      padding: 1.6mm 0;
-      border-top: 0.2mm solid #E7E0D4;
-      font-size: 9.5pt;
-    }
-    ol.parts li:first-child { border-top: 0; }
-    ol.parts li::before {
-      content: counter(part);
-      color: #8A6418;
-      font-weight: 700;
-    }
-    .quotes { margin: 0; padding: 0; list-style: none; }
-    .quotes li {
+    ol {
+      list-style: none;
       margin: 0;
-      padding: 1.8mm 0;
-      border-top: 0.2mm solid #E7E0D4;
-      font-size: 9pt;
-      line-height: 1.32;
+      padding: 0;
+      counter-reset: step;
     }
-    .quotes li:first-child { border-top: 0; padding-top: 0; }
-    .timing {
-      background: #132238;
-      color: #fff;
-      padding: 4mm 4.5mm;
-      margin: 0 0 4mm;
+    li {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 11mm 1fr;
+      column-gap: 2mm;
+      padding: 7.6mm 0 7.8mm;
+      border-bottom: 0.25mm solid #E4D8C4;
     }
-    .timing .label { color: #D4A84F; }
-    .timing h2 { color: #fff; }
-    .big {
-      margin: 0 0 1.5mm;
-      color: #D4A84F;
-      font-size: 18pt;
+    li::before {
+      content: counter(step, decimal-leading-zero);
+      color: #896821;
       font-weight: 700;
+      font-size: 11pt;
+      letter-spacing: 0.04em;
+      padding-top: 0.4mm;
+    }
+    h2 {
+      margin: 0;
+      font-size: 12.5pt;
+      line-height: 1.1;
       letter-spacing: -0.02em;
     }
-    .timing p { margin: 0 0 2mm; font-size: 9.5pt; line-height: 1.35; }
-    .timing p:last-child { margin: 0; }
-    ul.never { margin: 0; padding: 0; list-style: none; }
-    ul.never li {
-      position: relative;
-      padding: 1.2mm 0 1.2mm 4mm;
-      border-top: 0.2mm solid #E7E0D4;
-      font-size: 9pt;
+    p { margin: 0; }
+    .say {
+      margin-top: 0.7mm;
+      font-size: 9.6pt;
       line-height: 1.3;
+      color: #2A3A52;
     }
-    ul.never li:first-child { border-top: 0; }
-    ul.never li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 2.4mm;
-      width: 2mm;
-      height: 2mm;
+    .eg {
+      margin-top: 1.1mm;
+      padding-left: 2.4mm;
+      border-left: 0.7mm solid #D4A84F;
+      font-family: "Nimbus Roman", Georgia, serif;
+      font-style: italic;
+      font-size: 10pt;
+      line-height: 1.28;
+      color: #14253B;
+    }
+    .timing {
+      margin-top: 7mm;
       background: #132238;
+      color: #fff;
+      padding: 3.4mm 4.5mm 3.6mm;
+      display: grid;
+      grid-template-columns: 52mm 1fr;
+      column-gap: 5mm;
+      align-items: center;
     }
-    .test {
-      margin: 2mm 0 0;
-      font-size: 8.5pt;
-      color: #59616c;
+    .timing .words {
+      margin: 0;
+      color: #D4A84F;
+      font-size: 16pt;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
     }
+    .timing p { font-size: 10pt; line-height: 1.35; }
     .cta {
-      margin: 0 8mm;
-      border: 0.4mm solid #C9A15A;
+      margin-top: 7mm;
       background: #fff;
-      padding: 3mm 4mm 3.2mm;
+      border: 0.35mm solid #D4A84F;
+      padding: 3.6mm 4.5mm 3.8mm;
     }
-    .cta h2 { margin: 0 0 1mm; font-size: 12pt; }
-    .cta p { margin: 0; font-size: 9pt; line-height: 1.35; }
-    .cta a { color: #132238; font-weight: 700; }
+    .cta h2 { font-size: 13pt; margin-bottom: 1mm; }
+    .cta .what { font-size: 9.6pt; line-height: 1.35; color: #2A3A52; max-width: 175mm; }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 6mm;
+      margin-top: 2.8mm;
+    }
+    .button {
+      display: inline-block;
+      background: #14253B;
+      color: #fff;
+      font-weight: 700;
+      font-size: 11pt;
+      line-height: 1;
+      padding: 3.3mm 6mm;
+      border: 0.4mm solid #14253B;
+    }
+    .guides {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #14253B;
+      border-bottom: 0.35mm solid #AA8A50;
+      padding-bottom: 0.4mm;
+    }
     footer {
-      margin: 3mm 8mm 0;
+      margin-top: auto;
+      padding: 4mm 9mm 6mm;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      font-size: 9pt;
-    }
-    footer a { color: #17263D; font-weight: 700; text-decoration: none; }
-    footer em {
-      color: #8A6418;
+      color: #896821;
       font-family: "Nimbus Roman", Georgia, serif;
       font-style: italic;
+      font-size: 10.5pt;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="../assets/bmb-shield.svg" alt="Best Man Backup">
+    <img src="../assets/bmb-shield.svg" alt="">
     <div>
-      <p class="kicker">BEST MAN BACKUP · FREE GUIDE</p>
-      <h1>The Best Man's 1-Page<br>Speech Cheat Sheet</h1>
-      <p class="tagline">Everything that matters, on one page. Pin it up, then start writing.</p>
+      <p class="brand">BEST MAN BACKUP</p>
+      <h1>If you blank, you still know the next line.</h1>
+      <p class="sub">The worry is standing up with nothing to say. Five parts, in this order, so you always know what comes next.</p>
     </div>
   </header>
   <div class="goldbar"></div>
   <main>
-    <div class="col">
-      <section class="card">
-        <p class="label">01 · THE STRUCTURE</p>
-        <h2>Five parts. In this order.</h2>
-        <ol class="parts">
-          <li><span><strong>Open.</strong> Who you are and how you know him, in one line. Thank the hosts if no one else has.</span></li>
-          <li><span><strong>The groom.</strong> Pick one quality you genuinely rate in him. Just one.</span></li>
-          <li><span><strong>The story.</strong> One true moment that shows that quality: the scene, what happened, the detail you still laugh about, and why it matters.</span></li>
-          <li><span><strong>The couple.</strong> What changed when they met. Welcome his partner warmly, by name.</span></li>
-          <li><span><strong>The toast.</strong> Ask everyone to stand, raise a glass and name the couple. Then sit down.</span></li>
-        </ol>
-      </section>
-      <section class="card grow">
-        <p class="label">02 · FIVE OPENING LINES</p>
-        <h2>Start strong. Adapt one.</h2>
-        <ul class="quotes">
-          <li>"For those who don't know me, I'm [name]. I've known [groom] since [when], which means I know far too much. Don't worry, most of it stays with me."</li>
-          <li>"When [groom] asked me to be best man, I said yes straight away. Then he mentioned the speech."</li>
-          <li>"I've been asked to keep this short, so I've cut everything about [harmless habit]. That leaves about four minutes."</li>
-          <li>"[Groom] and I have been friends for [number] years. In that time he's taught me a lot. Mostly about [harmless thing]."</li>
-          <li>"Before I start, on behalf of [partner] and [groom], thank you all for being here today."</li>
-        </ul>
-      </section>
-    </div>
-    <div class="col">
-      <section class="timing">
-        <p class="label">03 · THE TIMING RULE</p>
-        <h2>Five to seven minutes.</h2>
-        <p class="big">650 to 900 words</p>
-        <p>That's roughly what you'll say in five to seven minutes at a calm, unhurried pace, with room for laughs.</p>
-        <p>Time yourself out loud, not in your head. If you run over, cut a story, not the toast.</p>
-      </section>
-      <section class="card grow">
-        <p class="label">04 · THINGS NEVER TO SAY</p>
-        <h2>Leave these out.</h2>
-        <ul class="never">
-          <li>Exes, past partners or "the one before".</li>
-          <li>Stag do stories that need "you had to be there", or that would embarrass anyone in the room.</li>
-          <li>"Ball and chain" jokes, or anything about the marriage not lasting.</li>
-          <li>Digs at either family, or at the cost of the wedding.</li>
-          <li>Secrets the couple don't know you're about to share.</li>
-          <li>In-jokes only three people will get.</li>
-          <li>"I'm not good at speeches." Skip the apology and start.</li>
-          <li>Anything you wouldn't say in front of his grandmother.</li>
-        </ul>
-        <p class="test">The test: would he laugh at it too, and would his partner be glad you said it?</p>
-      </section>
-    </div>
+    <ol>
+      <li>
+        <div>
+          <h2>Open</h2>
+          <p class="say">Who you are, and how you know him, in one line. Thank the hosts if no one else has.</p>
+          <p class="eg">"For those who don't know me, I'm [name]. I've known [groom] since [when]."</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h2>The story</h2>
+          <p class="say">One true moment. The scene, what happened, the detail you still laugh about, and why it matters. Then stop.</p>
+          <p class="eg">One story is enough. Do not stack three.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h2>The groom now</h2>
+          <p class="say">One quality you genuinely rate in him today. Just one. Not a list of old jokes.</p>
+          <p class="eg">"What I rate in him is [one quality], and you saw it in that story."</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h2>The couple</h2>
+          <p class="say">What changed when they met. Welcome his partner warmly, by name.</p>
+          <p class="eg">Say the name. Do not make the partner the joke.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h2>The toast</h2>
+          <p class="say">Ask everyone to stand, raise a glass, and name the couple. Then sit down.</p>
+          <p class="eg">"Please stand, and raise a glass to [partner] and [groom]."</p>
+        </div>
+      </li>
+    </ol>
+    <section class="timing">
+      <p class="words">650 to 900 words</p>
+      <p>That's roughly what you'll say in five to seven minutes at a calm, unhurried pace, with room for laughs. Say it out loud. If you run over, cut a story, not the toast.</p>
+    </section>
+    <section class="cta">
+      <h2>When you want the pages to write on</h2>
+      <p class="what">The Speech Kit is a writing guide, an editable workbook, a final-speech document and six large cue cards. You still bring the stories.</p>
+      <div class="actions">
+        <a class="button" href="https://bestmanbackup.com/kits/?utm_source=guide-pdf&amp;utm_medium=pdf&amp;utm_campaign=cheat-sheet#speech">Get the Speech Kit · £14.99</a>
+        <a class="guides" href="https://bestmanbackup.com/">Free guides at bestmanbackup.com</a>
+      </div>
+    </section>
+    <footer>
+      <span>You've got his back. We've got yours.</span>
+    </footer>
   </main>
-  <section class="cta" style="margin-top:4mm">
-    <h2>Want the full method?</h2>
-    <p>The Best Man Speech Kit takes you from scattered memories to a finished speech you can deliver: a speech-writing guide, an editable Word workbook, a final-speech document, six large cue cards and a rehearsal checklist. <a href="https://bestmanbackup.com/kits/?utm_source=guide-pdf&amp;utm_medium=pdf&amp;utm_campaign=cheat-sheet#speech">Best Man Speech Kit · £14.99 at bestmanbackup.com</a></p>
-  </section>
-  <footer>
-    <a href="https://bestmanbackup.com/">bestmanbackup.com</a>
-    <em>You've got his back - we've got yours</em>
-  </footer>
 </body>
 </html>
