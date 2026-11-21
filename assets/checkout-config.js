@@ -11,14 +11,13 @@
  * Server fulfillment matches Stripe price IDs by session.livemode
  * (test vs live) in lib/kits.mjs — never mix modes.
  *
- * BMB_PRICE_ID_LIVE is the only live Price ID map in this file. Replace the
- * string on a product's line when the new live price exists, and keep it
+ * BMB_PRICE_ID_LIVE is the current live Price ID map in this file. Keep it
  * identical to PRICE_ID_LIVE in lib/kits.mjs. Payment Link URLs stay below.
  */
 const BMB_PRICE_ID_LIVE = Object.freeze({
-  speech: 'price_1UcuxdRKrA7iXAzo7Bpifs0D',
-  duties: 'price_1UcuxsRKrA7iXAzoTZHCJEQo',
-  playbook: 'price_1Ucuy1RKrA7iXAzo80f5IBDs',
+  speech: 'price_1UeLlORKrA7iXAzo7cMXh5od',
+  duties: 'price_1UeLm0RKrA7iXAzoIFHfSgyP',
+  playbook: 'price_1UeLmURKrA7iXAzo4HNzSZcM',
   bundle: 'price_1UcuyBRKrA7iXAzolGfl4aQX',
 });
 
@@ -36,7 +35,7 @@ window.BMB_CHECKOUT = Object.freeze({
       description:
         'A speech-writing guide, an editable Word workbook, a final-speech document and six large cue cards, in A4 and US Letter. You bring the stories. Digital download.',
       checkoutUrlTest: 'https://buy.stripe.com/test_8x214pgMc0iq3wrbaI0Fi0g',
-      checkoutUrlLive: 'https://buy.stripe.com/9B67sN9jK1muc2X3Ig0Fi00',
+      checkoutUrlLive: 'https://buy.stripe.com/8x214p9jK0iqff9diQ0Fi04',
       kitsPath: '/kits/#speech',
       buttonLabel: 'Get the Speech Kit',
     }),
@@ -52,7 +51,7 @@ window.BMB_CHECKOUT = Object.freeze({
       description:
         'A duties handbook, an editable Word planner and a printable planner with 14 planning sections, plus a wedding-day sheet and four pocket carry cards, in A4 and US Letter. Digital download.',
       checkoutUrlTest: 'https://buy.stripe.com/test_5kQeVfanOfdkc2XemU0Fi0h',
-      checkoutUrlLive: 'https://buy.stripe.com/cNicN7anOe9g1oj92A0Fi01',
+      checkoutUrlLive: 'https://buy.stripe.com/6oU3cx2VmaX4d71gv20Fi05',
       kitsPath: '/kits/#duties',
       buttonLabel: 'Get the Duties Kit',
     }),
@@ -68,7 +67,7 @@ window.BMB_CHECKOUT = Object.freeze({
       description:
         'Eight stag do games, a groom quiz, challenge cards and the Stag Awards, editable in Word or printable, in UK and US editions. Digital download.',
       checkoutUrlTest: 'https://buy.stripe.com/test_5kQ14pgMc6GOc2Xa6E0Fi0i',
-      checkoutUrlLive: 'https://buy.stripe.com/4gM14p67y9T07MH5Qo0Fi02',
+      checkoutUrlLive: 'https://buy.stripe.com/5kQ3cxgMce9geb52Ec0Fi06',
       kitsPath: '/kits/#playbook',
       buttonLabel: 'Get the Playbook',
     }),

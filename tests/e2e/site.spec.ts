@@ -31,9 +31,9 @@ test.describe('Best Man Backup — desktop 1440', () => {
       set: /buy\.stripe\.com\/test_aFa7sN1Ric18gjd4Mk0Fi0j/,
     };
     const expectedLive: Record<string, RegExp> = {
-      duties: /buy\.stripe\.com\/cNicN7anOe9g1oj92A0Fi01/,
-      playbook: /buy\.stripe\.com\/4gM14p67y9T07MH5Qo0Fi02/,
-      speech: /buy\.stripe\.com\/9B67sN9jK1muc2X3Ig0Fi00/,
+      duties: /buy\.stripe\.com\/6oU3cx2VmaX4d71gv20Fi05/,
+      playbook: /buy\.stripe\.com\/5kQ3cxgMce9geb52Ec0Fi06/,
+      speech: /buy\.stripe\.com\/8x214p9jK0iqff9diQ0Fi04/,
       bundle: /buy\.stripe\.com\/dRmbJ3brSe9g7MHbaI0Fi03/,
     };
 
