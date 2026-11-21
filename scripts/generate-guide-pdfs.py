@@ -88,19 +88,31 @@ PRODUCT_META = {
     "speech": {
         "name": "Best Man Speech Kit",
         "blurb": "Speech-writing guide, editable workbook and six large cue cards.",
-        "price": "£6.98",
+        "price": "£14.99",
     },
     "duties": {
         "name": "Best Man Duties Kit",
         "blurb": "Duties handbook, planner, wedding-day sheet and pocket carry cards.",
-        "price": "£5.99",
+        "price": "£9.99",
     },
     "playbook": {
         "name": "Stag Do & Bachelor Party Playbook",
         "blurb": "Eight games, groom quiz, challenge cards and Stag Awards.",
-        "price": "£11.99",
+        "price": "£9.99",
     },
 }
+
+BUNDLE_NAME = "Best Man Bundle"
+BUNDLE_PRICE = "£19.99"
+# Query string first, then the kit anchor, so the link opens the right product.
+KITS_BASE = (
+    "https://bestmanbackup.com/kits/"
+    "?utm_source=guide-pdf&utm_medium=pdf&utm_campaign=free-guides"
+)
+
+
+def kit_url(anchor: str) -> str:
+    return f"{KITS_BASE}#{anchor}"
 
 
 def strip_tags(text: str) -> str:
@@ -178,7 +190,8 @@ class ChecklistPDF(FPDF):
     def __init__(self, guide: dict):
         super().__init__(orientation="P", unit="mm", format="A4")
         self.guide = guide
-        self.set_auto_page_break(auto=True, margin=18)
+        # Leave room for the two-line footer (buy line + guide URL).
+        self.set_auto_page_break(auto=True, margin=26)
         if FONT_SANS.exists() and FONT_SANS_BOLD.exists():
             self.add_font("Nimbus", "", str(FONT_SANS))
             self.add_font("Nimbus", "B", str(FONT_SANS_BOLD))
@@ -203,15 +216,39 @@ class ChecklistPDF(FPDF):
         self.cell(0, 5, "Free printable checklist", ln=1)
         self.ln(10)
 
+    def _text_link(self, text: str, url: str, height: float) -> None:
+        """Draw text and a /URI annotation exactly over those glyphs."""
+        width = self.get_string_width(text)
+        x = self.get_x()
+        y = self.get_y()
+        self.cell(width, height, text)
+        self.link(x, y, width, height, url)
+
     def footer(self):
-        self.set_y(-16)
+        product = PRODUCT_META[self.guide["product"]]
+        self.set_y(-22)
         self.set_draw_color(*GOLD)
         self.set_line_width(0.4)
         self.line(12, self.get_y(), 198, self.get_y())
-        self.ln(2)
+        self.ln(1.6)
+
+        buy = f"Buy the kit  ·  {product['name']}  ·  {product['price']}"
+        self.set_font(self.font_family, "B", 8)
+        self.set_text_color(*NAVY)
+        buy_w = self.get_string_width(buy)
+        self.set_x((self.w - buy_w) / 2)
+        self._text_link(buy, kit_url(self.guide["product"]), 4)
+        self.ln(4.2)
+
+        url = self.guide["url"]
+        page = f"   ·   Page {self.page_no()}"
         self.set_font(self.font_family, "", 8)
         self.set_text_color(*MUTED)
-        self.cell(0, 4, f"{self.guide['url']}  ·  Page {self.page_no()}", align="C")
+        url_w = self.get_string_width(url)
+        page_w = self.get_string_width(page)
+        self.set_x((self.w - url_w - page_w) / 2)
+        self._text_link(url, url, 4)
+        self.cell(page_w, 4, page)
 
     def build(self):
         self.add_page()
@@ -271,20 +308,38 @@ class ChecklistPDF(FPDF):
             self.ln(2)
 
         product = PRODUCT_META[self.guide["product"]]
-        if self.get_y() > 230:
+        product_href = kit_url(self.guide["product"])
+        bundle_href = kit_url("bundle")
+        box_h = 36
+        # 297mm page, 26mm footer margin.
+        if self.get_y() + box_h > 271:
             self.add_page()
         self.ln(4)
-        self.set_fill_color(*NAVY)
         box_y = self.get_y()
-        self.rect(12, box_y, 186, 28, "F")
-        self.set_xy(16, box_y + 5)
+        self.set_fill_color(*NAVY)
+        self.rect(12, box_y, 186, box_h, "F")
+
+        self.set_xy(16, box_y + 4)
         self.set_text_color(*GOLD)
         self.set_font(self.font_family, "B", 11)
-        self.cell(0, 5, f"Want the full kit?  {product['name']}  ·  {product['price']}", ln=1)
-        self.set_x(16)
+        title = f"Want the full kit?  {product['name']}  ·  {product['price']}"
+        self._text_link(title, product_href, 6)
+
+        self.set_xy(16, box_y + 12)
         self.set_text_color(255, 255, 255)
         self.set_font(self.font_family, "", 9)
-        self.multi_cell(178, 4.5, f"{product['blurb']}  See bestmanbackup.com/kits/")
+        self.multi_cell(178, 4.4, product["blurb"])
+
+        self.set_xy(16, box_y + 24)
+        self.set_font(self.font_family, "B", 9)
+        self.set_text_color(*GOLD)
+        self._text_link("Buy the kit", product_href, 5)
+        self.set_font(self.font_family, "", 9)
+        self.set_text_color(255, 255, 255)
+        self.cell(self.get_string_width("   or the "), 5, "   or the ")
+        self.set_text_color(*GOLD)
+        self.set_font(self.font_family, "B", 9)
+        self._text_link(f"{BUNDLE_NAME}  ·  {BUNDLE_PRICE}", bundle_href, 5)
 
 
 def main() -> int:

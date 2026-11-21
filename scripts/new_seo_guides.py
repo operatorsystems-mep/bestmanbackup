@@ -78,7 +78,7 @@ def top_cta(product: str) -> str:
     meta = PRODUCT_COPY[product]
     return (
         f'<aside class="kit-cta kit-cta-top" aria-label="{meta["aria"]}">'
-        f'<p class="eyebrow">FROM BEST MAN BACKUP</p>'
+        f'<p class="eyebrow">FROM BEST MAN BACKUP · { {"speech": "£14.99", "duties": "£9.99", "playbook": "£9.99"}[product] }</p>'
         f'<p><strong>{meta["name"]}:</strong> {meta["desc"]}</p>'
         f'<p><a class="button" data-product="{product}" href="/kits/#{meta["anchor"]}">{meta["button"]}</a></p>'
         f"</aside>"
@@ -95,7 +95,7 @@ def end_cta(product: str) -> str:
         f'<a class="button" data-product="{product}" href="/kits/#{meta["anchor"]}">{meta["button"]}</a> '
         f'<a class="button secondary" data-product="bundle" href="/kits/#bundle">Get the Best Man Bundle</a>'
         f"</p>"
-        f'<p class="kit-cta-small">The Best Man Bundle puts the Duties, Stag &amp; Bachelor Party and Speech Kits in one download.</p>'
+        f'<p class="kit-cta-small">The £19.99 Best Man Bundle includes the Speech Kit, the Duties Kit and the Stag Do &amp; Bachelor Party Playbook, worth £34.97 separately.</p>'
         f"</aside>"
     )
 
@@ -106,7 +106,7 @@ def kit_note(product: str) -> str:
         f'<aside class="kit-note" aria-label="From Best Man Backup">'
         f'<p class="eyebrow">FROM BEST MAN BACKUP</p>'
         f'<p><strong>{meta["note_lead"]}</strong> {meta["note_body"]} '
-        f'<a data-product="{product}" href="/kits/#{meta["anchor"]}">{meta["note_link"]}</a>.</p>'
+        f'<a href="/kits/#{meta["anchor"]}">{meta["note_link"]}</a>.</p>'
         f"</aside>"
     )
 
