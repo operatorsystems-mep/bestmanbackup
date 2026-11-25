@@ -11,3 +11,6 @@ tests
 scripts/requirements-pdf.txt
 scripts/generate-guide-pdfs.py
 scripts/update-guides-cta.py
+
+# Internal SEO log. Not a site page.
+seo
