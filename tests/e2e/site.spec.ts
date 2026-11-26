@@ -347,16 +347,23 @@ test.describe('Best Man Backup — desktop 1440', () => {
 
   test('guides index numbers every guide and search hides empty categories', async ({ page }) => {
     await page.goto('/guides/');
-    await expect(page.locator('#entries a')).toHaveCount(50);
+    await expect(page.locator('#entries .guide-cat a')).toHaveCount(50);
     await expect(page.locator('#entries .n').first()).toHaveText('1');
     await expect(page.locator('#entries .n').last()).toHaveText('50');
     await expect(page.getByRole('heading', { name: /Speech writing/ })).toBeVisible();
     await page.locator('#q').fill('what not to say');
-    await expect(page.locator('#entries a:visible')).toHaveCount(1);
+    await expect(page.locator('#entries .guide-cat a:visible')).toHaveCount(1);
     await expect(page.locator('#entries .guide-cat:visible')).toHaveCount(1);
     await expect(page.locator('#entries .guide-cat:visible h2')).toContainText('What to avoid');
     await page.locator('#q').fill('');
     await expect(page.locator('#entries .guide-cat:visible')).toHaveCount(5);
+    await expect(page.locator('.start-here a')).toHaveCount(3);
+    await expect(page.locator('.kit-band:visible')).toHaveCount(3);
+    await page.locator('#q').fill('zzz');
+    await expect(page.locator('#none')).toBeVisible();
+    await expect(page.locator('#none')).toContainText('No guide matches that yet');
+    await expect(page.locator('.kit-band:visible')).toHaveCount(0);
+    await expect(page.locator('#entries .guide-cat a:visible')).toHaveCount(0);
   });
 
   test('cheat-sheet sign-up stays hidden', async ({ page }) => {
