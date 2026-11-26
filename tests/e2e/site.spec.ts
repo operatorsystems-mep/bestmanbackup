@@ -189,8 +189,8 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.locator('#ty-download')).toBeHidden();
     await expect(page.locator('#ty-error-actions')).toContainText(/hello@bestmanbackup\.com/i);
     await expect(page.locator('#ty-tagline')).toHaveText("You've Got His Back, We've Got Yours.");
-    await expect(page.getByRole('navigation', { name: /Main navigation/i })).toBeVisible();
-    await expect(page.locator('footer .brand-name')).toBeVisible();
+    await expect(page.locator('header nav').getByRole('link', { name: 'Shop the kits' })).toBeVisible();
+    await expect(page.locator('footer p')).toContainText(/got his back/i);
   });
 
   test('links page is present, tap-friendly and noindex', async ({ page }) => {
@@ -418,13 +418,18 @@ test.describe('Best Man Backup — mobile 390', () => {
     }
   });
 
-  test('privacy and the 404 still use the existing menu button', async ({ page }) => {
+  test('privacy and the 404 use the pocket-card header', async ({ page }) => {
     for (const path of ['/privacy/', '/guides/this-page-does-not-exist/']) {
       await page.goto(path);
-      const toggle = page.getByRole('button', { name: 'Menu' });
-      await expect(toggle).toBeVisible();
-      const box = await toggle.boundingBox();
-      expect(box!.x + box!.width).toBeLessThanOrEqual(390);
+      const shop = page.locator('header nav').getByRole('link', { name: 'Shop the kits' });
+      await expect(shop).toBeVisible();
+      await expect(page.locator('header nav a.wide')).toBeHidden();
+      await expect(page.locator('footer p')).toContainText(/got his back/i);
+      const widths = await page.evaluate(() => ({
+        scroll: document.documentElement.scrollWidth,
+        client: document.documentElement.clientWidth,
+      }));
+      expect(widths.scroll, path).toBeLessThanOrEqual(widths.client);
     }
   });
 

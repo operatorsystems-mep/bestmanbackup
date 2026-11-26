@@ -21,7 +21,7 @@ from fpdf import FPDF
 ROOT = Path(__file__).resolve().parents[1]
 GUIDES = ROOT / "guides"
 DOWNLOADS = ROOT / "downloads"
-SHIELD = ROOT / "assets" / "bmb-shield-512.png"
+LOGO = ROOT / "assets" / "bmb-horizontal-navy.svg"
 FONT_SANS = ROOT / "fonts" / "NimbusSans-Regular.otf"
 FONT_SANS_BOLD = ROOT / "fonts" / "NimbusSans-Bold.otf"
 
@@ -223,21 +223,19 @@ class ChecklistPDF(FPDF):
             self.font_family = "Helvetica"
 
     def header(self):
-        self.set_fill_color(*NAVY)
-        self.rect(0, 0, 210, 28, "F")
-        self.set_fill_color(*GOLD)
-        self.rect(0, 28, 210, 2, "F")
-        if SHIELD.exists():
-            self.image(str(SHIELD), 12, 5, 18, 18)
-        self.set_xy(34, 8)
-        self.set_text_color(*GOLD)
-        self.set_font(self.font_family, "B", 14)
-        self.cell(0, 7, "BEST MAN BACKUP", ln=1)
-        self.set_x(34)
-        self.set_font(self.font_family, "", 9)
-        self.set_text_color(255, 255, 255)
-        self.cell(0, 5, "Free printable checklist", ln=1)
-        self.ln(10)
+        # Ivory band and the pocket-card wordmark. Checklist copy is unchanged.
+        self.set_fill_color(250, 246, 236)
+        self.rect(0, 0, 210, 26, "F")
+        if LOGO.exists():
+            self.image(str(LOGO), 12, 6, 64)
+        self.set_xy(80, 11)
+        self.set_text_color(173, 135, 73)
+        self.set_font(self.font_family, "B", 9)
+        self.cell(0, 5, "Free printable checklist")
+        self.set_draw_color(207, 200, 184)
+        self.set_line_width(0.35)
+        self.line(0, 26, 210, 26)
+        self.set_y(32)
 
     def _text_link(self, text: str, url: str, height: float) -> None:
         """Draw text and a /URI annotation exactly over those glyphs."""

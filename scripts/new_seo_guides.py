@@ -244,9 +244,9 @@ def render(guide: dict) -> str:
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="/assets/bmb-shield.svg">
-  <link rel="icon" type="image/png" sizes="48x48" href="/assets/bmb-shield-48.png">
-  <link rel="apple-touch-icon" href="/assets/bmb-shield-180.png">
+  <link rel="icon" href="/assets/bmb-icon-navy.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/guides/guides.css">
   <script defer src="/analytics.js"></script>
@@ -260,7 +260,7 @@ def render(guide: dict) -> str:
   <a class="skip" href="#main">Skip to content</a>
   <header class="header wrap">
     <a class="brand" href="/" aria-label="Best Man Backup home">
-      <img src="/assets/bmb-shield.svg" width="70" height="70" alt="">
+      <img src="/assets/bmb-horizontal-navy.svg" width="70" height="70" alt="">
       <span class="brand-name">Best Man Backup</span>
     </a>
     <nav aria-label="Main navigation">
@@ -291,7 +291,7 @@ def render(guide: dict) -> str:
       {end_cta(product)}
     </article>
   </main>
-  <footer><div class="wrap footer-inner"><div class="footer-brand"><a class="brand" href="/" aria-label="Best Man Backup home"><img src="/assets/bmb-shield.svg" width="96" height="96" alt=""><span class="footer-wordmark"><span class="brand-name">Best Man Backup</span><span class="footer-tagline">You've got his back - we've got yours</span></span></a></div><nav class="guide-footer-links" aria-label="Footer"><a href="/guides/">Best man guides</a></nav><small>© Best Man Backup</small></div></footer>
+  <footer><div class="wrap footer-inner"><div class="footer-brand"><a class="brand" href="/" aria-label="Best Man Backup home"><img src="/assets/bmb-horizontal-navy.svg" width="96" height="96" alt=""><span class="footer-wordmark"><span class="brand-name">Best Man Backup</span><span class="footer-tagline">You've got his back - we've got yours</span></span></a></div><nav class="guide-footer-links" aria-label="Footer"><a href="/guides/">Best man guides</a></nav><small>© Best Man Backup</small></div></footer>
 </body>
 </html>
 """
