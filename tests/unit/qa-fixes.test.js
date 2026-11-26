@@ -38,26 +38,20 @@ describe('QA fixes', () => {
         if (attrs.includes('data-product') || /buy\.stripe\.com/i.test(href)) {
           bad.push(`${path.relative(ROOT, file)} still checks out: ${text}`);
         }
-        if (/^(Best Man Speech Kit|Best Man Duties Kit|Stag Do & Bachelor Party Playbook)$/.test(text)) {
+        if (/^(The Speech Kit|The Duties Kit|The Stag Playbook|The Best Man Set)$/.test(text)) {
           stripped += 1;
           const expected = /Speech Kit$/.test(text)
-            ? '/kits/#speech'
+            ? '/kits/speech/'
             : /Duties Kit$/.test(text)
-              ? '/kits/#duties'
-              : '/kits/#playbook';
+              ? '/kits/duties/'
+              : /Playbook$/.test(text)
+                ? '/kits/playbook/'
+                : '/kits/bundle/';
           if (href !== expected) bad.push(`${path.relative(ROOT, file)} "${text}" -> ${href}`);
-        }
-        if (
-          text === 'Best Man Bundle' &&
-          file.endsWith(`${path.sep}what-does-the-best-man-pay-for${path.sep}index.html`)
-        ) {
-          if (href !== '/kits/' || attrs.includes('data-product')) {
-            bad.push(`${path.relative(ROOT, file)} in-text bundle link -> ${href}`);
-          }
         }
       }
     }
-    assert.ok(stripped >= 13, `expected the renamed in-text kit links, saw ${stripped}`);
+    assert.ok(stripped >= 13, `expected the product-page kit links, saw ${stripped}`);
     assert.deepEqual(bad, []);
   });
 
@@ -78,13 +72,60 @@ describe('QA fixes', () => {
           ['playbook', /playbook/i],
           ['bundle', /\bbundle\b/i],
         ].filter(([, pattern]) => pattern.test(text)).map(([kit]) => kit);
-        if (attrs.includes('data-product') || named.length !== 1 || href !== `/kits/#${named[0]}`) {
+        if (attrs.includes('data-product') || named.length !== 1 || href !== `/kits/${named[0]}/`) {
           bad.push(`${path.relative(ROOT, file)} "${text}" ${href}`);
         }
       }
     }
-    assert.equal(count, 50);
+    assert.equal(count, 0);
     assert.deepEqual(bad, []);
+  });
+
+  it('uses the guide CTA pattern and the corrected save amount', () => {
+    const visibleBad = [];
+    const speech = new Set([
+      '3-prompts-to-start-your-best-man-speech','best-man-speech-cue-cards','best-man-speech-dont-know-the-bride','best-man-speech-examples','best-man-speech-for-a-best-friend','best-man-speech-for-a-brother','best-man-speech-for-a-colleague','best-man-speech-for-a-cousin','best-man-speech-for-a-second-marriage','best-man-speech-jokes','best-man-speech-mistakes','best-man-speech-nerves','best-man-speech-opening-lines','best-man-speech-same-sex-wedding','best-man-speech-template','best-man-speech-thanking-parents','best-man-speech-without-notes','best-man-toast','dad-as-best-man','funny-best-man-speech-stories','funny-best-man-speech','heartfelt-best-man-speech','how-long-should-a-best-man-speech-be','how-to-end-a-best-man-speech','how-to-write-a-best-man-speech','joint-best-man-speech','last-minute-best-man-speech','rehearsal-dinner-toast','short-best-man-speech','what-not-to-say-in-a-best-man-speech','wedding-speech-order',
+    ]);
+    const duties = new Set([
+      'asked-to-be-best-man','best-man-checklist-week-before','best-man-duties-checklist','best-man-duties-timeline','best-man-gift-ideas','best-man-outfit','best-man-rehearsal-responsibilities','best-man-rings','best-man-vs-groomsmen-vs-ushers','best-mans-job','what-does-the-best-man-do-on-the-wedding-day','what-does-the-best-man-pay-for',
+    ]);
+    for (const file of guides) {
+      const html = fs.readFileSync(file, 'utf8');
+      const slug = path.basename(path.dirname(file));
+      const article = html.slice(html.indexOf('<article'), html.indexOf('</article>'));
+      const answerAt = article.indexOf('class="answer"');
+      const topAt = article.indexOf('kit-cta-top');
+      if ((article.match(/kit-cta-top/g) || []).length !== 1) visibleBad.push(`${slug} top`);
+      if ((article.match(/kit-inline/g) || []).length !== 1) visibleBad.push(`${slug} inline`);
+      if ((article.match(/kit-cta-end/g) || []).length !== 1) visibleBad.push(`${slug} end`);
+      if (article.includes('kit-note')) visibleBad.push(`${slug} note`);
+      if (!(article.indexOf('</h1>') < article.indexOf('class="dek"') && answerAt < topAt)) visibleBad.push(`${slug} order`);
+      const hook = (article.match(/<p class="dek">([^<]*)<\/p>/) || [])[1] || '';
+      if (hook.length === 0 || hook.length > 160) visibleBad.push(`${slug} hook ${hook.length}`);
+      const words = article.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ').match(/[A-Za-z0-9'’]+/g) || [];
+      if (words.length > 2000) visibleBad.push(`${slug} words ${words.length}`);
+      if (!article.includes('"@type": "FAQPage"') && !html.includes('"@type": "FAQPage"')) visibleBad.push(`${slug} faq schema`);
+      const kit = speech.has(slug) ? 'speech' : duties.has(slug) ? 'duties' : 'playbook';
+      if (!article.includes(`kit-cta-top" aria-label="The ${kit === 'speech' ? 'Speech Kit' : kit === 'duties' ? 'Duties Kit' : 'Stag Playbook'}"`) && !article.includes(`data-product="${kit}"`)) {
+        visibleBad.push(`${slug} kit ${kit}`);
+      }
+      if (!article.includes(`data-product="${kit}"`)) visibleBad.push(`${slug} missing ${kit}`);
+      if (!article.includes('data-product="bundle"')) visibleBad.push(`${slug} set`);
+      if (slug === 'what-does-the-best-man-pay-for' && !article.includes('href="/kits/playbook/"')) {
+        visibleBad.push('pay-for inline');
+      }
+      const visible = article.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ');
+      if (/Best Man Bundle|Stag Do & Bachelor Party Playbook|Save £15/.test(visible)) visibleBad.push(`${slug} old name`);
+      for (const block of article.match(/<(p|li)\b[\s\S]*?<\/\1>/gi) || []) {
+        const plain = block.replace(/<[^>]+>/g, ' ');
+        if (/Duties Kit/i.test(plain) && /budget|guest payment|supplier/i.test(plain)) {
+          visibleBad.push(`${slug} duties money claim`);
+        }
+      }
+    }
+    const served = files.filter((file) => file.endsWith('.html')).map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+    assert.equal(/Save £15/i.test(served), false);
+    assert.deepEqual(visibleBad, []);
   });
 
   it('puts a Kits link in every guide header and footer', () => {

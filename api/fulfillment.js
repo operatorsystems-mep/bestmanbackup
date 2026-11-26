@@ -37,6 +37,19 @@ function helpBlock() {
   return `<p>Need help? Email <a href="mailto:hello@bestmanbackup.com">hello@bestmanbackup.com</a>.</p>`;
 }
 
+export const ORDER_NOT_FOUND =
+  "We couldn't find that order. Use the download link in your Stripe receipt email, or email hello@bestmanbackup.com and we'll send your files.";
+
+export function sessionIdWellFormed(sessionId) {
+  return typeof sessionId === 'string' && /^cs_[A-Za-z0-9_]+$/.test(sessionId);
+}
+
+export function isMissingOrderError(err) {
+  const code = err?.code || err?.raw?.code;
+  const type = err?.type || err?.rawType || err?.name;
+  return code === 'resource_missing' || type === 'StripeInvalidRequestError';
+}
+
 function json(res, status, payload) {
   res.statusCode = status;
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -52,7 +65,7 @@ function html(res, status, title, body) {
   res.end(htmlPage({ title, body }));
 }
 
-export default async function handler(req, res) {
+export default async function handler(req, res, deps = {}) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return json(res, 405, { ok: false, error: 'method_not_allowed' });
@@ -64,7 +77,12 @@ export default async function handler(req, res) {
   const wantsJson = (req.headers.accept || '').includes('application/json');
   const kit = getKit(kitId);
 
-  if (!kit || !sessionId) {
+  if (!sessionIdWellFormed(sessionId)) {
+    if (wantsJson) return json(res, 404, { ok: false, code: 'order_not_found', message: ORDER_NOT_FOUND });
+    return html(res, 404, 'Order not found', `<h1>We couldn't find that order</h1><p>${ORDER_NOT_FOUND}</p>${helpBlock()}`);
+  }
+
+  if (!kit) {
     const message =
       'Missing kit or checkout session. If you have just paid, open the link from your Stripe confirmation email, or contact us.';
     if (wantsJson) return json(res, 400, { ok: false, code: 'bad_request', message });
@@ -100,7 +118,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const stripe = new Stripe(secret);
+    const stripe = deps.stripe || new Stripe(secret);
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ['line_items.data.price'],
     });
@@ -143,7 +161,11 @@ export default async function handler(req, res) {
        ${helpBlock()}`
     );
   } catch (err) {
-    console.error('fulfillment error', err);
+    if (isMissingOrderError(err)) {
+      if (wantsJson) return json(res, 404, { ok: false, code: 'order_not_found', message: ORDER_NOT_FOUND });
+      return html(res, 404, 'Order not found', `<h1>We couldn't find that order</h1><p>${ORDER_NOT_FOUND}</p>${helpBlock()}`);
+    }
+    console.error('fulfillment error', err?.code || err?.type || 'unexpected');
     const message = 'Something went wrong verifying your payment.';
     if (wantsJson) return json(res, 500, { ok: false, code: 'stripe_error', message });
     return html(

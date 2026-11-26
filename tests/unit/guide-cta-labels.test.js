@@ -75,7 +75,8 @@ describe('guide CTA labels match their kit tag', () => {
       for (const link of productLinks(html)) {
         const kits = kitNamedBy(link.label);
         const label = decodeEntities(link.label).replace(/\s+/g, ' ').trim();
-        if (kits.length !== 1 || kits[0] !== link.product || link.href !== `/kits/#${kits[0] || link.product}`) {
+        const expectedHref = `/kits/${kits[0] || link.product}/`;
+        if (kits.length !== 1 || kits[0] !== link.product || link.href !== expectedHref) {
           mismatches.push(
             `${rel}:${link.line} label "${label}" tagged ${link.product} (${link.href}), expected ${kits.join('+') || 'one kit'}`,
           );
