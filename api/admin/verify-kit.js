@@ -9,12 +9,22 @@
  * {pathname, size, md5}. The bytes and the read-write token are never
  * returned or logged.
  */
-import { createHash } from 'node:crypto';
+import { createHash, timingSafeEqual } from 'node:crypto';
 import { get } from '@vercel/blob';
-import { MAX_UPLOAD_BYTES, secretsMatch } from './upload-kit.js';
-import { kitBlobPath } from './upload-kit-token.js';
+
+export const MAX_UPLOAD_BYTES = 60 * 1024 * 1024;
 
 const NAMES = new Set(['speech', 'duties', 'playbook', 'bundle']);
+
+export function secretsMatch(provided, expected) {
+  const a = createHash('sha256').update(String(provided), 'utf8').digest();
+  const b = createHash('sha256').update(String(expected), 'utf8').digest();
+  return timingSafeEqual(a, b);
+}
+
+function kitBlobPath(name) {
+  return `kits/v2026-11-27/${name}.zip`;
+}
 
 function send(res, status, payload) {
   res.statusCode = status;
