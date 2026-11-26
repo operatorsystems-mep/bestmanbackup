@@ -102,17 +102,39 @@ PRODUCT_META = {
     },
 }
 
-BUNDLE_NAME = "Best Man Bundle"
-BUNDLE_PRICE = "£19.99"
-# Query string first, then the kit anchor, so the link opens the right product.
-KITS_BASE = (
-    "https://bestmanbackup.com/kits/"
-    "?utm_source=guide-pdf&utm_medium=pdf&utm_campaign=free-guides"
+# Owner-facing names on the four-product block. Prices and live Payment
+# Links come from assets/checkout-config.js, not from these labels.
+CATALOGUE = (
+    ("speech", "The Speech Kit"),
+    ("duties", "The Duties Kit"),
+    ("playbook", "The Stag Playbook"),
+    ("bundle", "The Best Man Set"),
 )
+CHECKOUT_CONFIG = ROOT / "assets" / "checkout-config.js"
 
 
-def kit_url(anchor: str) -> str:
-    return f"{KITS_BASE}#{anchor}"
+def load_live_checkout() -> dict:
+    """Read checkoutUrlLive and price for each kit. Single source of truth."""
+    text = CHECKOUT_CONFIG.read_text(encoding="utf-8")
+    products = {}
+    for product_id, label in CATALOGUE:
+        block = re.search(
+            rf"\b{product_id}:\s*Object\.freeze\(\{{(.*?)\n    \}}\)",
+            text,
+            re.S,
+        )
+        if not block:
+            raise SystemExit(f"checkout-config.js has no {product_id} product")
+        body = block.group(1)
+        price = re.search(r"price:\s*'([^']+)'", body)
+        url = re.search(r"checkoutUrlLive:\s*'([^']+)'", body)
+        if not price or not url:
+            raise SystemExit(f"checkout-config.js is missing price or live URL for {product_id}")
+        live = url.group(1)
+        if not live.startswith("https://buy.stripe.com/") or "/test_" in live:
+            raise SystemExit(f"{product_id} checkoutUrlLive is not a live Payment Link: {live}")
+        products[product_id] = {"id": product_id, "label": label, "price": price.group(1), "url": live}
+    return products
 
 
 def strip_tags(text: str) -> str:
@@ -187,9 +209,10 @@ def extract_guide(path: Path) -> dict:
 
 
 class ChecklistPDF(FPDF):
-    def __init__(self, guide: dict):
+    def __init__(self, guide: dict, checkout: dict):
         super().__init__(orientation="P", unit="mm", format="A4")
         self.guide = guide
+        self.checkout = checkout
         # Leave room for the two-line footer (buy line + guide URL).
         self.set_auto_page_break(auto=True, margin=26)
         if FONT_SANS.exists() and FONT_SANS_BOLD.exists():
@@ -226,18 +249,19 @@ class ChecklistPDF(FPDF):
 
     def footer(self):
         product = PRODUCT_META[self.guide["product"]]
+        live = self.checkout[self.guide["product"]]
         self.set_y(-22)
         self.set_draw_color(*GOLD)
         self.set_line_width(0.4)
         self.line(12, self.get_y(), 198, self.get_y())
         self.ln(1.6)
 
-        buy = f"Buy the kit  ·  {product['name']}  ·  {product['price']}"
+        buy = f"Buy the kit  ·  {product['name']}  ·  {live['price']}"
         self.set_font(self.font_family, "B", 8)
         self.set_text_color(*NAVY)
         buy_w = self.get_string_width(buy)
         self.set_x((self.w - buy_w) / 2)
-        self._text_link(buy, kit_url(self.guide["product"]), 4)
+        self._text_link(buy, live["url"], 4)
         self.ln(4.2)
 
         url = self.guide["url"]
@@ -307,39 +331,29 @@ class ChecklistPDF(FPDF):
             self.multi_cell(172, 5, item)
             self.ln(2)
 
-        product = PRODUCT_META[self.guide["product"]]
-        product_href = kit_url(self.guide["product"])
-        bundle_href = kit_url("bundle")
-        box_h = 36
+        # Compact navy block: all four kits, each linked straight to Stripe.
+        line_h = 5
+        box_h = 8 + line_h * len(CATALOGUE) + 3
         # 297mm page, 26mm footer margin.
         if self.get_y() + box_h > 271:
             self.add_page()
-        self.ln(4)
+        self.ln(3)
         box_y = self.get_y()
         self.set_fill_color(*NAVY)
         self.rect(12, box_y, 186, box_h, "F")
 
-        self.set_xy(16, box_y + 4)
-        self.set_text_color(*GOLD)
-        self.set_font(self.font_family, "B", 11)
-        title = f"Want the full kit?  {product['name']}  ·  {product['price']}"
-        self._text_link(title, product_href, 6)
+        self.set_xy(16, box_y + 3)
+        self.set_text_color(*IVORY)
+        self.set_font(self.font_family, "B", 8)
+        self.cell(0, 4, "BUY DIRECT", ln=1)
 
-        self.set_xy(16, box_y + 12)
-        self.set_text_color(255, 255, 255)
-        self.set_font(self.font_family, "", 9)
-        self.multi_cell(178, 4.4, product["blurb"])
-
-        self.set_xy(16, box_y + 24)
         self.set_font(self.font_family, "B", 9)
-        self.set_text_color(*GOLD)
-        self._text_link("Buy the kit", product_href, 5)
-        self.set_font(self.font_family, "", 9)
-        self.set_text_color(255, 255, 255)
-        self.cell(self.get_string_width("   or the "), 5, "   or the ")
-        self.set_text_color(*GOLD)
-        self.set_font(self.font_family, "B", 9)
-        self._text_link(f"{BUNDLE_NAME}  ·  {BUNDLE_PRICE}", bundle_href, 5)
+        for product_id, _label in CATALOGUE:
+            item = self.checkout[product_id]
+            self.set_x(16)
+            self.set_text_color(*IVORY)
+            self._text_link(f"{item['label']}  ·  {item['price']}", item["url"], line_h)
+            self.ln(line_h)
 
 
 def main() -> int:
@@ -351,10 +365,11 @@ def main() -> int:
         print("No guides found", file=sys.stderr)
         return 1
 
+    checkout = load_live_checkout()
     written = []
     for path in guides:
         guide = extract_guide(path)
-        pdf = ChecklistPDF(guide)
+        pdf = ChecklistPDF(guide, checkout)
         pdf.build()
         out = DOWNLOADS / f"{guide['slug']}-checklist.pdf"
         pdf.output(str(out))
