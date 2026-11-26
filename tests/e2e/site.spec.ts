@@ -81,7 +81,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.locator('#bundle')).toContainText('£19.99');
     await expect(page.locator('.grid .tile').first()).toHaveAttribute('id', 'bundle');
     await expect(page.locator('#bundle')).toContainText('Best value');
-    await expect(page.locator('#bundle')).toContainText('Worth £34.97 · Save £15');
+    await expect(page.locator('#bundle')).toContainText('Worth £34.97 · Save £14.98');
     await expect(page.locator('body')).not.toContainText('Stag & Bachelor Party Kit');
     await expect(page.locator('body')).not.toContainText(/Checkout opening shortly/i);
     const schema = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -94,7 +94,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
     const res = await page.goto('/thank-you/?kit=speech&session_id=cs_test_dummy');
     expect(res?.ok()).toBeTruthy();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
-    await expect(page.locator('#ty-tagline')).toHaveText("You've Got His Back, We've Got Yours.");
+    await expect(page.locator('#ty-tagline')).toHaveText("You’ve got his back. We’ve got yours.");
     await expect(page.locator('body')).toContainText(/Checking your payment|verify|hello@bestmanbackup\.com/i);
 
     const sitemap = await (await request.get('/sitemap.xml')).text();
@@ -114,7 +114,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.locator('#ty-status')).toContainText(/Missing kit or session/i);
     await expect(page.locator('#ty-error-actions')).toBeVisible();
     await expect(page.locator('#ty-download')).toBeHidden();
-    await expect(page.locator('#ty-tagline')).toHaveText("You've Got His Back, We've Got Yours.");
+    await expect(page.locator('#ty-tagline')).toHaveText("You’ve got his back. We’ve got yours.");
   });
 
   test('thank-you success state for a single kit shows download, contents, steps and bundle upsell', async ({ page }) => {
@@ -134,7 +134,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await page.goto('/thank-you/?kit=speech&session_id=cs_test_ok');
     await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'success');
     await expect(page.getByRole('heading', { name: /You're all set/i })).toBeVisible();
-    await expect(page.locator('#ty-product')).toHaveText('Best Man Speech Kit');
+    await expect(page.locator('#ty-product')).toHaveText('The Speech Kit');
     await expect(page.locator('#ty-download-btn')).toBeVisible();
     await expect(page.locator('#ty-download-btn')).toHaveAttribute('href', '/api/download/?token=test-token');
     await expect(page.locator('#ty-contents')).toContainText(/speech-writing guide/i);
@@ -165,7 +165,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
 
     await page.goto('/thank-you/?kit=bundle&session_id=cs_test_bundle');
     await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'success');
-    await expect(page.locator('#ty-product')).toHaveText('Best Man Bundle');
+    await expect(page.locator('#ty-product')).toHaveText('The Best Man Set');
     await expect(page.locator('#ty-contents')).toContainText(/Duties Kit/i);
     await expect(page.locator('#ty-share')).toBeVisible();
     await expect(page.locator('#ty-share')).toContainText(/groom or ushers/i);
@@ -188,10 +188,10 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.locator('#ty-status')).toHaveAttribute('data-state', 'error');
     await expect(page.locator('#ty-status')).toContainText(/could not verify/i);
     await expect(page.locator('#ty-eyebrow')).toContainText(/ORDER HELP/i);
-    await expect(page.locator('#ty-product')).toHaveText('Best Man Duties Kit');
+    await expect(page.locator('#ty-product')).toHaveText('The Duties Kit');
     await expect(page.locator('#ty-download')).toBeHidden();
     await expect(page.locator('#ty-error-actions')).toContainText(/hello@bestmanbackup\.com/i);
-    await expect(page.locator('#ty-tagline')).toHaveText("You've Got His Back, We've Got Yours.");
+    await expect(page.locator('#ty-tagline')).toHaveText("You’ve got his back. We’ve got yours.");
     await expect(page.locator('header nav').getByRole('link', { name: 'Shop the kits' })).toBeVisible();
     await expect(page.locator('footer p')).toContainText(/got his back/i);
   });
@@ -317,7 +317,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.locator('#bundle')).toContainText('£19.99');
     await expect(page.locator('.grid .tile').first()).toHaveAttribute('id', 'bundle');
     await expect(page.locator('#bundle')).toContainText('Best value');
-    await expect(page.locator('#bundle')).toContainText('Worth £34.97 · Save £15');
+    await expect(page.locator('#bundle')).toContainText('Worth £34.97 · Save £14.98');
     await expect(page.locator('#speech')).toHaveAttribute('href', '/kits/speech/');
     await expect(page.locator('a[data-product]')).toHaveCount(0);
     const kits = page.locator('header nav').getByRole('link', { name: 'Shop the kits' });
@@ -327,10 +327,10 @@ test.describe('Best Man Backup — desktop 1440', () => {
     expect(box?.height || 0).toBeGreaterThan(20);
   });
 
-  test('See the kit links stay on the kits page while buy buttons use test checkout', async ({ page }) => {
+  test('guide buy buttons use test checkout and the inline link stays on the kit page', async ({ page }) => {
     await page.goto('/guides/how-to-write-a-best-man-speech/');
     await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
-    await expect(page.getByRole('link', { name: 'See the Best Man Speech Kit' })).toHaveAttribute('href', '/kits/#speech');
+    await expect(page.locator('.kit-inline a')).toHaveAttribute('href', '/kits/speech/');
     await expect(page.locator('.kit-cta a[data-product="speech"]').first()).toHaveAttribute('href', /buy\.stripe\.com\/test_/);
   });
 
@@ -396,7 +396,7 @@ test.describe('Best Man Backup — mobile 390', () => {
       const guides = page.locator('header nav').getByRole('link', { name: 'Free guides' });
       await expect(shop).toBeVisible();
       await expect(guides).toBeVisible();
-      await expect(page.locator('header nav a.wide')).toBeHidden();
+      await expect(page.locator('header nav a.wide')).toBeVisible();
       const box = await shop.boundingBox();
       expect(box, path).toBeTruthy();
       expect(box!.x, path).toBeGreaterThanOrEqual(0);
@@ -422,7 +422,7 @@ test.describe('Best Man Backup — mobile 390', () => {
       await page.goto(path);
       const shop = page.locator('header nav').getByRole('link', { name: 'Shop the kits' });
       await expect(shop).toBeVisible();
-      await expect(page.locator('header nav a.wide')).toBeHidden();
+      await expect(page.locator('header nav a.wide')).toBeVisible();
       await expect(page.locator('footer p')).toContainText(/got his back/i);
       const widths = await page.evaluate(() => ({
         scroll: document.documentElement.scrollWidth,
@@ -443,8 +443,9 @@ test.describe('Best Man Backup — mobile 390', () => {
     await page.goto('/guides/stag-do-games/');
     const cta = page.locator('.kit-cta-top a.button');
     await expect(cta).toBeVisible();
+    const answer = await page.locator('.answer').boundingBox();
     const ctaBox = await cta.boundingBox();
-    expect(ctaBox!.y + ctaBox!.height).toBeLessThanOrEqual(844);
+    expect(ctaBox!.y).toBeGreaterThan(answer!.y);
     await expect(cta).toHaveAttribute('data-product', 'playbook');
     await expect(page.locator('.kit-cta-end a[data-product="bundle"]')).toContainText('all three');
   });

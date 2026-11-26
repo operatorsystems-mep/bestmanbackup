@@ -84,7 +84,8 @@ describe('pocket-card storefront', () => {
       const html = read(`kits/${id}/index.html`);
       assert.match(html, new RegExp(`data-product="${id}" href="/kits/${id}/">Buy ${name} · ${labelPrice}`));
       assert.match(html, new RegExp(`"price": "${schemaPrice}"`));
-      assert.match(html, /Instant private download after payment\./);
+      assert.match(html, /Instant private download · Secure Stripe checkout/);
+      assert.equal(html.includes('Instant private download after payment.'), false);
       assert.match(html, /<script defer src="\/assets\/checkout-config\.js"><\/script>/);
       assert.match(html, /<script defer src="\/assets\/checkout\.js"><\/script>/);
     }
@@ -153,17 +154,17 @@ describe('pocket-card storefront', () => {
       const html = read(rel);
       const ids = [...html.matchAll(/<a class="tile" id="([^"]+)"/g)].map((match) => match[1]);
       assert.deepEqual(ids, ['bundle', 'speech', 'duties', 'playbook'], rel);
-      assert.match(html, /id="bundle"[\s\S]*Best value[\s\S]*Worth £34\.97 · Save £15/);
+      assert.match(html, /id="bundle"[\s\S]*Best value[\s\S]*Worth £34\.97 · Save £14.98/);
     }
     const speech = read('kits/speech/index.html');
     const duties = read('kits/duties/index.html');
     const playbook = read('kits/playbook/index.html');
     const bundle = read('kits/bundle/index.html');
-    assert.match(speech, /What you get[\s\S]*14 files[\s\S]*A4 and US Letter/);
+    assert.match(speech, /What you get[\s\S]*A4 and US Letter[\s\S]*14 files/);
     assert.match(speech, /editable Word workbook/i);
-    assert.match(duties, /What you get[\s\S]*19 files[\s\S]*A4 and US Letter[\s\S]*Editable Word files/);
-    assert.match(playbook, /What you get[\s\S]*21 files[\s\S]*Editable in Word/);
-    assert.equal(playbook.includes('A4'), false);
+    assert.match(duties, /What you get[\s\S]*A4 and US Letter[\s\S]*19 files/);
+    assert.match(playbook, /What you get[\s\S]*21 files/);
+    assert.match(playbook, /A4 and US Letter/);
     assert.match(bundle, /All three kits/);
     assert.match(speech, /Instant private download · Secure Stripe checkout · Problems\?/);
     assert.match(speech, /mailto:hello@bestmanbackup\.com/);

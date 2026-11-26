@@ -3,12 +3,14 @@
  * Kit copy and guide links come from existing site product/guide pages.
  */
 (() => {
-  const TAGLINE = "You've Got His Back, We've Got Yours.";
+  const TAGLINE = "You’ve got his back. We’ve got yours.";
+  const ORDER_NOT_FOUND =
+    "We couldn't find that order. Use the download link in your Stripe receipt email, or email hello@bestmanbackup.com and we'll send your files.";
 
   const KITS = {
     speech: {
       id: 'speech',
-      name: 'Best Man Speech Kit',
+      name: 'The Speech Kit',
       price: '£14.99',
       contents: [
         'A speech-writing guide',
@@ -37,7 +39,7 @@
     },
     duties: {
       id: 'duties',
-      name: 'Best Man Duties Kit',
+      name: 'The Duties Kit',
       price: '£9.99',
       contents: [
         'A duties handbook',
@@ -67,7 +69,7 @@
     },
     playbook: {
       id: 'playbook',
-      name: 'Stag Do & Bachelor Party Playbook',
+      name: 'The Stag Playbook',
       price: '£9.99',
       contents: [
         'Eight stag do games',
@@ -90,25 +92,24 @@
         {
           title: 'Stag do budget',
           href: '/guides/stag-do-budget/',
-          blurb: 'Budgets and guest payments sit in the Duties Kit; this guide helps you plan.',
+          blurb: 'The Stag Playbook money tracker logs costs and guest payments; this guide helps you plan.',
         },
       ],
     },
     bundle: {
       id: 'bundle',
-      name: 'Best Man Bundle',
+      name: 'The Best Man Set',
       price: '£19.99',
       contents: [
         'The Speech Kit',
         'The Duties Kit',
-        'The Stag Do & Bachelor Party Playbook',
-        'One starting point across the speech, the duties and the stag do',
+        'The Stag Playbook',
       ],
       steps: [
         {
           title: 'Best man duties checklist',
           href: '/guides/best-man-duties-checklist/',
-          blurb: 'Start with the role, then open Start Here in the Bundle.',
+          blurb: 'Start with the role, then open Start Here in the Set.',
         },
         {
           title: 'How to plan a stag do',
@@ -292,6 +293,10 @@
   })
     .then(async (res) => {
       const data = await res.json().catch(() => ({}));
+      if (res.status === 404 || data.code === 'order_not_found') {
+        renderError(kit, data.message || ORDER_NOT_FOUND);
+        return;
+      }
       if (!res.ok || !data.ok) {
         renderError(kit, data.message || 'We could not verify this purchase.');
         return;
