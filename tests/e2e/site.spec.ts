@@ -16,19 +16,16 @@ test.describe('Best Man Backup — desktop 1440', () => {
   test('home loads and names the brand', async ({ page }) => {
     const res = await page.goto('/');
     expect(res?.ok()).toBeTruthy();
-    await expect(page).toHaveTitle('Best Man Help: 50 Free Guides, Speech & Duties');
+    await expect(page).toHaveTitle('Be the best man he’ll never forget | Best Man Backup');
     await expect(page.getByRole('link', { name: /Best Man Backup/i }).first()).toBeVisible();
   });
 
-  test('home buy buttons use Stripe TEST links on non-production hosts; LIVE links stay in config', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
-
+  test('kit buy buttons use Stripe TEST links on non-production hosts; LIVE links stay in config', async ({ page }) => {
     const expectedTest: Record<string, RegExp> = {
       duties: /buy\.stripe\.com\/test_5kQeVfanOfdkc2XemU0Fi0h/,
       playbook: /buy\.stripe\.com\/test_5kQ14pgMc6GOc2Xa6E0Fi0i/,
       speech: /buy\.stripe\.com\/test_8x214pgMc0iq3wrbaI0Fi0g/,
-      set: /buy\.stripe\.com\/test_aFa7sN1Ric18gjd4Mk0Fi0j/,
+      bundle: /buy\.stripe\.com\/test_aFa7sN1Ric18gjd4Mk0Fi0j/,
     };
     const expectedLive: Record<string, RegExp> = {
       duties: /buy\.stripe\.com\/6oU3cx2VmaX4d71gv20Fi05/,
@@ -36,24 +33,37 @@ test.describe('Best Man Backup — desktop 1440', () => {
       speech: /buy\.stripe\.com\/8x214p9jK0iqff9diQ0Fi04/,
       bundle: /buy\.stripe\.com\/dRmbJ3brSe9g7MHbaI0Fi03/,
     };
+    const prices: Record<string, string> = {
+      speech: '£14.99',
+      duties: '£9.99',
+      playbook: '£9.99',
+      bundle: '£19.99',
+    };
 
+    await page.goto('/kits/speech/');
+    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
     const cfg = await page.evaluate(() => {
-      const c = (window as unknown as { BMB_CHECKOUT: { products: Record<string, { checkoutUrlTest: string; checkoutUrlLive: string }> } }).BMB_CHECKOUT;
+      const c = (window as unknown as { BMB_CHECKOUT: { products: Record<string, { checkoutUrlTest: string; checkoutUrlLive: string; price: string }> } }).BMB_CHECKOUT;
       return c.products;
     });
     for (const id of Object.keys(expectedLive)) {
       expect(cfg[id].checkoutUrlLive, `${id} live url`).toMatch(expectedLive[id]);
       expect(cfg[id].checkoutUrlTest, `${id} test url`).toMatch(/buy\.stripe\.com\/test_/);
+      expect(cfg[id].price, `${id} price`).toBe(prices[id]);
     }
 
     for (const product of Object.keys(expectedTest)) {
-      const link = page.locator(`a[data-product="${product}"]`).first();
+      await page.goto(`/kits/${product}/`);
+      await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
+      const link = page.locator(`a.btn[data-product="${product}"]`);
       await expect(link, `missing buy button for ${product}`).toBeVisible();
+      await expect(link).toContainText(prices[product]);
+      await expect(page.locator('.price')).toHaveText(prices[product]);
       const href = await link.getAttribute('href');
       expect(href, `${product} href`).toMatch(expectedTest[product]);
       expect(href || '').not.toMatch(/etsy\.com/i);
-      // Local/preview must not wire live Payment Links.
       expect(href || '').not.toMatch(/buy\.stripe\.com\/(?!test_)/);
+      await expect(page.locator('a[href*="/checkout/"], a[href*="/receipt/"]')).toHaveCount(0);
     }
   });
 
@@ -61,12 +71,14 @@ test.describe('Best Man Backup — desktop 1440', () => {
   test('kits page lists every product with a price and no pending checkout wording', async ({ page }) => {
     const res = await page.goto('/kits/');
     expect(res?.ok()).toBeTruthy();
-    await page.waitForFunction(() => !!(window as unknown as { BMB_CHECKOUT?: unknown }).BMB_CHECKOUT);
+    await expect(page.locator('#speech')).toContainText('The Speech Kit');
     await expect(page.locator('#speech')).toContainText('£14.99');
+    await expect(page.locator('#duties')).toContainText('The Duties Kit');
     await expect(page.locator('#duties')).toContainText('£9.99');
+    await expect(page.locator('#playbook')).toContainText('The Stag Playbook');
     await expect(page.locator('#playbook')).toContainText('£9.99');
+    await expect(page.locator('#bundle')).toContainText('The Best Man Set');
     await expect(page.locator('#bundle')).toContainText('£19.99');
-    await expect(page.locator('#bundle')).toContainText('Stag Do & Bachelor Party Playbook');
     await expect(page.locator('body')).not.toContainText('Stag & Bachelor Party Kit');
     await expect(page.locator('body')).not.toContainText(/Checkout opening shortly/i);
     const schema = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -292,23 +304,21 @@ test.describe('Best Man Backup — desktop 1440', () => {
     expect(xml).not.toContain('https://bestmanbackup.com/links/');
   });
 
-  test('home shows current kit prices and the toolkit title', async ({ page }) => {
+  test('home shows the delivered kit prices and keeps the free-guides phrase', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/');
-    await expect(page).toHaveTitle('Best Man Help: 50 Free Guides, Speech & Duties');
-    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'Best Man Help: 50 Free Guides, Speech & Duties');
-    await expect(page.locator('.kit-price')).toHaveText(['£9.99', '£9.99', '£14.99', '£19.99']);
-    await expect(page.locator('.set-price')).toHaveText('£19.99');
-    await expect(page.locator('table')).toContainText('£14.99');
-    await expect(page.locator('table')).toContainText('£19.99');
-    const games = page.locator('tr', { hasText: 'Stag do games, challenges and awards' });
-    await expect(games.locator('td').nth(3)).toHaveText('Included');
-    await expect(page.locator('#kits a[href="/kits/#playbook"]').first()).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Browse the 50 free guides' })).toBeVisible();
-    await expect(page.locator('#guides')).toContainText('50 free best man guides');
-    await expect(page.locator('#guides .guide-group-list a')).toHaveCount(50);
-    await expect(page.getByRole('button', { name: 'Menu' })).toBeHidden();
-    const kits = page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'All kits' });
+    const title = 'Be the best man he’ll never forget | Best Man Backup';
+    await expect(page).toHaveTitle(title);
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', title);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /50 free best man guides/);
+    await expect(page.locator('#speech')).toContainText('£14.99');
+    await expect(page.locator('#duties')).toContainText('£9.99');
+    await expect(page.locator('#playbook')).toContainText('£9.99');
+    await expect(page.locator('#bundle')).toContainText('£19.99');
+    await expect(page.locator('#speech')).toHaveAttribute('href', '/kits/speech/');
+    await expect(page.locator('a[data-product]')).toHaveCount(0);
+    const kits = page.locator('header nav').getByRole('link', { name: 'Shop the kits' });
+    await expect(kits).toBeVisible();
     const box = await kits.boundingBox();
     expect(box?.width || 0).toBeGreaterThan(40);
     expect(box?.height || 0).toBeGreaterThan(20);
@@ -339,9 +349,9 @@ test.describe('Best Man Backup — desktop 1440', () => {
     expect(source).toMatch(/signupEnabled:\s*false/);
 
     await page.goto('/');
-    const section = page.locator('[data-signup]');
-    await expect(section).toHaveCount(1);
-    await expect(section).toBeHidden();
+    await expect(page.locator('[data-signup]')).toHaveCount(0);
+    await expect(page.locator('form')).toHaveCount(0);
+    await expect(page.locator('body')).not.toContainText('MAILERLITE_FORM_ACTION');
   });
 });
 
@@ -349,14 +359,9 @@ for (const width of [360, 375, 390, 414]) {
   test.describe(`Best Man Backup — no sideways scroll at ${width}`, () => {
     test.use({ viewport: { width, height: 800 } });
 
-    test('home kits and guides, the kits page and the guide index stay within the screen', async ({ page }) => {
-      for (const path of ['/', '/kits/', '/guides/']) {
+    test('home, kits, checklist and the guide index stay within the screen', async ({ page }) => {
+      for (const path of ['/', '/kits/', '/kits/speech/', '/checklist/', '/guides/']) {
         await page.goto(path);
-        if (path === '/') {
-          await expect(page.locator('#kits')).toBeVisible();
-          await expect(page.locator('#guides')).toBeVisible();
-          await expect(page.locator('.bundle-banner')).toBeVisible();
-        }
         const widths = await page.evaluate(() => ({
           scroll: document.documentElement.scrollWidth,
           client: document.documentElement.clientWidth,
@@ -370,16 +375,27 @@ for (const width of [360, 375, 390, 414]) {
 test.describe('Best Man Backup — mobile 390', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
-  test('pages do not scroll sideways and the menu button stays on screen', async ({ page }) => {
-    const paths = ['/', '/kits/', '/guides/', '/guides/how-to-write-a-best-man-speech/', '/privacy/', '/guides/this-page-does-not-exist/'];
+  test('pocket-card pages do not scroll sideways and keep the inline nav on screen', async ({ page }) => {
+    const paths = ['/', '/kits/', '/kits/speech/', '/kits/bundle/', '/checklist/', '/guides/', '/guides/how-to-write-a-best-man-speech/', '/guides/what-does-the-best-man-pay-for/'];
     for (const path of paths) {
       await page.goto(path);
-      const toggle = page.getByRole('button', { name: 'Menu' });
-      await expect(toggle).toBeVisible();
-      const box = await toggle.boundingBox();
+      const shop = page.locator('header nav').getByRole('link', { name: 'Shop the kits' });
+      const guides = page.locator('header nav').getByRole('link', { name: 'Free guides' });
+      await expect(shop).toBeVisible();
+      await expect(guides).toBeVisible();
+      await expect(page.locator('header nav a.wide')).toBeHidden();
+      const box = await shop.boundingBox();
       expect(box, path).toBeTruthy();
       expect(box!.x, path).toBeGreaterThanOrEqual(0);
       expect(box!.x + box!.width, path).toBeLessThanOrEqual(390);
+      const buttons = page.locator('a.btn, a.button');
+      const count = await buttons.count();
+      for (let i = 0; i < count; i += 1) {
+        const button = buttons.nth(i);
+        if (!(await button.isVisible())) continue;
+        const target = await button.boundingBox();
+        expect(target?.height || 0, `${path} button ${i}`).toBeGreaterThanOrEqual(44);
+      }
       const widths = await page.evaluate(() => ({
         scroll: document.documentElement.scrollWidth,
         client: document.documentElement.clientWidth,
@@ -388,19 +404,13 @@ test.describe('Best Man Backup — mobile 390', () => {
     }
   });
 
-  test('guide and kits pages open a real mobile menu', async ({ page }) => {
-    for (const path of ['/guides/how-to-write-a-best-man-speech/', '/kits/', '/']) {
+  test('privacy and the 404 still use the existing menu button', async ({ page }) => {
+    for (const path of ['/privacy/', '/guides/this-page-does-not-exist/']) {
       await page.goto(path);
       const toggle = page.getByRole('button', { name: 'Menu' });
       await expect(toggle).toBeVisible();
-      const nav = page.getByRole('navigation', { name: 'Main navigation' });
-      const link = nav.getByRole('link').first();
-      await expect(link).toBeHidden();
-      await toggle.click();
-      await expect(link).toBeVisible();
-      const box = await link.boundingBox();
-      expect(box?.width || 0).toBeGreaterThan(40);
-      expect(box?.height || 0).toBeGreaterThanOrEqual(44);
+      const box = await toggle.boundingBox();
+      expect(box!.x + box!.width).toBeLessThanOrEqual(390);
     }
   });
 

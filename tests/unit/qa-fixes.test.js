@@ -91,8 +91,8 @@ describe('QA fixes', () => {
     const bad = [];
     for (const file of guides) {
       const html = fs.readFileSync(file, 'utf8');
-      const nav = html.match(/<nav id="site-nav"[\s\S]*?<\/nav>/);
-      const footer = html.match(/<nav class="guide-footer-links"[\s\S]*?<\/nav>/);
+      const nav = html.match(/<header>[\s\S]*?<\/header>/);
+      const footer = html.match(/<footer>[\s\S]*?<\/footer>/);
       if (!nav || !nav[0].includes('href="/kits/"') || !footer || !footer[0].includes('href="/kits/"')) {
         bad.push(path.relative(ROOT, file));
       }
