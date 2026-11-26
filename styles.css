@@ -60,13 +60,13 @@ footer{padding-block:32px}
 .button[data-etsy]{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
 .button[data-etsy]:hover{background:#e3ba67;border-color:#e3ba67}
 .footer-brand{max-width:100%}
-.footer-tagline{margin:-14px 0 0 106px;color:#fff;font-size:1rem;line-height:1.5;max-width:330px}
+.footer-tagline{margin:-14px 0 0 106px;color:#AD8749;font-size:1rem;line-height:1.5;max-width:330px}
 @media(max-width:760px){.footer-tagline{margin:-8px 0 0 90px;font-size:.9375rem}.closing .button[data-etsy]{width:100%;min-width:0;padding-inline:18px}.header .button.compact{padding-inline:24px}}
 @media(max-width:370px){.footer-tagline{margin-left:78px;margin-top:-5px}.actions .button[data-etsy]{width:100%;padding-inline:14px}}
 
 /* Compact aligned footer lockup and cue-card feature. */
 .footer-inner .brand .footer-wordmark{display:flex;flex-direction:column;gap:4px;letter-spacing:0;line-height:1.1}
-.footer-inner .brand .footer-tagline{display:block;margin:0;color:#fff;font-size:.797rem;line-height:1.25;letter-spacing:0;white-space:nowrap;max-width:none}
+.footer-inner .brand .footer-tagline{display:block;margin:0;color:#AD8749;font-size:.797rem;line-height:1.25;letter-spacing:0;white-space:nowrap;max-width:none}
 .cue-feature{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:72px;align-items:center}
 .cue-photo{margin:0;min-width:0}.cue-photo>img{width:100%;height:auto;display:block}
 .cue-photo figcaption{font-size:.875rem;color:var(--muted);margin-top:14px;line-height:1.5}
