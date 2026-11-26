@@ -199,7 +199,7 @@ def render(guide: dict) -> str:
             "datePublished": DATE_ISO,
             "dateModified": DATE_ISO,
             "mainEntityOfPage": canonical,
-            "image": "https://bestmanbackup.com/assets/best-man-editorial.jpg",
+            "image": "https://bestmanbackup.com/assets/apple-touch-icon.png",
             "author": {
                 "@type": "Organization",
                 "name": "Best Man Backup",
@@ -240,16 +240,14 @@ def render(guide: dict) -> str:
   <meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(meta_desc)}">
   <meta property="og:url" content="{canonical}">
-  <meta property="og:image" content="https://bestmanbackup.com/assets/best-man-editorial.jpg">
+  <meta property="og:image" content="https://bestmanbackup.com/assets/apple-touch-icon.png">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/assets/bmb-icon-navy.svg" type="image/svg+xml">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/guides/guides.css">
-  <script defer src="/analytics.js"></script>
+      <script defer src="/analytics.js"></script>
   <script defer src="/assets/checkout-config.js"></script>
   <script defer src="/assets/checkout.js"></script>
 <script type="application/ld+json">{article_schema}</script>

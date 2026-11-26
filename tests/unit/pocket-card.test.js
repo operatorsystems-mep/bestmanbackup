@@ -49,9 +49,6 @@ describe('pocket-card storefront', () => {
     const css = read('style.css');
     assert.match(css, /--gold:\s*#AD8749/i);
     assert.match(css, /footer p\{color:\s*var\(--gold\)\}/);
-    const legacy = read('styles.css');
-    assert.equal((legacy.match(/\.footer-tagline\{[^}]*color:#AD8749/g) || []).length >= 1, true);
-    assert.equal(legacy.includes('.footer-inner .brand .footer-tagline{display:block;margin:0;color:#AD8749'), true);
   });
 
   const files = htmlFiles(ROOT);

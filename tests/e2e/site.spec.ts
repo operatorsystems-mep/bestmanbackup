@@ -239,8 +239,6 @@ test.describe('Best Man Backup — desktop 1440', () => {
     }
 
     for (const asset of [
-      '/site.js',
-      '/suite.js',
       '/analytics.js',
       '/assets/checkout-config.js',
       '/assets/checkout.js',
@@ -248,8 +246,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
       const res = await request.get(asset);
       expect(res.ok(), asset).toBeTruthy();
       const body = await res.text();
-      // Allow the empty-URL guard comment/check in site.js and config comments.
-      if (asset === '/site.js' || asset === '/assets/checkout-config.js') {
+      if (asset === '/assets/checkout-config.js') {
         expect(body.replace(/etsy\.com/gi, '')).not.toMatch(/listing\/\d+/);
         continue;
       }
@@ -357,15 +354,11 @@ test.describe('Best Man Backup — desktop 1440', () => {
   });
 
   test('cheat-sheet sign-up stays hidden', async ({ page }) => {
-    const siteJs = await page.request.get('/site.js');
-    expect(siteJs.ok()).toBeTruthy();
-    const source = await siteJs.text();
-    expect(source).toMatch(/signupEnabled:\s*false/);
-
     await page.goto('/');
     await expect(page.locator('[data-signup]')).toHaveCount(0);
     await expect(page.locator('form')).toHaveCount(0);
     await expect(page.locator('body')).not.toContainText('MAILERLITE_FORM_ACTION');
+    await expect(page.locator('script[src="/site.js"]')).toHaveCount(0);
   });
 });
 

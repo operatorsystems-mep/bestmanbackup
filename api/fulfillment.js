@@ -21,8 +21,7 @@ function htmlPage({ title, body }) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>${title} | Best Man Backup</title>
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/guides/guides.css">
+  <link rel="stylesheet" href="/style.css">
   <link rel="icon" href="/favicon.ico" sizes="any">
 </head>
 <body>

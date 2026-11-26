@@ -14,7 +14,7 @@ function helpHtml(title, message) {
   return `<!DOCTYPE html><html lang="en-GB"><head>
   <meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
   <title>${title} | Best Man Backup</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/style.css">
 </head><body style="font-family:system-ui;padding:2rem;max-width:40rem">
   <h1>${title}</h1>
   <p>${message}</p>
