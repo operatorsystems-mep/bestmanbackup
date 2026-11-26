@@ -160,12 +160,14 @@ describe('pocket-card storefront', () => {
     const duties = read('kits/duties/index.html');
     const playbook = read('kits/playbook/index.html');
     const bundle = read('kits/bundle/index.html');
-    assert.match(speech, /What you get[\s\S]*A4 and US Letter[\s\S]*14 files/);
+    assert.match(speech, /What you get[\s\S]*including a support note · 15 files/);
     assert.match(speech, /editable Word workbook/i);
-    assert.match(duties, /What you get[\s\S]*A4 and US Letter[\s\S]*19 files/);
-    assert.match(playbook, /What you get[\s\S]*21 files/);
+    assert.match(duties, /What you get[\s\S]*including a support note · 20 files/);
+    assert.match(playbook, /What you get[\s\S]*including a support note · 22 files/);
     assert.match(playbook, /A4 and US Letter/);
-    assert.match(bundle, /All three kits/);
+    assert.match(bundle, /One main Start Here, plus a quick-start for each kit/);
+    assert.match(bundle, /including a support note · 61 files/);
+    assert.match(read('index.html'), /One main Start Here, plus a quick-start for each kit/);
     assert.match(speech, /Instant private download · Secure Stripe checkout · Problems\?/);
     assert.match(speech, /mailto:hello@bestmanbackup\.com/);
     assert.match(read('lib/kits.mjs'), /blobPath: 'kits\/v2026-11-27\/speech\.zip'/);
