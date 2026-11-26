@@ -161,12 +161,16 @@ describe('pocket-card storefront', () => {
     const playbook = read('kits/playbook/index.html');
     const bundle = read('kits/bundle/index.html');
     assert.match(speech, /What you get[\s\S]*including a support note · 15 files/);
+    assert.match(speech, /A sample speech/);
     assert.match(speech, /editable Word workbook/i);
     assert.match(duties, /What you get[\s\S]*including a support note · 20 files/);
+    assert.match(duties, /An ushers brief/);
     assert.match(playbook, /What you get[\s\S]*including a support note · 22 files/);
+    assert.match(playbook, /A UK running order/);
     assert.match(playbook, /A4 and US Letter/);
     assert.match(bundle, /One main Start Here, plus a quick-start for each kit/);
     assert.match(bundle, /including a support note · 61 files/);
+    assert.match(bundle, /A sample speech, a UK running order and an ushers brief/);
     assert.match(read('index.html'), /One main Start Here, plus a quick-start for each kit/);
     assert.match(speech, /Instant private download · Secure Stripe checkout · Problems\?/);
     assert.match(speech, /mailto:hello@bestmanbackup\.com/);
