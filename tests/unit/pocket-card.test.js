@@ -148,6 +148,36 @@ describe('pocket-card storefront', () => {
     assert.equal(blob.includes('MAILERLITE_FORM_ACTION'), false);
   });
 
+  it('leads with the Best Man Set and states what each kit includes', () => {
+    for (const rel of ['index.html', 'kits/index.html']) {
+      const html = read(rel);
+      const ids = [...html.matchAll(/<a class="tile" id="([^"]+)"/g)].map((match) => match[1]);
+      assert.deepEqual(ids, ['bundle', 'speech', 'duties', 'playbook'], rel);
+      assert.match(html, /id="bundle"[\s\S]*Best value[\s\S]*Worth £34\.97 · Save £15/);
+    }
+    const speech = read('kits/speech/index.html');
+    const duties = read('kits/duties/index.html');
+    const playbook = read('kits/playbook/index.html');
+    const bundle = read('kits/bundle/index.html');
+    assert.match(speech, /What you get[\s\S]*14 files[\s\S]*A4 and US Letter/);
+    assert.match(speech, /editable Word workbook/i);
+    assert.match(duties, /What you get[\s\S]*19 files[\s\S]*A4 and US Letter[\s\S]*Editable Word files/);
+    assert.match(playbook, /What you get[\s\S]*21 files[\s\S]*Editable in Word/);
+    assert.equal(playbook.includes('A4'), false);
+    assert.match(bundle, /All three kits/);
+    assert.match(speech, /Instant private download · Secure Stripe checkout · Problems\?/);
+    assert.match(speech, /mailto:hello@bestmanbackup\.com/);
+    assert.match(read('lib/kits.mjs'), /blobPath: 'kits\/speech\.zip'/);
+    assert.match(read('lib/kits.mjs'), /downloadName: 'Best-Man-Speech-Kit\.zip'/);
+    const guide = read('guides/how-to-write-a-best-man-speech/index.html');
+    assert.match(guide, /theme-color" content="#101b2b"/);
+    assert.equal(guide.includes('#132238'), false);
+    assert.equal(guide.includes('#e3ba67'), false);
+    assert.equal(guide.includes('#D4A84F'), false);
+    assert.equal(guide.includes('#14253B'), false);
+    assert.equal(read('thank-you/thank-you.css').includes('#e3ba67'), false);
+  });
+
   it('adds one-page pocket checklist PDFs at A4 and US Letter', () => {
     const a4 = pdfBox(path.join(ROOT, 'downloads/pocket-a4.pdf'));
     const letter = pdfBox(path.join(ROOT, 'downloads/pocket-letter.pdf'));

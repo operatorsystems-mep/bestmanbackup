@@ -124,8 +124,9 @@
 }
 
 .ty-download .button:hover {
-  background: #e3ba67;
-  border-color: #e3ba67;
+  background: #FAF6EC;
+  border-color: #FAF6EC;
+  color: #101B2B;
 }
 
 .ty-download-note {
@@ -274,8 +275,19 @@
 }
 
 .ty-upsell .button:hover {
-  background: #e3ba67;
-  border-color: #e3ba67;
+  background: #FAF6EC;
+  border-color: #FAF6EC;
+  color: #101B2B;
+}
+
+.ty-upsell .trust {
+  color: #FAF6EC;
+  margin: 14px 0 0;
+  font-size: 0.95rem;
+}
+
+.ty-upsell .trust a {
+  color: #FAF6EC;
 }
 
 .ty-share {

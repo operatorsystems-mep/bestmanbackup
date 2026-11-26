@@ -79,6 +79,9 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.locator('#playbook')).toContainText('£9.99');
     await expect(page.locator('#bundle')).toContainText('The Best Man Set');
     await expect(page.locator('#bundle')).toContainText('£19.99');
+    await expect(page.locator('.grid .tile').first()).toHaveAttribute('id', 'bundle');
+    await expect(page.locator('#bundle')).toContainText('Best value');
+    await expect(page.locator('#bundle')).toContainText('Worth £34.97 · Save £15');
     await expect(page.locator('body')).not.toContainText('Stag & Bachelor Party Kit');
     await expect(page.locator('body')).not.toContainText(/Checkout opening shortly/i);
     const schema = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -312,6 +315,9 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.locator('#duties')).toContainText('£9.99');
     await expect(page.locator('#playbook')).toContainText('£9.99');
     await expect(page.locator('#bundle')).toContainText('£19.99');
+    await expect(page.locator('.grid .tile').first()).toHaveAttribute('id', 'bundle');
+    await expect(page.locator('#bundle')).toContainText('Best value');
+    await expect(page.locator('#bundle')).toContainText('Worth £34.97 · Save £15');
     await expect(page.locator('#speech')).toHaveAttribute('href', '/kits/speech/');
     await expect(page.locator('a[data-product]')).toHaveCount(0);
     const kits = page.locator('header nav').getByRole('link', { name: 'Shop the kits' });
@@ -424,6 +430,23 @@ test.describe('Best Man Backup — mobile 390', () => {
       }));
       expect(widths.scroll, path).toBeLessThanOrEqual(widths.client);
     }
+  });
+
+  test('buy buttons sit above the fold on a phone', async ({ page }) => {
+    await page.goto('/kits/speech/');
+    const buy = page.locator('a.btn[data-product="speech"]');
+    await expect(buy).toBeVisible();
+    const buyBox = await buy.boundingBox();
+    expect(buyBox!.y + buyBox!.height).toBeLessThanOrEqual(844);
+    await expect(page.locator('.trust').first()).toContainText('Secure Stripe checkout');
+
+    await page.goto('/guides/stag-do-games/');
+    const cta = page.locator('.kit-cta-top a.button');
+    await expect(cta).toBeVisible();
+    const ctaBox = await cta.boundingBox();
+    expect(ctaBox!.y + ctaBox!.height).toBeLessThanOrEqual(844);
+    await expect(cta).toHaveAttribute('data-product', 'playbook');
+    await expect(page.locator('.kit-cta-end a[data-product="bundle"]')).toContainText('all three');
   });
 
   test('guide free download and CTA remain usable on a phone width', async ({ page }) => {
