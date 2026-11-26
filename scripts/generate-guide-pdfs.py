@@ -18,12 +18,16 @@ from pathlib import Path
 
 from fpdf import FPDF
 
-ROOT = Path(__file__).resolve().parents[1]
+import json, os
+ROOT = Path(os.environ.get("BMB_REPO", Path(__file__).resolve().parents[1]))
+CHECKLISTS = Path(os.environ.get("BMB_CHECKLISTS", ROOT / "scripts" / "guide-checklists.json"))
+OUTDIR = Path(os.environ.get("BMB_OUT", ROOT / "downloads"))
 GUIDES = ROOT / "guides"
 DOWNLOADS = ROOT / "downloads"
 LOGO = ROOT / "assets" / "bmb-horizontal-navy.svg"
-FONT_SANS = ROOT / "fonts" / "NimbusSans-Regular.otf"
-FONT_SANS_BOLD = ROOT / "fonts" / "NimbusSans-Bold.otf"
+FONT_DIR = Path(os.environ.get("BMB_FONT_DIR", ROOT / "fonts"))
+FONT_SANS = FONT_DIR / "NimbusSans-Regular.ttf"
+FONT_SANS_BOLD = FONT_DIR / "NimbusSans-Bold.ttf"
 
 NAVY = (16, 27, 43)  # #101B2B
 GOLD = (173, 135, 73)  # #AD8749
@@ -86,17 +90,17 @@ PRODUCT_BY_SLUG = {
 
 PRODUCT_META = {
     "speech": {
-        "name": "Best Man Speech Kit",
+        "name": "The Speech Kit",
         "blurb": "Speech-writing guide, editable workbook and six large cue cards.",
         "price": "£14.99",
     },
     "duties": {
-        "name": "Best Man Duties Kit",
+        "name": "The Duties Kit",
         "blurb": "Duties handbook, planner, wedding-day sheet and pocket carry cards.",
         "price": "£9.99",
     },
     "playbook": {
-        "name": "Stag Do & Bachelor Party Playbook",
+        "name": "The Stag Playbook",
         "blurb": "Eight games, groom quiz, challenge cards and Stag Awards.",
         "price": "£9.99",
     },
@@ -138,13 +142,56 @@ def load_live_checkout() -> dict:
 
 
 def strip_tags(text: str) -> str:
+    # v2.1: list items become one bulleted line each (v2 glued them: "...wordsMain UK speaker")
+    text = re.sub(r"<li[^>]*>", "\n\u2022 ", text, flags=re.I)
+    text = re.sub(r"</(li|ul|ol)\s*>", "\n", text, flags=re.I)
     text = re.sub(r"<br\s*/?>", "\n", text, flags=re.I)
     text = re.sub(r"</p\s*>", "\n", text, flags=re.I)
     text = re.sub(r"<[^>]+>", "", text)
     text = html.unescape(text)
     text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r" *\n *", "\n", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
+
+
+def _similar(a: str, b: str) -> bool:
+    import difflib
+    return difflib.SequenceMatcher(None, a.lower(), b.lower()).ratio() > 0.68
+
+
+DROPPED: list[str] = []
+
+
+def clean_answer(answer: str) -> str:
+    """v2.1: print-only tidy of the short answer.
+    - drop on-screen navigation sentences/clauses ("Jump to ...") that mean nothing on paper
+    - drop a paragraph whose every sentence is repeated (near-verbatim) in another paragraph
+    - list items on their own lines, paragraphs separated by a blank line"""
+    answer = re.sub(r"Jump to [^.]*?, or use", "Use", answer)
+    answer = re.sub(r"(^|(?<=[.!?] ))Jump to [^.]*\.\s*", "", answer)
+    paras = [p.strip() for p in re.split(r"\n\s*\n|\n(?!\u2022)", answer) if p.strip()]
+    # re-split so bullet runs stay together as one block
+    blocks: list[str] = []
+    for line in answer.split("\n"):
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith("\u2022") and blocks and blocks[-1].startswith("\u2022"):
+            blocks[-1] += "\n" + line
+        else:
+            blocks.append(line)
+    sent = lambda t: [x for x in re.split(r"(?<=[.!?])\s+", t) if len(x) > 20]
+    keep = []
+    for i, b in enumerate(blocks):
+        others = [s for j, o in enumerate(blocks) if j != i and j not in [k for k, _ in keep if False] for s in sent(o)]
+        ss = sent(b)
+        rep = sum(1 for x in ss if any(_similar(x, y) for y in others))
+        if ss and not b.startswith("\u2022") and rep >= 2 and rep / len(ss) >= 0.6 and i < len(blocks) - 1 and any(len(o) >= len(b) for j, o in enumerate(blocks) if j > i):
+            DROPPED.append(b[:70])
+            continue  # mostly repeated by a later, fuller paragraph
+        keep.append((i, b))
+    return "\n\n".join(b for _, b in keep)
 
 
 def extract_guide(path: Path) -> dict:
@@ -158,6 +205,7 @@ def extract_guide(path: Path) -> dict:
     answer = strip_tags(answer_m.group(1)) if answer_m else ""
     # Drop the SHORT ANSWER eyebrow from the printable body
     answer = re.sub(r"^THE SHORT ANSWER\s*", "", answer, flags=re.I).strip()
+    answer = clean_answer(answer)
 
     body_m = re.search(r'<div class="guide-body">(.*?)</div>\s*<section class="guide-faq"', raw, re.S | re.I)
     if not body_m:
@@ -198,6 +246,10 @@ def extract_guide(path: Path) -> dict:
     if not items and answer:
         items = [s.strip() for s in re.split(r"[.!?]\s+", answer) if len(s.strip()) > 20][:8]
 
+    override = json.loads(CHECKLISTS.read_text(encoding="utf-8")) if CHECKLISTS.exists() else {}
+    if path.parent.name in override:
+        items = override[path.parent.name]
+
     return {
         "slug": path.parent.name,
         "title": title,
@@ -209,8 +261,14 @@ def extract_guide(path: Path) -> dict:
 
 
 class ChecklistPDF(FPDF):
-    def __init__(self, guide: dict, checkout: dict):
-        super().__init__(orientation="P", unit="mm", format="A4")
+    def __init__(self, guide: dict, checkout: dict, fmt: str = "A4"):
+        super().__init__(orientation="P", unit="mm", format=fmt)
+        self.cw = self.w - 24  # content width between 12 mm margins
+        self.set_title(guide["title"] + " - free printable checklist")
+        self.set_author("Best Man Backup")
+        self.set_subject("Free printable checklist from bestmanbackup.com")
+        self.set_creator("Best Man Backup")
+        self.set_lang("en-GB")
         self.guide = guide
         self.checkout = checkout
         # Leave room for the two-line footer (buy line + guide URL).
@@ -220,12 +278,12 @@ class ChecklistPDF(FPDF):
             self.add_font("Nimbus", "B", str(FONT_SANS_BOLD))
             self.font_family = "Nimbus"
         else:
-            self.font_family = "Helvetica"
+            raise SystemExit("Nimbus TTF fonts not found in " + str(FONT_DIR))
 
     def header(self):
         # Ivory band and the pocket-card wordmark. Checklist copy is unchanged.
         self.set_fill_color(250, 246, 236)
-        self.rect(0, 0, 210, 26, "F")
+        self.rect(0, 0, self.w, 26, "F")
         if LOGO.exists():
             self.image(str(LOGO), 12, 6, 64)
         self.set_xy(80, 11)
@@ -234,7 +292,7 @@ class ChecklistPDF(FPDF):
         self.cell(0, 5, "Free printable checklist")
         self.set_draw_color(207, 200, 184)
         self.set_line_width(0.35)
-        self.line(0, 26, 210, 26)
+        self.line(0, 26, self.w, 26)
         self.set_y(32)
 
     def _text_link(self, text: str, url: str, height: float) -> None:
@@ -251,7 +309,7 @@ class ChecklistPDF(FPDF):
         self.set_y(-22)
         self.set_draw_color(*GOLD)
         self.set_line_width(0.4)
-        self.line(12, self.get_y(), 198, self.get_y())
+        self.line(12, self.get_y(), self.w - 12, self.get_y())
         self.ln(1.6)
 
         buy = f"Buy the kit  ·  {product['name']}  ·  {live['price']}"
@@ -285,26 +343,23 @@ class ChecklistPDF(FPDF):
             x = self.get_x()
             y = self.get_y()
             self.set_font(self.font_family, "", 10)
-            # Estimate box height
-            self.set_xy(x + 4, y + 4)
-            self.set_text_color(*INK)
-            self.multi_cell(178, 5, self.guide["answer"][:900])
-            after = self.get_y()
-            self.set_xy(x, y)
+            # Measure without drawing, so the text layer is written once.
+            lines = self.multi_cell(self.cw - 12, 5, self.guide["answer"], dry_run=True, output="LINES")
+            height = len(lines) * 5 + 8
             self.set_fill_color(*IVORY)
-            height = after - y + 4
-            self.rect(x, y, 186, height, "F")
+            self.rect(x, y, self.cw, height, "F")
             self.set_fill_color(*GOLD)
             self.rect(x, y, 2.5, height, "F")
             self.set_xy(x + 6, y + 4)
             self.set_text_color(*INK)
             self.set_font(self.font_family, "", 10)
-            self.multi_cell(174, 5, self.guide["answer"][:900])
-            self.ln(6)
+            self.multi_cell(self.cw - 12, 5, self.guide["answer"])
+            self.set_y(y + height)
+            self.ln(5)
 
         self.set_text_color(*NAVY)
         self.set_font(self.font_family, "B", 12)
-        self.cell(0, 8, "Checklist", ln=1)
+        self.cell(0, 8, "Checklist", new_x="LMARGIN", new_y="NEXT")
         self.set_draw_color(*GOLD)
         self.set_line_width(0.6)
         self.line(12, self.get_y(), 70, self.get_y())
@@ -313,11 +368,11 @@ class ChecklistPDF(FPDF):
         self.set_font(self.font_family, "", 10)
         self.set_text_color(*INK)
         for item in self.guide["items"]:
-            if self.get_y() > 250:
+            if self.get_y() > self.h - 47:
                 self.add_page()
                 self.set_font(self.font_family, "B", 12)
                 self.set_text_color(*NAVY)
-                self.cell(0, 8, "Checklist (continued)", ln=1)
+                self.cell(0, 8, "Checklist (continued)", new_x="LMARGIN", new_y="NEXT")
                 self.ln(2)
                 self.set_font(self.font_family, "", 10)
                 self.set_text_color(*INK)
@@ -326,24 +381,24 @@ class ChecklistPDF(FPDF):
             self.set_line_width(0.5)
             self.rect(14, y + 1, 4, 4)
             self.set_xy(22, y)
-            self.multi_cell(172, 5, item)
+            self.multi_cell(self.cw - 14, 5, item)
             self.ln(2)
 
         # Compact navy block: all four kits, each linked straight to Stripe.
         line_h = 5
         box_h = 8 + line_h * len(CATALOGUE) + 3
-        # 297mm page, 26mm footer margin.
-        if self.get_y() + box_h > 271:
+        box_h += 5  # Set saving line
+        if self.get_y() + box_h > self.h - 26:
             self.add_page()
         self.ln(3)
         box_y = self.get_y()
         self.set_fill_color(*NAVY)
-        self.rect(12, box_y, 186, box_h, "F")
+        self.rect(12, box_y, self.cw, box_h, "F")
 
         self.set_xy(16, box_y + 3)
         self.set_text_color(*IVORY)
         self.set_font(self.font_family, "B", 8)
-        self.cell(0, 4, "BUY DIRECT", ln=1)
+        self.cell(0, 4, "BUY DIRECT", new_x="LMARGIN", new_y="NEXT")
 
         self.set_font(self.font_family, "B", 9)
         for product_id, _label in CATALOGUE:
@@ -352,10 +407,14 @@ class ChecklistPDF(FPDF):
             self.set_text_color(*IVORY)
             self._text_link(f"{item['label']}  ·  {item['price']}", item["url"], line_h)
             self.ln(line_h)
+        self.set_x(16)
+        self.set_font(self.font_family, "", 8)
+        self.cell(0, line_h, "The Best Man Set: all three kits, worth £34.97 separately. Save £14.98.", new_x="LMARGIN", new_y="NEXT")
 
 
 def main() -> int:
-    DOWNLOADS.mkdir(parents=True, exist_ok=True)
+    fmt = os.environ.get("BMB_FORMAT", "A4")
+    OUTDIR.mkdir(parents=True, exist_ok=True)
     guides = sorted(
         p for p in GUIDES.glob("*/index.html") if p.parent.name != ""
     )
@@ -367,12 +426,12 @@ def main() -> int:
     written = []
     for path in guides:
         guide = extract_guide(path)
-        pdf = ChecklistPDF(guide, checkout)
+        pdf = ChecklistPDF(guide, checkout, fmt)
         pdf.build()
-        out = DOWNLOADS / f"{guide['slug']}-checklist.pdf"
+        out = OUTDIR / f"{guide['slug']}-checklist.pdf"
         pdf.output(str(out))
         written.append(out.name)
-        print(f"wrote {out.relative_to(ROOT)} ({len(guide['items'])} items)")
+        print(f"wrote {out} ({len(guide['items'])} items, {pdf.pages_count} pages)")
 
     print(f"Done: {len(written)} PDFs in downloads/")
     return 0

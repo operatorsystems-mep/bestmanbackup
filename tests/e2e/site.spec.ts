@@ -218,13 +218,18 @@ test.describe('Best Man Backup — desktop 1440', () => {
       const res = await page.goto(guidePath);
       expect(res?.ok(), guidePath).toBeTruthy();
 
-      const pdfLinks = page.locator('a[href^="/downloads/"][href$="-checklist.pdf"]');
+      const pdfLinks = page.locator(`a[href="/downloads/${slug}-checklist.pdf"]`);
       await expect(pdfLinks, `${slug} pdf count`).toHaveCount(2);
       const href = await pdfLinks.first().getAttribute('href');
       expect(href).toBe(`/downloads/${slug}-checklist.pdf`);
       const pdfRes = await request.get(href!);
       expect(pdfRes.ok(), `${href} should be HTTP 200`).toBeTruthy();
       expect(pdfRes.headers()['content-type'] || '').toMatch(/pdf/i);
+      const letterLinks = page.locator(`a[href="/downloads/letter/${slug}-checklist.pdf"]`);
+      await expect(letterLinks, `${slug} letter`).toHaveCount(2);
+      await expect(letterLinks.first()).toHaveText('US Letter');
+      const letterRes = await request.get(`/downloads/letter/${slug}-checklist.pdf`);
+      expect(letterRes.ok(), `${slug} letter pdf`).toBeTruthy();
 
       await expect(page.locator('.kit-cta a[data-product]').first(), `${slug} CTA`).toBeVisible();
       const ctaHref = await page.locator('.kit-cta a[data-product]').first().getAttribute('href');

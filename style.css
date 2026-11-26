@@ -68,6 +68,7 @@
 .free-download .eyebrow{margin:0 0 8px}
 .free-download p{margin:0 0 12px}
 .free-download p:last-child{margin:0}
+.free-download .pdf-letter{margin-left:14px;font-size:.875rem;font-weight:700;color:#7A5C28;text-decoration:underline}
 .free-download-end{margin:40px 0 28px}
 .button{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--paper);padding:.83rem 1.4rem;min-height:44px;font-weight:700;text-decoration:none;border:1px solid var(--ink)}
 .button.secondary{background:transparent;color:var(--ink);border-color:var(--ink)}
