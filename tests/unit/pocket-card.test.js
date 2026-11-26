@@ -82,7 +82,7 @@ describe('pocket-card storefront', () => {
     };
     for (const [id, [name, labelPrice, schemaPrice]] of Object.entries(expected)) {
       const html = read(`kits/${id}/index.html`);
-      assert.match(html, new RegExp(`data-product="${id}" href="/kits/${id}/">Buy ${name} · ${labelPrice}`));
+      assert.match(html, new RegExp(`data-product="${id}" href="/kits/${id}/"[^>]*>Buy ${name} · ${labelPrice}`));
       assert.match(html, new RegExp(`"price": "${schemaPrice}"`));
       assert.match(html, /Instant private download · Secure Stripe checkout/);
       assert.equal(html.includes('Instant private download after payment.'), false);
