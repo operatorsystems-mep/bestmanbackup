@@ -168,7 +168,7 @@ describe('pocket-card storefront', () => {
     assert.match(bundle, /All three kits/);
     assert.match(speech, /Instant private download · Secure Stripe checkout · Problems\?/);
     assert.match(speech, /mailto:hello@bestmanbackup\.com/);
-    assert.match(read('lib/kits.mjs'), /blobPath: 'kits\/speech\.zip'/);
+    assert.match(read('lib/kits.mjs'), /blobPath: 'kits\/v2026-11-27\/speech\.zip'/);
     assert.match(read('lib/kits.mjs'), /downloadName: 'Best-Man-Speech-Kit\.zip'/);
     const guide = read('guides/how-to-write-a-best-man-speech/index.html');
     assert.match(guide, /theme-color" content="#101b2b"/);
