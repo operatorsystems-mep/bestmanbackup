@@ -342,6 +342,20 @@ test.describe('Best Man Backup — desktop 1440', () => {
     expect(redirect.headers().location).toBe('/guides/');
   });
 
+  test('guides index numbers every guide and search hides empty categories', async ({ page }) => {
+    await page.goto('/guides/');
+    await expect(page.locator('#entries a')).toHaveCount(50);
+    await expect(page.locator('#entries .n').first()).toHaveText('1');
+    await expect(page.locator('#entries .n').last()).toHaveText('50');
+    await expect(page.getByRole('heading', { name: /Speech writing/ })).toBeVisible();
+    await page.locator('#q').fill('what not to say');
+    await expect(page.locator('#entries a:visible')).toHaveCount(1);
+    await expect(page.locator('#entries .guide-cat:visible')).toHaveCount(1);
+    await expect(page.locator('#entries .guide-cat:visible h2')).toContainText('What to avoid');
+    await page.locator('#q').fill('');
+    await expect(page.locator('#entries .guide-cat:visible')).toHaveCount(5);
+  });
+
   test('cheat-sheet sign-up stays hidden', async ({ page }) => {
     const siteJs = await page.request.get('/site.js');
     expect(siteJs.ok()).toBeTruthy();

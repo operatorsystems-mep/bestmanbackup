@@ -34,9 +34,21 @@ describe('public catalogue', () => {
       'best-man-speech-opening-lines',
       'stag-do-budget',
     ]);
-    const entries = hub.match(/id="entries">([\s\S]*?)<\/div>/);
-    const hubHrefs = [...entries[1].matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]).sort();
+    const hubHrefs = [...hub.matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]).sort();
     assert.deepEqual(hubHrefs, slugs);
+    for (const heading of [
+      'Speech writing',
+      'Duties and logistics',
+      'Stag do planning',
+      'Etiquette and manners',
+      'What to avoid',
+    ]) {
+      assert.equal(hub.includes(heading), true, heading);
+    }
+    assert.equal(hub.includes('50 guides, every one free to read'), true);
+    assert.equal(home.includes('Explore 50 guides'), true);
+    assert.equal(home.includes('50 guides, every one free to read'), true);
+    assert.equal((hub.match(/class="n">/g) || []).length, 50);
   });
 
   it('shows the current prices and the full product name', () => {
