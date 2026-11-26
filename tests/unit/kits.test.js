@@ -4,9 +4,15 @@ import fs from 'node:fs';
 import { KITS, PRICE_ID_LIVE, PRICE_ID_LIVE_PREVIOUS, getKit } from '../../lib/kits.mjs';
 
 describe('kit blob pathnames', () => {
-  it('maps every kit to a private Blob pathname under kits/', () => {
+  it('maps every kit to the v2026-11-27 private Blob pathname', () => {
+    const expected = {
+      speech: ['kits/v2026-11-27/speech.zip', 'Best-Man-Speech-Kit.zip'],
+      duties: ['kits/v2026-11-27/duties.zip', 'Best-Man-Duties-Kit.zip'],
+      playbook: ['kits/v2026-11-27/playbook.zip', 'Stag-and-Bachelor-Party-Playbook.zip'],
+      bundle: ['kits/v2026-11-27/bundle.zip', 'The-Best-Man-Set.zip'],
+    };
     for (const kit of Object.values(KITS)) {
-      assert.match(kit.blobPath, /^kits\/[a-z]+\.zip$/);
+      assert.deepEqual([kit.blobPath, kit.downloadName], expected[kit.id]);
       assert.ok(Array.isArray(kit.sources) || Array.isArray(kit.includes));
     }
   });
