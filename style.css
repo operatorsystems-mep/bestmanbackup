@@ -105,7 +105,12 @@ footer p{color:var(--gold)}
 .guide-cat h2{font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 .35rem}
 .guide-cat .cat-count{font-family:Sans,Arial,sans-serif;font-size:.8rem;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-left:.4rem}
 .list a .n{font-family:Sans,Arial,sans-serif;font-size:.78rem;letter-spacing:.04em;color:var(--accent);margin-right:.4rem;font-weight:700}
-.guide-cat[hidden]{display:none}
+.guide-cat[hidden],.kit-band[hidden],#none[hidden]{display:none}
+.kit-band{margin:1.4rem 0 0;padding:16px 18px;background:#FAF6EC;border-left:3px solid #AD8749}
+.kit-band p{margin:0 0 .45rem}
+.kit-band p:last-child{margin:0}
+.kit-band a{color:#AD8749}
+.start-here{margin:0 0 1.4rem}
 .tile h2{font-size:clamp(1.65rem,2.4vw,2.7rem)}
 .kit-inline{background:#FAF6EC;border-left:3px solid #AD8749;padding:16px;margin:20px 0;max-width:100%}
 .kit-inline p{margin:0;font:1.08rem/1.5 Sans,Arial,sans-serif}

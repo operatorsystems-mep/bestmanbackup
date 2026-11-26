@@ -34,8 +34,9 @@ describe('public catalogue', () => {
       'best-man-speech-opening-lines',
       'stag-do-budget',
     ]);
-    const hubHrefs = [...hub.matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]).sort();
-    assert.deepEqual(hubHrefs, slugs);
+    const hubHrefs = [...hub.matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]);
+    assert.deepEqual([...new Set(hubHrefs)].sort(), slugs);
+    assert.equal(hubHrefs.length, 53);
     for (const heading of [
       'Speech writing',
       'Duties and logistics',
@@ -45,7 +46,7 @@ describe('public catalogue', () => {
     ]) {
       assert.equal(hub.includes(heading), true, heading);
     }
-    assert.equal(hub.includes('50 guides, every one free to read'), true);
+    assert.equal(hub.includes('50 free guides to the speech, the duties and the stag do. No sign-up.'), true);
     assert.equal(home.includes('Explore 50 guides'), true);
     assert.equal(home.includes('50 guides, every one free to read'), true);
     assert.equal((hub.match(/class="n">/g) || []).length, 50);
