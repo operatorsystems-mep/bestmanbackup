@@ -46,8 +46,9 @@ export function sessionIdWellFormed(sessionId) {
 
 export function isMissingOrderError(err) {
   const code = err?.code || err?.raw?.code;
-  const type = err?.type || err?.rawType || err?.name;
-  return code === 'resource_missing' || type === 'StripeInvalidRequestError';
+  const type = err?.type || err?.rawType || err?.raw?.type || err?.name;
+  const status = err?.statusCode || err?.raw?.statusCode;
+  return code === 'resource_missing' || type === 'StripeInvalidRequestError' || type === 'invalid_request_error' || status === 404;
 }
 
 function json(res, status, payload) {
