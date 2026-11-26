@@ -29,6 +29,18 @@
     return typeof url === 'string' && /^https:\/\//i.test(url);
   }
 
+  const PAGE_NAME = {
+    speech: 'The Speech Kit',
+    duties: 'The Duties Kit',
+    playbook: 'The Stag Playbook',
+    bundle: 'The Best Man Set',
+  };
+
+  function visibleLabel(el, product) {
+    const shown = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    return shown || PAGE_NAME[product.id] || '';
+  }
+
   function applyLink(el, product) {
     const url = checkoutUrlFor(product);
     const live = isHttpCheckout(url);
@@ -36,8 +48,8 @@
     el.setAttribute('href', href);
     el.removeAttribute('target');
     el.removeAttribute('rel');
-    const label = el.dataset.label || product.buttonLabel;
-    el.setAttribute('aria-label', label);
+    const label = visibleLabel(el, product);
+    if (label) el.setAttribute('aria-label', label);
     if (el.dataset.goatcounterClick) {
       el.dataset.goatcounterClick = el.dataset.goatcounterClick
         .replace(/^etsy-/, live ? 'checkout-' : 'kits-')
@@ -68,6 +80,11 @@
       applyLink(link, product);
       el.replaceWith(link);
     }
+  });
+
+  document.querySelectorAll('[data-price]').forEach((node) => {
+    const product = resolve(node.getAttribute('data-price'));
+    if (product && product.price) node.textContent = product.price;
   });
 
   const allLive = Object.values(config.products).every((p) => isHttpCheckout(checkoutUrlFor(p)));

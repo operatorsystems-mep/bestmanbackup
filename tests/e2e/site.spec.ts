@@ -358,6 +358,7 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await page.locator('#q').fill('');
     await expect(page.locator('#entries .guide-cat:visible')).toHaveCount(5);
     await expect(page.locator('.start-here a')).toHaveCount(3);
+    await expect(page.locator('a[href="/kits/speech/"] [data-price="speech"]')).toHaveText('£14.99');
     await expect(page.locator('.kit-band:visible')).toHaveCount(3);
     await page.locator('#q').fill('zzz');
     await expect(page.locator('#none')).toBeVisible();

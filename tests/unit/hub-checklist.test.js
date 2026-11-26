@@ -38,10 +38,11 @@ describe('guides hub and checklist addendum', () => {
       assert.equal(hub.includes(`href="/kits/${KITS[id].id}/"`), true, id);
       assert.equal(config.includes(`id: '${id}'`), true);
     }
-    assert.equal(hub.includes('data-price="speech"'), true);
-    assert.equal(hub.includes('data-price="duties"'), true);
-    assert.equal(hub.includes('data-price="playbook"'), true);
-    assert.equal(/£14\.99|£9\.99|£19\.99/.test(hub), false);
+    assert.equal(hub.includes('data-price="speech">£14.99'), true);
+    assert.equal(hub.includes('data-price="duties">£9.99'), true);
+    assert.equal(hub.includes('data-price="playbook">£9.99'), true);
+    assert.equal(hub.includes('src="/assets/checkout.js"'), true);
+    assert.equal(checklist.includes('src="/assets/checkout.js"'), true);
     assert.equal(hub.includes('No guide matches that yet'), true);
     assert.equal(hub.includes('querySelector(".d")'), true);
     assert.equal(hub.includes('apple-touch-icon.png'), true);
@@ -69,6 +70,33 @@ describe('guides hub and checklist addendum', () => {
     assert.equal(typeof data.name, 'string');
     assert.equal(typeof data.description, 'string');
     assert.equal(data.url, 'https://bestmanbackup.com/checklist/');
-    assert.equal(/£14\.99|£9\.99|£19\.99/.test(checklist), false);
+    assert.equal(checklist.includes('data-price="duties">£9.99'), true);
+    assert.equal(checklist.includes('class="sheet-preview"'), true);
+  });
+
+  it('matches kit FAQ schema to the visible questions and names buy buttons', () => {
+    for (const id of ['speech', 'duties', 'playbook', 'bundle']) {
+      const html = read(`kits/${id}/index.html`);
+      const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) =>
+        JSON.parse(match[1]),
+      );
+      const faq = blocks.find((block) => block['@type'] === 'FAQPage');
+      assert.ok(faq, id);
+      assert.ok(faq.mainEntity.length >= 3 && faq.mainEntity.length <= 4, id);
+      for (const question of faq.mainEntity) {
+        assert.equal(html.includes(`<summary>${question.name}</summary>`), true, question.name);
+        assert.equal(html.includes(question.acceptedAnswer.text), true, question.name);
+      }
+      assert.equal(/refund|cancellation/i.test(html.slice(html.indexOf('id="kit-faq"'))), false);
+    }
+    const guide = read('guides/how-to-write-a-best-man-speech/index.html');
+    assert.match(guide, /data-product="speech"[^>]*aria-label="Get The Speech Kit"/);
+    assert.match(guide, /data-product="bundle"[^>]*aria-label="Get all three · The Best Man Set · £19\.99"/);
+    assert.equal(guide.includes('Get the Best Man Bundle'), false);
+    assert.equal(guide.includes('About these guides: written by Best Man Backup'), true);
+    assert.match(read('style.css'), /\.kit-band a\{color:#7A5C28/);
+    assert.match(read('style.css'), /\.kit-inline a\{color:#7A5C28/);
+    assert.match(read('assets/checkout.js'), /data-price/);
+    assert.match(read('assets/checkout.js'), /The Best Man Set/);
   });
 });
