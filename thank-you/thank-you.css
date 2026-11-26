@@ -303,6 +303,11 @@
 }
 
 @media (max-width: 760px) {
+  .ty-hero::before {
+    right: 0;
+    left: 0;
+  }
+
   .ty-main {
     padding-block: 32px 72px;
   }

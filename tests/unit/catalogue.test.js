@@ -28,11 +28,14 @@ describe('public catalogue', () => {
     assert.equal(slugs.length, 50);
     assert.equal(home.includes('50 free best man guides'), true);
     assert.equal(hub.includes('50 free best man guides'), true);
-    const guideSection = home.slice(home.indexOf('id="guides"'), home.indexOf('id="duties"'));
-    const homeHrefs = [...guideSection.matchAll(/href="\/guides\/([^"]+)\/"/g)].map((match) => match[1]).sort();
-    const lists = [...hub.matchAll(/class="guide-index-list"[\s\S]*?<\/ol>/g)].map((match) => match[0]).join('\n');
-    const hubHrefs = [...lists.matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]).sort();
-    assert.deepEqual(homeHrefs, slugs);
+    const homeHrefs = [...home.matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]).sort();
+    assert.deepEqual(homeHrefs, [
+      'best-man-duties-timeline',
+      'best-man-speech-opening-lines',
+      'stag-do-budget',
+    ]);
+    const entries = hub.match(/id="entries">([\s\S]*?)<\/div>/);
+    const hubHrefs = [...entries[1].matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]).sort();
     assert.deepEqual(hubHrefs, slugs);
   });
 
@@ -51,9 +54,22 @@ describe('public catalogue', () => {
     }
     assert.equal(home.includes('£14.99'), true);
     assert.equal(home.includes('£19.99'), true);
-    assert.match(home, /Stag do games, challenges and awards<\/th><td>—<\/td><td>Included<\/td><td>—<\/td><td>Included<\/td>/);
+    for (const [id, name, price] of [
+      ['speech', 'The Speech Kit', '£14.99'],
+      ['duties', 'The Duties Kit', '£9.99'],
+      ['playbook', 'The Stag Playbook', '£9.99'],
+      ['bundle', 'The Best Man Set', '£19.99'],
+    ]) {
+      for (const page of [home, kits]) {
+        const tile = page.match(new RegExp(`id="${id}"[\\s\\S]*?</a>`));
+        assert.ok(tile, id);
+        assert.equal(tile[0].includes(name), true, name);
+        assert.equal(tile[0].includes(price), true, price);
+      }
+    }
     assert.equal(kits.includes('"price": "14.99"'), true);
     assert.equal(kits.includes('"price": "9.99"'), true);
+    assert.equal(kits.includes('"price": "19.99"'), true);
     assert.equal(KITS.playbook.name, 'Stag Do & Bachelor Party Playbook');
   });
 
@@ -61,9 +77,11 @@ describe('public catalogue', () => {
     const title = home.match(/<title>([^<]*)<\/title>/)[1];
     const og = home.match(/property="og:title" content="([^"]*)"/)[1];
     assert.equal(title, og);
+    assert.equal(title, 'Be the best man he’ll never forget | Best Man Backup');
     assert.ok(title.length <= 60, title.length);
-    assert.match(title, /50 free/i);
     assert.match(title, /best man/i);
+    const desc = home.match(/<meta name="description" content="([^"]*)"/)[1];
+    assert.match(desc, /^50 free best man guides/);
   });
 
   it('leads the guides hub description with the free guides', () => {
