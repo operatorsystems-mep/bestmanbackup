@@ -83,6 +83,23 @@
 }
 :root{--gold:#AD8749}
 footer p{color:var(--gold)}
+.trust{margin:.7rem 0 0;font-size:.92rem;line-height:1.45;color:#5c564c}
+.trust a{color:inherit}
+.gets{margin-top:1.5rem}
+.gets ul{margin:.25rem 0 0;padding-left:1.15rem}
+.gets li{margin:.35rem 0}
+.who{margin:.9rem 0 0}
+.best-value{display:inline-block;margin:0 0 .55rem;background:#0f2340;color:var(--paper);font-family:Sans,Arial,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;line-height:1;padding:.35rem .62rem}
+.save{margin:.45rem 0 0;font-weight:700}
+@media(max-width:640px){
+  .offer{display:flex;flex-direction:column}
+  .offer .price{order:1;margin-bottom:.15rem}
+  .offer .buy{order:2;margin:.15rem 0 .9rem}
+  .offer .dek,.offer .lead,.offer .format,.offer .small,.offer .gets{order:3}
+  .kit-cta-top{display:flex;flex-direction:column}
+  .kit-cta-top .cta-buy{order:-2;margin:0 0 .75rem}
+  .kit-cta-top .trust{order:-1;margin:0 0 .85rem}
+}
 .free-badge{display:inline-block;margin-left:.55rem;background:#0f2340;color:var(--paper);font-family:Sans,Arial,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;line-height:1;padding:.35rem .62rem;border-radius:999px;vertical-align:.12em}
 .guide-cat{margin:2.4rem 0 0}
 .guide-cat h2{font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 .35rem}

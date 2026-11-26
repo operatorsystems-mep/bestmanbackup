@@ -14,7 +14,7 @@ const KIT_FROM_LABEL = [
   ['speech', /speech\s*kit/i],
   ['duties', /duties\s*kit/i],
   ['playbook', /playbook/i],
-  ['bundle', /\bbundle\b/i],
+  ['bundle', /\b(bundle|set|all three)\b/i],
 ];
 
 function guideHtmlFiles(dir, out = []) {

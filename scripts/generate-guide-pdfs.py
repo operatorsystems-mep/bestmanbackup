@@ -25,11 +25,11 @@ LOGO = ROOT / "assets" / "bmb-horizontal-navy.svg"
 FONT_SANS = ROOT / "fonts" / "NimbusSans-Regular.otf"
 FONT_SANS_BOLD = ROOT / "fonts" / "NimbusSans-Bold.otf"
 
-NAVY = (19, 34, 56)  # #132238
-GOLD = (212, 168, 79)  # #D4A84F
+NAVY = (16, 27, 43)  # #101B2B
+GOLD = (173, 135, 73)  # #AD8749
 INK = (23, 38, 61)
 MUTED = (89, 97, 108)
-IVORY = (247, 244, 238)
+IVORY = (250, 246, 236)  # #FAF6EC
 
 PRODUCT_BY_SLUG = {
     "3-prompts-to-start-your-best-man-speech": "speech",

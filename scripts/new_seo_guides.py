@@ -80,7 +80,8 @@ def top_cta(product: str) -> str:
         f'<aside class="kit-cta kit-cta-top" aria-label="{meta["aria"]}">'
         f'<p class="eyebrow">FROM BEST MAN BACKUP · { {"speech": "£14.99", "duties": "£9.99", "playbook": "£9.99"}[product] }</p>'
         f'<p><strong>{meta["name"]}:</strong> {meta["desc"]}</p>'
-        f'<p><a class="button" data-product="{product}" href="/kits/#{meta["anchor"]}">{meta["button"]}</a></p>'
+        f'<p class="cta-buy"><a class="button" data-product="{product}" href="/kits/#{meta["anchor"]}">{meta["button"]}</a></p>'
+        f'<p class="trust">Instant private download · Secure Stripe checkout · Problems? <a href="mailto:hello@bestmanbackup.com">hello@bestmanbackup.com</a></p>'
         f"</aside>"
     )
 
@@ -93,8 +94,9 @@ def end_cta(product: str) -> str:
         f'<p><strong>{meta["name"]}:</strong> {meta["desc"]}</p>'
         f'<p class="kit-cta-actions">'
         f'<a class="button" data-product="{product}" href="/kits/#{meta["anchor"]}">{meta["button"]}</a> '
-        f'<a class="button secondary" data-product="bundle" href="/kits/#bundle">Get the Best Man Bundle</a>'
+        f'<a class="button secondary" data-product="bundle" href="/kits/#bundle">Get all three · The Best Man Set</a>'
         f"</p>"
+        f'<p class="trust">Instant private download · Secure Stripe checkout · Problems? <a href="mailto:hello@bestmanbackup.com">hello@bestmanbackup.com</a></p>'
         f'<p class="kit-cta-small">The £19.99 Best Man Bundle includes the Speech Kit, the Duties Kit and the Stag Do &amp; Bachelor Party Playbook, worth £34.97 separately.</p>'
         f"</aside>"
     )
@@ -231,7 +233,7 @@ def render(guide: dict) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#132238">
+  <meta name="theme-color" content="#101b2b">
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(meta_desc)}">
   <link rel="canonical" href="{canonical}">
@@ -272,13 +274,13 @@ def render(guide: dict) -> str:
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/guides/">Guides</a></nav>
       <p class="eyebrow"><span></span> {esc(eyebrow)}</p>
       <h1>{esc(h1)}</h1>
+      {top_cta(product)}
       <div class="guide-stamp"><p>Updated {TODAY}</p><p>About these guides: written by Best Man Backup, an independent site for best men only.</p></div>
             <div class="answer"><p class="eyebrow">THE SHORT ANSWER</p><p>{answer}</p></div>
       {free_block(slug, "top")}
       <div class="guide-body">
 
 {toc_from_sections(sections)}
-{top_cta(product)}
 {body_from_sections(sections)}
 
       </div>
