@@ -10,5 +10,7 @@ Disallow: /links/
 Disallow: /thank-you/
 Disallow: /private/
 Disallow: /api/
+# Social post images. Keep out of search.
+Disallow: /social/
 
 Sitemap: https://bestmanbackup.com/sitemap.xml
