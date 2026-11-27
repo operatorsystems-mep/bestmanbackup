@@ -29,11 +29,11 @@ describe('public catalogue', () => {
     assert.equal(home.includes('50 free best man guides'), true);
     assert.equal(hub.includes('50 free best man guides'), true);
     const homeHrefs = [...home.matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]).sort();
-    assert.deepEqual(homeHrefs, [
-      'best-man-duties-timeline',
-      'best-man-speech-opening-lines',
-      'stag-do-budget',
-    ]);
+    assert.deepEqual(homeHrefs, []);
+    assert.equal(home.includes('A good opening line'), false);
+    assert.equal(home.includes('What to do and when'), false);
+    assert.equal(home.includes('Agreeing a budget'), false);
+    assert.match(home, /<a class="btn btn-guides" href="\/guides\/">Read all 50 here for free<\/a>/);
     const hubHrefs = [...hub.matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]);
     assert.deepEqual([...new Set(hubHrefs)].sort(), slugs);
     assert.equal(hubHrefs.length, 53);
