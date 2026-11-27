@@ -19,6 +19,7 @@ from pathlib import Path
 from fpdf import FPDF
 
 import json, os
+from datetime import datetime, timezone
 ROOT = Path(os.environ.get("BMB_REPO", Path(__file__).resolve().parents[1]))
 CHECKLISTS = Path(os.environ.get("BMB_CHECKLISTS", ROOT / "scripts" / "guide-checklists.json"))
 OUTDIR = Path(os.environ.get("BMB_OUT", ROOT / "downloads"))
@@ -271,6 +272,14 @@ class ChecklistPDF(FPDF):
         self.set_lang("en-GB")
         self.guide = guide
         self.checkout = checkout
+        # Pin CreationDate, the file ID and the XMP dates. fpdf2 otherwise
+        # stamps the current time, so two builds of the same text get different md5s.
+        raw_epoch = os.environ.get("SOURCE_DATE_EPOCH")
+        if raw_epoch:
+            built = datetime.fromtimestamp(int(raw_epoch), timezone.utc)
+        else:
+            built = datetime(2026, 11, 27, tzinfo=timezone.utc)
+        self.set_creation_date(built)
         # Leave room for the two-line footer (buy line + guide URL).
         self.set_auto_page_break(auto=True, margin=26)
         if FONT_SANS.exists() and FONT_SANS_BOLD.exists():
