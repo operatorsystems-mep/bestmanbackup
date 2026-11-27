@@ -164,7 +164,7 @@ describe('pocket-card storefront', () => {
     assert.match(speech, /A complete sample speech \(about 5 to 6 minutes\), set in the UK running order, inside the Speech Writing Guide and the Editable Workbook/);
     assert.match(speech, /editable Word workbook/i);
     assert.match(duties, /What you get[\s\S]*including a support note · 20 files/);
-    assert.match(duties, /Ushers and buttonholes in the guide and planner, and ushers briefed \(seating, orders of service, late arrivals\) on the day sheet/);
+    assert.match(duties, /Ushers, buttonholes and witness duties in the guide and planner, and ushers briefed \(seating, orders of service, late arrivals\) on the day sheet/);
     assert.equal(duties.includes('An ushers brief'), false);
     assert.match(playbook, /What you get[\s\S]*including a support note · 22 files/);
     assert.equal(playbook.includes('A UK running order'), false);
@@ -174,8 +174,13 @@ describe('pocket-card storefront', () => {
     assert.equal(bundle.includes('A sample speech, a UK running order and an ushers brief'), false);
     assert.match(bundle, /A complete sample speech \(about 5 to 6 minutes\), set in the UK running order/);
     assert.match(read('kits/index.html'), /Complete sample speech \(about 5 to 6 minutes\), in the guide and workbook/);
-    assert.match(read('kits/index.html'), /Ushers and buttonholes; day sheet: ushers briefed/);
-    assert.match(read('guides/index.html'), /Save £14\.98 <a href="\/kits\/bundle\/">The Best Man Set<\/a>/);
+    assert.match(read('kits/index.html'), /Ushers, buttonholes and witness duties; day sheet: ushers briefed/);
+    assert.match(bundle, /Ushers, buttonholes and witness duties in the Duties Guide and Planner/);
+    assert.match(read('guides/index.html'), /<a href="\/kits\/bundle\/">The Best Man Set<\/a>\. All three kits, save <span data-save>£14\.98<\/span>/);
+    assert.match(read('assets/checkout.js'), /data-save/);
+    const home = read('index.html');
+    assert.match(home, /What's inside[\s\S]*A complete sample speech \(about 5 to 6 minutes\), set in the UK running order, inside the Speech Writing Guide and the Editable Workbook/);
+    assert.match(home, /What's inside[\s\S]*Ushers, buttonholes and witness duties in the guide and planner, and ushers briefed \(seating, orders of service, late arrivals\) on the day sheet/);
     assert.match(read('index.html'), /One main Start Here, plus a quick-start for each kit/);
     assert.match(speech, /Instant private download · Secure Stripe checkout · Problems\?/);
     assert.match(speech, /mailto:hello@bestmanbackup\.com/);
