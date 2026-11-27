@@ -87,6 +87,20 @@
     if (product && product.price) node.textContent = product.price;
   });
 
+  function pounds(label) {
+    const amount = Number(String(label || '').replace(/[^0-9.]/g, ''));
+    return Number.isFinite(amount) ? amount : null;
+  }
+
+  document.querySelectorAll('[data-save]').forEach((node) => {
+    const parts = ['speech', 'duties', 'playbook'].map((id) => pounds(resolve(id) && resolve(id).price));
+    const set = pounds(resolve('bundle') && resolve('bundle').price);
+    if (parts.some((amount) => amount == null) || set == null) return;
+    const worth = parts.reduce((sum, amount) => sum + amount, 0);
+    const save = Math.round((worth - set) * 100) / 100;
+    node.textContent = `£${save.toFixed(2)}`;
+  });
+
   const allLive = Object.values(config.products).every((p) => isHttpCheckout(checkoutUrlFor(p)));
   if (allLive) {
     document.querySelectorAll('[data-checkout-pending="all"]').forEach((node) => {
