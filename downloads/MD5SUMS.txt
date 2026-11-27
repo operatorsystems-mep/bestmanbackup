@@ -34,7 +34,7 @@ bcee1b3803723604ff0f2d3aa2c7ee00  funny-best-man-speech-stories-checklist.pdf
 9e5ed95fb2faaa101a91b63ae317465f  heartfelt-best-man-speech-checklist.pdf
 b08dfb50f4de6dd2a4e0d80558a8e8bb  how-long-should-a-best-man-speech-be-checklist.pdf
 509ba75cc6fdbcd702424fb80e34fd7c  how-to-end-a-best-man-speech-checklist.pdf
-8e1d6d018a963c2a9716e0902370f4fb  how-to-plan-a-stag-do-checklist.pdf
+7b7e80d8381fd32f3341e81cefa43fc4  how-to-plan-a-stag-do-checklist.pdf
 d5c35bfc57bdaa5ca76ec6ba4f86f6e7  how-to-write-a-best-man-speech-checklist.pdf
 39879e2c635093882d0c5e9fd5a1fd8d  joint-best-man-speech-checklist.pdf
 654cae6acf4c9b265b25476a26de7109  last-minute-best-man-speech-checklist.pdf
@@ -84,7 +84,7 @@ fc30239c7cb6cab1c3f7385fefd6dded  letter/dad-as-best-man-checklist.pdf
 43d5229d7363de8a49434b0638868315  letter/heartfelt-best-man-speech-checklist.pdf
 9cdf068cfe6d2de5bafb6b7ab9ef7339  letter/how-long-should-a-best-man-speech-be-checklist.pdf
 e786cd1841e5a96ceff30f681b324a4c  letter/how-to-end-a-best-man-speech-checklist.pdf
-3fce7998e25cefc21c548108770e2e6e  letter/how-to-plan-a-stag-do-checklist.pdf
+e2bf3b1b2e4eece125269a17b1ad8543  letter/how-to-plan-a-stag-do-checklist.pdf
 93d13e8f99fec4c72e3e604210a6ef1c  letter/how-to-write-a-best-man-speech-checklist.pdf
 61109bd844954f25167ceefe574758e2  letter/joint-best-man-speech-checklist.pdf
 fdef2144098aa42a822750ab8cbcfb8e  letter/last-minute-best-man-speech-checklist.pdf
