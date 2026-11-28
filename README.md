@@ -31,12 +31,14 @@ This repository is **public**. Paid kit ZIPs must **never** be committed.
 
 Files are stored in private Vercel Blob store **`bmb-paid-products`** on the `bestmanbackup` project (`operator-systems-mep`, region `lhr1`):
 
-| Kit | Blob pathname |
-|---|---|
-| Speech | `kits/speech.zip` |
-| Duties | `kits/duties.zip` |
-| Playbook | `kits/playbook.zip` |
-| Bundle | `kits/bundle.zip` |
+| Kit | Blob pathname | Saved download name |
+|---|---|---|
+| Speech | `kits/v2026-11-28/speech.zip` | `Best-Man-Speech-Kit.zip` |
+| Duties | `kits/v2026-11-28/duties.zip` | `Best-Man-Duties-Kit.zip` |
+| Playbook | `kits/v2026-11-28/playbook.zip` | `Stag-and-Bachelor-Party-Playbook.zip` |
+| The Best Man Set | `kits/v2026-11-28/bundle.zip` | `The-Best-Man-Set.zip` |
+
+Do not merge this path change until those four zips are in the private store. Nothing in git should be named `Best-Man-Bundle.zip`.
 
 Flow: `/thank-you/` → `/api/fulfillment` (paid + matching price ID) → short-lived token → `/api/download` → short-lived signed Blob GET URL.
 
