@@ -42,7 +42,7 @@ Flow: `/thank-you/` → `/api/fulfillment` (paid + matching price ID) → short-
 
 ## Free cards
 
-`/cards/` asks for an email and consent, stores the signup in the private Blob store at `signups/free-cards/` (the same `BLOB_READ_WRITE_TOKEN` as the kits), then downloads one of the twelve PDFs in `cards/`. UK visitors default to A4. US visitors default to US Letter. The bachelor party card defaults to US Letter, and US visitors see it before the stag card. Phone size is always offered. A short-lived cookie from that form is what `/api/card-file` checks, so guessing a PDF address sends you back to the form.
+`/cards/` asks for an email and consent, stores the signup in the private Blob store at `signups/free-cards/` (the same `BLOB_READ_WRITE_TOKEN` as the kits), then downloads one of the twelve PDFs in `private/cards/`. UK visitors default to A4. US visitors default to US Letter. The bachelor party card defaults to US Letter, and US visitors see it before the stag card. Phone size is always offered. A short-lived cookie from that form is what `/api/card-file` checks, so guessing a PDF address sends you back to the form.
 
 ## Free printable PDFs
 

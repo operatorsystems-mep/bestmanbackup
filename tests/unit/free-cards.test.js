@@ -77,7 +77,7 @@ describe('free cards', () => {
       assert.equal(path.basename(card.files.letter), letter);
       assert.equal(path.basename(card.files.phone), phone);
       for (const [format, pages] of [['a4', a4Pages], ['letter', letterPages], ['phone', phonePages]]) {
-        const file = path.join(ROOT, 'cards', path.basename(card.files[format]));
+        const file = path.join(ROOT, 'private', 'cards', path.basename(card.files[format]));
         const bytes = fs.readFileSync(file);
         assert.equal(bytes.subarray(0, 5).toString(), '%PDF-', file);
         assert.ok(bytes.length > 50_000, file);

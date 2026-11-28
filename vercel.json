@@ -7,13 +7,13 @@
       "destination": "/api/blocked"
     },
     {
-      "source": "/cards/:file.pdf",
-      "destination": "/api/card-file/?file=:file.pdf"
+      "source": "/cards/:file(.*\\.pdf)",
+      "destination": "/api/card-file/?file=:file"
     }
   ],
   "functions": {
     "api/card-file.js": {
-      "includeFiles": "cards/*.pdf"
+      "includeFiles": "private/cards/*.pdf"
     }
   },
   "redirects": [

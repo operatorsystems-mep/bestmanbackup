@@ -15,8 +15,8 @@ const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 function findPdf(filename) {
   const candidates = [
-    path.join(process.cwd(), 'cards', filename),
-    path.join(ROOT, 'cards', filename),
+    path.join(process.cwd(), 'private', 'cards', filename),
+    path.join(ROOT, 'private', 'cards', filename),
   ];
   return candidates.find((candidate) => fs.existsSync(candidate)) || null;
 }
