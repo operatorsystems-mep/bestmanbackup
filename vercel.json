@@ -50,6 +50,11 @@
       "statusCode": 308
     },
     {
+      "source": "/private/:path*",
+      "destination": "/api/blocked/",
+      "statusCode": 307
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
