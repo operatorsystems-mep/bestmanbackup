@@ -124,7 +124,7 @@ img.sheet-preview{width:100%;max-width:100%;height:auto}
 .inside li{margin:.35rem 0;font-size:1rem;line-height:1.4}
 .preview-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:1rem}
 .preview-row img{width:100%;height:auto;background:#fff}
-.btn-guides{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:1.05rem 2rem;margin-top:.4rem;font-size:1.25rem;line-height:1.2}
+.btn-guides{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:1.05rem 2rem;margin-top:1.15rem;font-size:1.25rem;line-height:1.2}
 @media(max-width:640px){
   .btn-guides{display:flex;width:100%;min-height:56px;box-sizing:border-box}
 }
