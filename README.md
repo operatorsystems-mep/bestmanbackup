@@ -40,6 +40,10 @@ Files are stored in private Vercel Blob store **`bmb-paid-products`** on the `be
 
 Flow: `/thank-you/` → `/api/fulfillment` (paid + matching price ID) → short-lived token → `/api/download` → short-lived signed Blob GET URL.
 
+## Free cards
+
+`/cards/` asks for an email and consent, stores the signup in the private Blob store at `signups/free-cards/` (the same `BLOB_READ_WRITE_TOKEN` as the kits), then downloads one of the twelve PDFs in `cards/`. UK visitors default to A4. US visitors default to US Letter. The bachelor party card defaults to US Letter, and US visitors see it before the stag card. Phone size is always offered. A short-lived cookie from that form is what `/api/card-file` checks, so guessing a PDF address sends you back to the form.
+
 ## Free printable PDFs
 
 ```bash

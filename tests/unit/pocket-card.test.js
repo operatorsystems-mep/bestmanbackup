@@ -119,13 +119,17 @@ describe('pocket-card storefront', () => {
     const xml = read('sitemap.xml');
     assert.doesNotThrow(() => new DOMParserLike(xml));
     const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-    assert.equal(locs.length, 59);
+    assert.equal(locs.length, 63);
     for (const url of [
       'https://bestmanbackup.com/kits/speech/',
       'https://bestmanbackup.com/kits/duties/',
       'https://bestmanbackup.com/kits/playbook/',
       'https://bestmanbackup.com/kits/bundle/',
       'https://bestmanbackup.com/checklist/',
+      'https://bestmanbackup.com/cards/',
+      'https://bestmanbackup.com/terms/',
+      'https://bestmanbackup.com/refunds/',
+      'https://bestmanbackup.com/contact/',
     ]) {
       assert.equal(locs.includes(url), true, url);
     }

@@ -118,11 +118,14 @@ describe('public catalogue', () => {
     assert.deepEqual(low, []);
   });
 
-  it('does not publish draft legal pages', () => {
-    for (const page of ['terms', 'refunds', 'contact', 'about']) {
-      assert.equal(fs.existsSync(path.join(ROOT, page, 'index.html')), false);
+  it('publishes the signed-off legal pages and leaves about unpublished', () => {
+    for (const page of ['terms', 'refunds', 'contact']) {
+      assert.equal(fs.existsSync(path.join(ROOT, page, 'index.html')), true, page);
     }
-    assert.equal(home.includes('href="/terms/"'), false);
+    assert.equal(fs.existsSync(path.join(ROOT, 'about', 'index.html')), false);
+    assert.equal(home.includes('href="/terms/"'), true);
+    assert.equal(home.includes('href="/refunds/"'), true);
+    assert.equal(home.includes('href="/contact/"'), true);
     assert.equal(home.includes('[TRADER NAME]'), false);
     assert.equal(home.includes('[ADDRESS]'), false);
   });
