@@ -48,7 +48,8 @@ describe('public catalogue', () => {
     }
     assert.equal(hub.includes('50 free guides to the speech, the duties and the stag do. No sign-up.'), true);
     assert.equal(home.includes('Explore 50 guides'), true);
-    assert.equal(home.includes('50 guides, every one free to read'), true);
+    assert.equal(home.includes('50 guides, every one free to read'), false);
+    assert.equal(home.includes('No cost, no charge, no sign-up'), false);
     assert.equal((hub.match(/class="n">/g) || []).length, 50);
   });
 
