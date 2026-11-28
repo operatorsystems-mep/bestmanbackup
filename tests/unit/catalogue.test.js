@@ -33,7 +33,7 @@ describe('public catalogue', () => {
     assert.equal(home.includes('A good opening line'), false);
     assert.equal(home.includes('What to do and when'), false);
     assert.equal(home.includes('Agreeing a budget'), false);
-    assert.match(home, /<a class="btn btn-guides" href="\/guides\/">Read all 50 here for free<\/a>/);
+    assert.match(home, /<a class="btn btn-guides" href="\/guides\/">Read all 50 for free here<\/a>/);
     const hubHrefs = [...hub.matchAll(/href="\/guides\/([^"/]+)\//g)].map((match) => match[1]);
     assert.deepEqual([...new Set(hubHrefs)].sort(), slugs);
     assert.equal(hubHrefs.length, 53);
