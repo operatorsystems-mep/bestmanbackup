@@ -196,12 +196,18 @@ describe('QA fixes', () => {
     assert.equal(pdf.headers[0].value, 'noindex, follow');
   });
 
-  it('does not publish the draft legal pages from this branch', () => {
-    for (const page of ['terms', 'refunds', 'contact', 'about']) {
-      assert.equal(fs.existsSync(path.join(ROOT, page, 'index.html')), false);
+  it('publishes terms, refunds and contact, and links them from the footer', () => {
+    for (const page of ['terms', 'refunds', 'contact']) {
+      const html = fs.readFileSync(path.join(ROOT, page, 'index.html'), 'utf8');
+      assert.equal(/noindex/i.test(html), false, page);
+      assert.equal(html.includes('[TRADER'), false, page);
+      assert.equal(html.includes('hello@bestmanbackup.com'), true, page);
     }
     const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-    assert.equal(home.includes('href="/terms/"'), false);
+    assert.equal(home.includes('href="/terms/"'), true);
+    assert.equal(home.includes('href="/refunds/"'), true);
+    assert.equal(home.includes('href="/contact/"'), true);
     assert.equal(home.includes('[TRADER NAME]'), false);
+    assert.equal(home.includes('Best Man Bundle'), false);
   });
 });

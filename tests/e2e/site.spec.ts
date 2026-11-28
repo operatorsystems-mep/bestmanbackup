@@ -372,6 +372,33 @@ test.describe('Best Man Backup — desktop 1440', () => {
     await expect(page.locator('#entries .guide-cat a:visible')).toHaveCount(0);
   });
 
+  test('legal pages, free cards and the social card are published', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://bestmanbackup.com/assets/og-card.png');
+    await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
+    await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute('content', '630');
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://bestmanbackup.com/assets/og-card.png');
+    await expect(page.locator('footer a[href="/terms/"]')).toBeVisible();
+    await expect(page.locator('footer a[href="/refunds/"]')).toBeVisible();
+    await expect(page.locator('footer a[href="/contact/"]')).toBeVisible();
+    await expect(page.locator('body')).not.toContainText('Best Man Bundle');
+
+    for (const path of ['/terms/', '/refunds/', '/contact/', '/cards/']) {
+      const res = await page.goto(path);
+      expect(res?.ok(), path).toBeTruthy();
+      await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
+      await expect(page.locator('footer a[href="/terms/"]')).toBeVisible();
+    }
+
+    await page.goto('/cards/');
+    await expect(page.locator('form[data-card]')).toHaveCount(4);
+    await expect(page.locator('form[data-card="bachelor"] input[value="letter"]')).toBeChecked();
+    await expect(page.locator('form[data-card="speech"] input[value="a4"]')).toBeChecked();
+    await expect(page.locator('form[data-card="stag"]')).toBeVisible();
+    await expect(page.locator('body')).toContainText('hello@bestmanbackup.com');
+  });
+
   test('cheat-sheet sign-up stays hidden', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('[data-signup]')).toHaveCount(0);
@@ -386,7 +413,7 @@ for (const width of [360, 375, 390, 414]) {
     test.use({ viewport: { width, height: 800 } });
 
     test('home, kits, checklist and the guide index stay within the screen', async ({ page }) => {
-      for (const path of ['/', '/kits/', '/kits/speech/', '/checklist/', '/guides/']) {
+      for (const path of ['/', '/kits/', '/kits/speech/', '/checklist/', '/cards/', '/guides/']) {
         await page.goto(path);
         const widths = await page.evaluate(() => ({
           scroll: document.documentElement.scrollWidth,
@@ -402,7 +429,7 @@ test.describe('Best Man Backup — mobile 390', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
   test('pocket-card pages do not scroll sideways and keep the inline nav on screen', async ({ page }) => {
-    const paths = ['/', '/kits/', '/kits/speech/', '/kits/bundle/', '/checklist/', '/guides/', '/guides/how-to-write-a-best-man-speech/', '/guides/what-does-the-best-man-pay-for/'];
+    const paths = ['/', '/kits/', '/kits/speech/', '/kits/bundle/', '/checklist/', '/cards/', '/guides/', '/guides/how-to-write-a-best-man-speech/', '/guides/what-does-the-best-man-pay-for/'];
     for (const path of paths) {
       await page.goto(path);
       const shop = page.locator('header nav').getByRole('link', { name: 'Shop the kits' });

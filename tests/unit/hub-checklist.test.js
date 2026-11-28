@@ -87,7 +87,8 @@ describe('guides hub and checklist addendum', () => {
         assert.equal(html.includes(`<summary>${question.name}</summary>`), true, question.name);
         assert.equal(html.includes(question.acceptedAnswer.text), true, question.name);
       }
-      assert.equal(/refund|cancellation/i.test(html.slice(html.indexOf('id="kit-faq"'))), false);
+      const faqHtml = html.slice(html.indexOf('id="kit-faq"'), html.indexOf('</main>'));
+      assert.equal(/refund|cancellation/i.test(faqHtml), false);
     }
     const guide = read('guides/how-to-write-a-best-man-speech/index.html');
     assert.match(guide, /data-product="speech"[^>]*aria-label="Get The Speech Kit"/);

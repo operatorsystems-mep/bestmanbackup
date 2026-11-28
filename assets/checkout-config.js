@@ -73,8 +73,8 @@ window.BMB_CHECKOUT = Object.freeze({
     }),
     bundle: Object.freeze({
       id: 'bundle',
-      name: 'Best Man Bundle',
-      shortName: 'Best Man Bundle',
+      name: 'The Best Man Set',
+      shortName: 'The Best Man Set',
       price: '£19.99',
       currency: 'GBP',
       priceValue: 19.99,
@@ -85,7 +85,7 @@ window.BMB_CHECKOUT = Object.freeze({
       checkoutUrlTest: 'https://buy.stripe.com/test_aFa7sN1Ric18gjd4Mk0Fi0j',
       checkoutUrlLive: 'https://buy.stripe.com/dRmbJ3brSe9g7MHbaI0Fi03',
       kitsPath: '/kits/#bundle',
-      buttonLabel: 'Get the Best Man Bundle',
+      buttonLabel: 'Get The Best Man Set',
     }),
   }),
 });
